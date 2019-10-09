@@ -17,8 +17,8 @@ school project
 <ul>
 <li>Adding a player select</li>
 <li>Implementing music</li>
-<li>adding different types of games (roulette, slots, etc...)</li>
-<li>Making the play with the name "Kevin" never lucky</li>
+<li>Adding different types of games (roulette, slots, etc...)</li>
+<li>Making the player with the name "Kevin" never lucky</li>
 <li>Shiro and Sora can never loose</li>
 </ul>
 </ul>
