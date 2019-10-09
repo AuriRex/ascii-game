@@ -4,10 +4,9 @@ import java.awt.Rectangle;
 import com.sun.jna.platform.*;
 
 public class MouseIn {
-    
-    public MouseIn() {
 
-        //Find IntelliJ IDEA Window
+    public static Rectangle getConsoleWindow() {
+        //Find Powershell Window
         Rectangle rect = null;
         for (DesktopWindow desktopWindow : WindowUtils.getAllWindows(true)) {
             if (desktopWindow.getTitle().contains("PowerShell")) {
@@ -16,8 +15,8 @@ public class MouseIn {
         }
 
 
-        System.out.println(rect);
-
+        // System.out.println(rect);
+        return rect;
     }
     
 

@@ -1,5 +1,7 @@
 package our.game.core;
 
+import java.awt.Rectangle;
+
 import our.game.util.MouseIn;
 
 public class Main {
@@ -10,13 +12,13 @@ public class Main {
 
         Calibration c = new Calibration(X, Y); // 4:1 lol
 
-        new MouseIn(); // Test stuff
+        Rectangle rect = MouseIn.getConsoleWindow(); // Test stuff
 
         c.startCalibration();
+        c.createInvis(rect.x, rect.y, rect.width, rect.height);
 
         /*GameManager gm = */new GameManager(X, Y);
 
     }
 
-    //THIS IS MY FANCE COMMIT
 }

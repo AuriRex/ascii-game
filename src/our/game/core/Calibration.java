@@ -2,6 +2,11 @@ package our.game.core;
 
 import our.game.util.Input;
 
+import java.awt.Color;
+
+import javax.swing.*;
+
+
 class Calibration {
 
     int resolution_x;
@@ -69,6 +74,20 @@ class Calibration {
             x--;
         }
         return spaces;
+    }
+    public void createInvis(int x, int y, int width, int height) {
+        JFrame f = new JFrame();
+        f.setType(JFrame.Type.UTILITY); //  ***
+        f.setLocation(x, y);
+        f.setSize(width, height);
+        f.setTitle("Not Visible in the Taskbar");
+        f.setUndecorated(true);
+        f.setBackground(new Color(255, 255, 255, 50));
+        f.getRootPane().setOpaque(false);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        f.setVisible(true);
+    
     }
 
 }
