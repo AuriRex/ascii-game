@@ -39,26 +39,45 @@ public class Reader {
             
             raw_tex = raw_tex.substring(1);
 
+            // TODO: Check that each Frame of the Animation has the same height -> append strings filled with spaces if neccesarry
+
             String[] raw_tex_split = raw_tex.split("\n\n");
 
+            // "   sss\n    diij\n dsadsadasd"
+            int ylen = 0;
+            for(String s : raw_tex_split){
+                if (ylen < s.split("\n").length) ylen = s.split("\n").length;
+            }
             texArray = new Tex[raw_tex_split.length];
 
             // for(String s : raw_tex_split) {
             for(int i = 0; i < raw_tex_split.length; i++) {
 
                 String[] tmp = raw_tex_split[i].split("\n");
+                // new String array with len ylen
+                // old values into new String[]
+                String[] ytmp = new String[ylen];
 
-                for (int k = 0; k < tmp.length; k++){
-                    if (tmp[k].length() < len){
-                        int tmp_ = len - tmp[k].length();
-                        for(int j = 0; j < tmp_; j++){
-                            tmp[k] += " ";
-                        }
+                for (int k = 0; k < ytmp.length; k++){
+                    try{
+                        ytmp[k] = tmp[k];
+                    } catch(IndexOutOfBoundsException ex) {
+                        // Fill with one space
+                        ytmp[k] = " ";
                     }
-                    System.out.println(tmp[i].length());
                 }
 
-                texArray[i] = new Tex(tmp);
+                for (int k = 0; k < ytmp.length; k++){
+                    if (ytmp[k].length() < len){
+                        int tmp_ = len - ytmp[k].length();
+                        for(int j = 0; j < tmp_; j++){
+                            ytmp[k] += " ";
+                        }
+                    }
+                    // System.out.println(tmp[i].length());
+                }
+
+                texArray[i] = new Tex(ytmp);
 
             }
 
