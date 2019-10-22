@@ -1,5 +1,8 @@
 package our.game.util;
 
+/**
+ * Tex contains one String[] and metadata
+ */
 public class Tex {
 
     // private final boolean animated = false;
@@ -17,21 +20,30 @@ public class Tex {
 
     }
 
+    /**
+     * Check if the Tex Object is actually an ATex object (Animated)
+     */
     public boolean isAnimated() {
         return false;
     }
 
     /**
-     * @return Returns one Tex as String[]
+     * @return Returns this Texes String[]
      */
     public String[] getFrame() {
         return this.tex;
     }
 
+    /**
+     * @return Returns this or if animated the current Tex at the current framecount
+     */
     public Tex getTex() {
         return this;
     }
 
+    /**
+     * increment the frame counter
+     */
     public void nextFrame() {
 
     }

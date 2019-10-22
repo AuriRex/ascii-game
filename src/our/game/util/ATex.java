@@ -24,11 +24,17 @@ public class ATex extends Tex {
         return true;
     }
 
+    /**
+     * @return Returns the String[] from the Tex Object at the current framecount
+     */
     @Override
     public String[] getFrame() {
         return texArray[frameCounter].getFrame();
     }
 
+     /**
+     * @return Returns a Tex Object at the current framecount
+     */
     @Override
     public Tex getTex() {
         return texArray[frameCounter];
