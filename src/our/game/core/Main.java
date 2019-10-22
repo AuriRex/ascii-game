@@ -12,9 +12,10 @@ public class Main {
 
         Calibration c = new Calibration(X, Y); // 4:1 lol
 
+        c.startCalibration();
+
         Rectangle rect = MouseIn.getConsoleWindow(); // Test stuff
 
-        c.startCalibration();
         c.createInvis(rect.x, rect.y, rect.width, rect.height);
 
         /*GameManager gm = */new GameManager(X, Y);
@@ -22,3 +23,16 @@ public class Main {
     }
 
 }
+
+/*
+    ┌─────────┐
+    │A        │
+    │         │
+    │         │
+    │    ♠    │
+    │         │
+    │         │
+    │        A│
+    └─────────┘
+
+*/
