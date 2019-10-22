@@ -6,12 +6,12 @@ class Screen {
 
     public static Screen screen = null;
 
-    
     final int RESOLUTION_X;
     final int RESOLUTION_Y;
     final String[] clearFrame;
     String[] frame;
     String[] rframe;
+
     public Screen(int x, int y) {
         RESOLUTION_X = x;
         RESOLUTION_Y = y;
@@ -34,23 +34,15 @@ class Screen {
     }
 
     private String[] fillDefaultFrame() {
-        for(int i = 0; i < RESOLUTION_Y; i++) {
+        for (int i = 0; i < RESOLUTION_Y; i++) {
             String s = "";
-            for(int j = 0; j < RESOLUTION_X; j++)
-              s += " ";
+            for (int j = 0; j < RESOLUTION_X; j++)
+                s += " ";
             frame[i] = s;
         }
         return frame;
     }
 
-    String[] testString = {
-        "xoxo",
-        "oxox",
-        "uzuz",
-        "UwU ",
-        "QwQ "
-    };
-    
     public boolean drawToScreen(int x, int y, Tex tex) {
 
         // x, y, w , h
@@ -64,11 +56,10 @@ class Screen {
         // ################################################################################################################################
         // #################
 
-
         //
-        if(Tex.checkTex(tex)) {
+        if (Tex.checkTex(tex)) {
 
-            if(tex.isAnimated()) {
+            if (tex.isAnimated()) {
                 // Is ATex
             }
 
@@ -79,14 +70,14 @@ class Screen {
             int ycount = 0;
             for (int i = 0; i < RESOLUTION_Y; i++) {
                 currentLine = frame[i];
-                
+
                 if (i >= y && ycount < texFrame.length) {
                     String newLine = "";
                     char[] tmp = texFrame[ycount].toCharArray();
                     int xcount = 0;
                     int x_res_count = 0;
-                    for(char c : currentLine.toCharArray()) {
-                        if(x_res_count >= x && xcount < texFrame[0].length()) {
+                    for (char c : currentLine.toCharArray()) {
+                        if (x_res_count >= x && xcount < texFrame[0].length()) {
                             newLine += tmp[xcount];
                             xcount++;
                         } else {
@@ -98,7 +89,6 @@ class Screen {
                     frame[i] = newLine;
                 }
             }
-            
 
             return true;
         }
@@ -107,8 +97,8 @@ class Screen {
     }
 
     public void printFrame() {
-        for(String s : frame) {
-            System.out.print("\n"+s);
+        for (String s : frame) {
+            System.out.print("\n" + s);
         }
     }
 
@@ -121,20 +111,22 @@ class Screen {
     }
 
     public static void clearScreen() {
-        for(int i = 0; i < 32; i++) System.out.println();
+        for (int i = 0; i < 32; i++)
+            System.out.println();
     }
 
-	public void printReadyFrame() {
-        for(String s : rframe) {
-            System.out.print("\n"+s);
+    public void printReadyFrame() {
+        for (String s : rframe) {
+            System.out.print("\n" + s);
         }
     }
-    
+
     Tex test = Reader.read("./assets/defaultdance.anim");
     // Tex test = Reader.read("./assets/default_sframe.tex");
     boolean test_b = true;
+
     public void printReadyFrameDBG() {
-        if(test_b) {
+        if (test_b) {
             ((ATex) test).reversed = true;
             test_b = false;
         }
@@ -142,10 +134,10 @@ class Screen {
         drawToScreen(30, 4, test);
         test.nextFrame();
         pushFrame();
-        for(String s : rframe) {
-            System.out.print("\n"+s);
+        for (String s : rframe) {
+            System.out.print("\n" + s);
         }
-	}
+    }
 
     private void clearFrame() {
         frame = clearFrame.clone();
