@@ -16,7 +16,7 @@ public class Main {
         c.startCalibration();
 
         Rectangle rect = MouseIn.getConsoleWindow(); // Test stuff
-        //temp change
+        //TODO: check if calibration was sucessful
         c.createInvis(rect.x, rect.y, rect.width, rect.height);
 
         ResourceManager.init();
