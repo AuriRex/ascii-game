@@ -3,6 +3,7 @@ package our.game.core;
 import java.awt.Rectangle;
 
 import our.game.util.MouseIn;
+import our.game.util.ResourceManager;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -18,21 +19,11 @@ public class Main {
         //temp change
         c.createInvis(rect.x, rect.y, rect.width, rect.height);
 
+        ResourceManager.init();
+        ResourceManager.instance.loadResources("./assets/");
+
         /*GameManager gm = */new GameManager(X, Y);
 
     }
 
 }
-
-/*
-    ┌─────────┐
-    │A        │
-    │         │
-    │         │
-    │    ♠    │
-    │         │
-    │         │
-    │        A│
-    └─────────┘
-
-*/

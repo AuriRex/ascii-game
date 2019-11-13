@@ -172,6 +172,10 @@ public class Input {
         get(CONFIRM, null, true);
     }
 
+    public static void confirm(String msg) {
+        get(CONFIRM, msg, true);
+    }
+
     /**
      * Closes the Scanner instance. This should be called after all input has been read!
      */

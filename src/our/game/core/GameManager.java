@@ -18,6 +18,7 @@ class GameManager {
             // screen.advanceAnimation();
             // screen.printReadyFrame();
             screen.printReadyFrameDBG();
+            Calibration.resetTop();
             
             try {
                 Thread.sleep(600);

@@ -5,6 +5,7 @@ import our.game.util.Input;
 import java.awt.Color;
 
 import javax.swing.*;
+import our.game.util.XFrame;
 
 class Calibration {
 
@@ -71,9 +72,9 @@ class Calibration {
         }
         return spaces;
     }
-
+    private static XFrame f;
     public void createInvis(int x, int y, int width, int height) {
-        JFrame f = new JFrame();
+        f = new XFrame();
         f.setType(JFrame.Type.UTILITY);
         f.setLocation(x, y);
         f.setSize(width, height);
@@ -81,10 +82,14 @@ class Calibration {
         f.setUndecorated(true);
         f.setBackground(new Color(255, 255, 255, 50));
         f.getRootPane().setOpaque(false);
+        f.addMouseListener(f);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         f.setVisible(true);
-
     }
-
+    public static void resetTop(){
+        if (!f.hasFocus()){
+            Input.confirm(" Press enter to regain control!");
+            f.toFront();
+        }
+    }
 }
