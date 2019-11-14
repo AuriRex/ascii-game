@@ -85,7 +85,7 @@ class Calibration {
         f.setType(JFrame.Type.UTILITY);
         f.setLocation(x, y);
         f.setSize(width, height);
-        g = new Dimension(f.getWidth(), f.getHeight());
+        g = new Dimension(width, height);
         f.setTitle("Not Visible in the Taskbar");
         f.setUndecorated(true);
         f.setBackground(new Color(255, 255, 255, 50));
@@ -95,17 +95,19 @@ class Calibration {
         f.setVisible(true);
     }
 
-    public static void redraw() {
-        if (!(f.getSize().equals(g))) {
-            System.err.println("Check your Calibration!");
-            Input.confirm("Calibration okay?");
-        }
+    public void redraw() {
         Rectangle rect = MouseIn.getConsoleWindow();
+        g.setSize(rect.width, rect.height);
+        if (!(f.getSize().equals(g))) {
+            startCalibration();
+            g.setSize(rect.width, rect.height);
+        }
+        rect = MouseIn.getConsoleWindow();
         f.setLocation(rect.x, rect.y);
         f.setSize(rect.width, rect.height);
     }
 
-    public static void resetTop() {
+    public void resetTop() {
         if (!f.hasFocus()) {
             Input.confirm(
                     " Press Enter to regain control!\n If it doesn't recognise your Enter retab into your console!");

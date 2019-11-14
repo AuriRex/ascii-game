@@ -22,7 +22,7 @@ public class Main {
         ResourceManager.init();
         ResourceManager.instance.loadResources("./assets/");
 
-        /*GameManager gm = */new GameManager(X, Y);
+        /*GameManager gm = */new GameManager(X, Y, c);
 
     }
 

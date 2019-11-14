@@ -20,7 +20,7 @@ public class XFrame extends JFrame implements MouseInputListener {
         if (maxx - x <= 50 && y < 30){
 
             int eingabe = JOptionPane.showConfirmDialog(null,"Wollen Sie wirklich beenden?",
-                                                        "Beenden",JOptionPane.YES_NO_CANCEL_OPTION);
+                                                        "Beenden",JOptionPane.YES_NO_OPTION);
 
             if (eingabe == 0){
                 this.dispose();

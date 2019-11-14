@@ -7,7 +7,7 @@ class GameManager {
     private Screen screen;
     boolean running = true;
 
-    public GameManager(int x, int y) {
+    public GameManager(int x, int y, Calibration c) {
         screen = new Screen(x, y);
 
         init();
@@ -17,9 +17,9 @@ class GameManager {
             // Loop thorugh all game objects and call draw function
             // screen.advanceAnimation();
             // screen.printReadyFrame();
+            c.resetTop();
             screen.printReadyFrameDBG();
-            Calibration.resetTop();
-            
+
             try {
                 Thread.sleep(600);
             } catch (InterruptedException e) {
@@ -34,8 +34,5 @@ class GameManager {
         // Screen.clearScreen();
         // System.out.println("Initialized!");
     }
-
-
-
 
 }
