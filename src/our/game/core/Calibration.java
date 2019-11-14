@@ -1,11 +1,15 @@
 package our.game.core;
 
 import our.game.util.Input;
+import our.game.util.MouseIn;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.*;
 import our.game.util.XFrame;
+
+import java.awt.Rectangle;
 
 class Calibration {
 
@@ -72,12 +76,16 @@ class Calibration {
         }
         return spaces;
     }
+
     private static XFrame f;
-    public void createInvis(int x, int y, int width, int height) {
+    private static Dimension g;
+
+    public static void createInvis(int x, int y, int width, int height) {
         f = new XFrame();
         f.setType(JFrame.Type.UTILITY);
         f.setLocation(x, y);
         f.setSize(width, height);
+        g = new Dimension(f.getWidth(), f.getHeight());
         f.setTitle("Not Visible in the Taskbar");
         f.setUndecorated(true);
         f.setBackground(new Color(255, 255, 255, 50));
@@ -86,9 +94,22 @@ class Calibration {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
     }
-    public static void resetTop(){
-        if (!f.hasFocus()){
-            Input.confirm(" Press enter to regain control!");
+
+    public static void redraw() {
+        if (!(f.getSize().equals(g))) {
+            System.err.println("Check your Calibration!");
+            Input.confirm("Calibration okay?");
+        }
+        Rectangle rect = MouseIn.getConsoleWindow();
+        f.setLocation(rect.x, rect.y);
+        f.setSize(rect.width, rect.height);
+    }
+
+    public static void resetTop() {
+        if (!f.hasFocus()) {
+            Input.confirm(
+                    " Press Enter to regain control!\n If it doesn't recognise your Enter retab into your console!");
+            redraw();
             f.toFront();
         }
     }
