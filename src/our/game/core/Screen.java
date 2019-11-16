@@ -121,13 +121,16 @@ class Screen {
         }
     }
 
-    Tex test = Reader.read("./assets/defaultdance.anim");
+    // Tex test = Reader.read("./assets/fu.tex");
+    // Tex test = Reader.read("./assets/defaultdance.atex");
+    // Tex test = Reader.read("./assets/cards/mode/exit_idle.atex");
+    Tex test = Reader.read("./assets/cards/mode/exit_hover.atex");
     // Tex test = Reader.read("./assets/default_sframe.tex");
     boolean test_b = true;
 
     public void printReadyFrameDBG() {
         if (test_b) {
-            ((ATex) test).reversed = true;
+            ((ATex) test).reversed = false;
             test_b = false;
         }
         clearFrame();

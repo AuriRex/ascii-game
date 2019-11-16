@@ -37,8 +37,6 @@ public class Reader {
             reader.close();
             // tex = raw_tex.split("\n");
             
-            raw_tex = raw_tex.substring(1);
-
             // TODO: Check that each Frame of the Animation has the same height -> append strings filled with spaces if neccesarry
 
             String[] raw_tex_split = raw_tex.split("\n\n");

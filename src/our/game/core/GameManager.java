@@ -1,11 +1,16 @@
 package our.game.core;
 
-class GameManager {
+import our.game.mode.Default;
+import our.game.mode.Menu;
+
+public class GameManager {
 
     // final int X;
     // final int Y;
     private Screen screen;
     boolean running = true;
+
+    private static Default mode;
 
     public GameManager(int x, int y, Calibration c) {
         screen = new Screen(x, y);
@@ -18,6 +23,7 @@ class GameManager {
             // screen.advanceAnimation();
             // screen.printReadyFrame();
             c.resetTop();
+            mode.frameAdvance();
             screen.printReadyFrameDBG();
 
             try {
@@ -30,7 +36,14 @@ class GameManager {
 
     }
 
+    public static Default getModeInstance() {
+        return mode;
+    }
+
     private void init() {
+
+        mode = new Menu();
+
         // Screen.clearScreen();
         // System.out.println("Initialized!");
     }

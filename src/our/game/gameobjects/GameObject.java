@@ -12,7 +12,7 @@ public class GameObject {
 
     // }
 
-    private ATex texture = null;
+    private ATex[] texture = null;
 
     public int x;
     public int y;

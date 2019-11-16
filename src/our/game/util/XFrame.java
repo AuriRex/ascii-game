@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputListener;
 
+import our.game.mode.Default;
+import our.game.core.GameManager;
+
 public class XFrame extends JFrame implements MouseInputListener {
 
 
@@ -28,6 +31,9 @@ public class XFrame extends JFrame implements MouseInputListener {
             }
 
         }
+
+        int[] pos = calcPos(e);
+        GameManager.getModeInstance().clickInput(pos[0], pos[1]);
     }
 
     @Override
@@ -42,15 +48,25 @@ public class XFrame extends JFrame implements MouseInputListener {
         
     }
 
+    private int[] calcPos(MouseEvent e) {
+        int x = e.getX();
+        int y = e.getY();
+        double refx = this.getSize().getWidth() / our.game.core.Main.X;
+        double refy = this.getSize().getHeight() / our.game.core.Main.Y;
+        x = (int) (x / refx);
+        y = (int) (y / refy);
+        return new int[]{x, y};
+    }
+
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
+        int[] pos = calcPos(e);
+        GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
+        GameManager.getModeInstance().noHoverInput();
         
     }
 

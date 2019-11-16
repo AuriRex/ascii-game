@@ -13,7 +13,7 @@ class Card extends GameObject {
 
     public Card(int x, int y) {
         super(x, y);
-        UID = 0; // TODO: not this fuck u
+        UID = 0; // TODO: not this fluff u (<-- agressive coding :))
 
     }
 
