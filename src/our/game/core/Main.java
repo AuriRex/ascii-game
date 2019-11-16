@@ -23,6 +23,7 @@ public class Main {
         ResourceManager.instance.loadResources("./assets/");
 
         /*GameManager gm = */new GameManager(X, Y, c);
+        //test
 
     }
 
