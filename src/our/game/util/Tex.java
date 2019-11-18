@@ -68,8 +68,6 @@ public class Tex {
      * @return boolean whether Tex has the right format.
      */
     public static boolean checkTex(Tex tex) {
-        // 4 x 4
-        // [####,####,####,####]
 
         if(tex.isAnimated()) {
             ATex tmp = (ATex) tex;

@@ -22,5 +22,10 @@ Height: 32/2 -10 = 6
 ###############
 ###############
 
-:upvote: :star: :heart: :sunflower: :cloud: :downvote:
-best to worst
+Todo: Fix Animation System animation jump when switching -> eg reset frame counter
+
+Todo: Fix todos
+
+PICTURE POKER:
+    :upvote: :star: :heart: :sunflower: :cloud: :downvote:
+    best to worst

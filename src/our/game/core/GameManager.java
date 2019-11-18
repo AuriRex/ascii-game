@@ -1,7 +1,9 @@
 package our.game.core;
 
-import our.game.mode.Default;
+import our.game.gameobjects.GameObject;
+import our.game.mode.GameMode;
 import our.game.mode.Menu;
+import our.game.util.Tex;
 
 /**
  * Responsible for running the main programm loop and calling all of the necesarry functions.
@@ -10,10 +12,10 @@ public class GameManager {
 
     // final int X;
     // final int Y;
-    private Screen screen;
+    private static Screen screen;
     boolean running = true;
 
-    private static Default mode;
+    private static GameMode mode;
 
     public GameManager(int x, int y, Calibration c) {
         screen = new Screen(x, y);
@@ -27,18 +29,28 @@ public class GameManager {
         int sleepTime = 200;
         int sleepCount = 0;
 
+        boolean debug = true;
+
         // Main Programm Loop
         while (running) {
 
-            // Loop thorugh all game objects and call draw function -> do this through gamemode!
-            // screen.advanceAnimation();
-            // screen.printReadyFrame();
+            // Loop thorugh all game objects and call draw function -> do this through
+            // gamemode!
+            screen.clearFrame();
             c.resetTop();
+            mode.preDraw();
+            mode.draw();
             mode.frameAdvance();
-            screen.printReadyFrameDBG(deltaTime);
+            screen.pushFrame();
+            if(debug) {
+                screen.debugHud(deltaTime);
+                screen.drawDebugText(0,30, "X:"+d_x+" Y:"+d_y);
+            }
+            screen.printReadyFrame();
+            // screen.printReadyFrameDBG(deltaTime);
 
             // Makes sure the program runs at 5 frames per second
-            while(sleepCount < sleepTime) {
+            while (sleepCount < sleepTime) {
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
@@ -48,7 +60,6 @@ public class GameManager {
                     break;
                 }
             }
-            
 
             time = System.currentTimeMillis();
             deltaTime = time - oldTime;
@@ -57,9 +68,38 @@ public class GameManager {
         }
 
     }
+    /**
+     * Draws a GameObject to the screen
+     * @param g Gameobject with x, y and tex
+     */
+    public static void drawToScreen(GameObject g) {
+        drawToScreen(g.x, g.y, g.getObjectTex());
+    }
 
-    public static Default getModeInstance() {
+    /**
+     * Draws a Tex to the screen
+     * @param x x-coordinate for the drawing
+     * @param y y-coordinate for the drawing
+     * @param tex texture to be drawn
+     */
+    public static void drawToScreen(int x, int y, Tex tex) {
+        screen.drawToScreen(x, y, tex);
+    }
+
+    /**
+     * Returns the current running GameMode Instance.
+     * @return GameMode Instance
+     */
+    public static GameMode getModeInstance() { // TODO: Redo all methods that call this one and handle null!
         return mode;
+    }
+
+    private static int d_x = 0;
+    private static int d_y = 0;
+
+    public static void debug(int x, int y) {
+        d_x = x;
+        d_y = y;
     }
 
     private void init() {

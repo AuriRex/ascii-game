@@ -1,20 +1,13 @@
 package our.game.gameobjects;
 
-class Card extends GameObject {
+import our.game.util.Tex;
 
-    public final int UID;
+public class Card extends GameObject {
 
-    // private static int gameobject_count = 0;
-
-    // private static void d() {
-
-    // }
-
-
-    public Card(int x, int y) {
-        super(x, y);
-        UID = 0; // TODO: not this fluff u (<-- agressive coding :))
-
+    public Card(String uid, int x, int y, Tex idle) {
+        super(uid, x, y, idle);
+        width = idle.width;
+        height = idle.height;
     }
 
 }

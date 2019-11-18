@@ -26,7 +26,7 @@ class Screen {
         clearFrame = fillDefaultFrame();
         rframe = frame;
 
-        drawToScreen(30, 4, test);
+        // drawToScreen(30, 4, test);
         printReadyFrame();
     }
 
@@ -116,9 +116,9 @@ class Screen {
     // Tex test = Reader.read("./assets/fu.tex");
     // Tex test = Reader.read("./assets/defaultdance.atex");
     // Tex test = Reader.read("./assets/cards/mode/exit_idle.atex");
-    Tex test = Reader.read("./assets/cards/mode/exit_hover.atex");
+    // Tex test = Reader.read("./assets/cards/mode/exit_hover.atex");
     // Tex test = Reader.read("./assets/default_sframe.tex");
-    // Tex time = Reader.read("./assets/test.tex");
+    Tex test;
     boolean test_b = true;
 
     /**
@@ -143,8 +143,22 @@ class Screen {
     /**
      * replaces the frame with an empty frame
      */
-    private void clearFrame() {
+    void clearFrame() {
         frame = clearFrame.clone();
     }
+
+	public void debugHud(long deltaTime) {
+        
+        drawToScreen(0, 0, new Tex(new String[] {"################################################################################################################################"}));
+        drawToScreen(0, 31, new Tex(new String[] {"################################################################################################################################"}));
+
+        if(deltaTime != 0)
+            drawToScreen(1, 0, new Tex(new String[] {" Framerate: " + (int) (1000/deltaTime) + " "}));
+
+	}
+
+	public void drawDebugText(int x, int y, String txt) {
+        drawToScreen(x, y, new Tex(new String[] {txt}));
+	}
 
 }

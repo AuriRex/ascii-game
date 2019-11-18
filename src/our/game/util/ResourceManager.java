@@ -9,6 +9,7 @@ public class ResourceManager {
 
     public static ResourceManager instance;
 
+    @SuppressWarnings("unused")
     private HashMap<String, ATex> textures;
 
     protected HashMap<Integer, GameObject> objectPool;
@@ -35,7 +36,7 @@ public class ResourceManager {
                 listFilesForFolder(fileEntry);
             } else {
                 System.out.println(fileEntry.getName());
-                //TODO 
+                //TODO yes
             }
         }
     }

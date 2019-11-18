@@ -3,7 +3,7 @@ package our.game.core;
 import java.awt.Rectangle;
 
 import our.game.util.MouseIn;
-import our.game.util.ResourceManager;
+// import our.game.util.ResourceManager;
 
 public class Main {
 
@@ -21,17 +21,19 @@ public class Main {
         //Fixing Console Debugging
         try {
             rect = MouseIn.getConsoleWindow();
+            if(rect == null) rect = new Rectangle(0,0,10,10);
         }catch(Exception ex) {
             rect = new Rectangle(0,0,10,10);
         }
-        //TODO: check if calibration was sucessful
+
         Calibration.createInvis(rect.x, rect.y, rect.width, rect.height);
+        
 
         // Unused
-        ResourceManager.init();
-        ResourceManager.instance.loadResources("./assets/");
+        // ResourceManager.init();
+        // ResourceManager.instance.loadResources("./assets/");
 
-        /*GameManager gm = */new GameManager(X, Y, c);
+        new GameManager(X, Y, c);
 
     }
 

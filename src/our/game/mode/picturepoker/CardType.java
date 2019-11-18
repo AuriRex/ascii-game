@@ -1,6 +1,6 @@
 package our.game.mode.picturepoker;
 
-public enum Cards {
+public enum CardType {
 
     UPVOTE,
     STAR,

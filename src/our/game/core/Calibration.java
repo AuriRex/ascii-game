@@ -7,14 +7,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+
 import our.game.util.XFrame;
 
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 
 class Calibration {
 
     int resolution_x;
     int resolution_y;
+
     /**
      * @param x sets the x-value
      * @param y sets the y-value
@@ -29,15 +33,16 @@ class Calibration {
      */
     public void startCalibration() {
 
-        /* Creates "#" around the corners
-        ###        ###
-        #            #
-        #            #
-
-        #            #
-        #            #
-        ###        ###
-        */
+        /*
+         * Creates "#" around the corners 
+         * ###      ### 
+         * #          # 
+         * #          #
+         * 
+         * #          #
+         * #          #
+         * ###      ###
+         */
 
         Screen.clearScreen();
 
@@ -65,10 +70,12 @@ class Calibration {
         Input.confirm();
 
     }
+
     /**
      * Centers the text to be in the exact middle of the console after Calibration
+     * 
      * @param txt The String to be placed in the middle
-     * @param x The width in characters
+     * @param x   The width in characters
      * @return String txt with leading spaces
      */
     public String centerText(String txt, int x) {
@@ -80,8 +87,10 @@ class Calibration {
         }
         return (spaces + txt);
     }
+
     /**
      * Gets the number of spaces in a single console line
+     * 
      * @param x The number of spaces in characters
      * @return String containing the spaces
      */
@@ -96,11 +105,13 @@ class Calibration {
 
     private static XFrame f;
     private static Dimension g;
+
     /**
      * Creates the invisible clickable Frame
-     * @param x the x-coordinate of the window
-     * @param y the y-coordinate of the window
-     * @param width the width of the window
+     * 
+     * @param x      the x-coordinate of the window
+     * @param y      the y-coordinate of the window
+     * @param width  the width of the window
      * @param height the height of the window
      */
     public static void createInvis(int x, int y, int width, int height) {
@@ -111,9 +122,17 @@ class Calibration {
         g = new Dimension(width, height);
         f.setTitle("Not Visible in the Taskbar");
         f.setUndecorated(true);
-        f.setBackground(new Color(255, 255, 255, 50));
+        f.setBackground(new Color(255, 255, 255, 1));
         f.getRootPane().setOpaque(false);
-        f.addMouseListener(f);
+        f.getRootPane().addMouseMotionListener(new MouseInputAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                int[] pos = XFrame.calcPos(e);
+                GameManager.debug(pos[0], pos[1]);
+                GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
+            }
+        });
+        f.getRootPane().addMouseListener(f);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
     }
