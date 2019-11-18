@@ -23,9 +23,9 @@ public class Input {
     public static final int BOOLEAN = 3;
     public static final int CONFIRM = 4;
 
-    public static final String VERSION = "1.5";
+    public static final String VERSION = "1.6";
 
-    public static final String UPDATE = "* press enter to continue!";
+    public static final String UPDATE = "* Boolean input %values% var!";
 
     private static Scanner scn = null;
 
@@ -145,6 +145,7 @@ public class Input {
                 String x3 = null;
                 boolean x3r = false;
                 if(msg == null) msg = "Wählen sie zwischen wahr und falsch - Werte die wahr sind, sind: ["+Arrays.toString(trueValues.toArray())+"] - alle anderen Werte sind falsch: ";
+                else msg = msg.replace("%values%", Arrays.toString(trueValues.toArray()));
                 while(x3 == null) {
                     try {
                         System.out.println(msg);
