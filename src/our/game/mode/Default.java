@@ -22,7 +22,7 @@ public abstract class Default implements GMMethods {
     public abstract ATex[] setPreview();
 
     public void frameAdvance() {
-        //TODO implement stuff if we need it lmao
+        //TODO implement stuff if we need it
     }
 
     /**

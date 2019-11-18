@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.MouseInputListener;
 
-import our.game.mode.Default;
 import our.game.core.GameManager;
 
 public class XFrame extends JFrame implements MouseInputListener {
@@ -20,8 +19,8 @@ public class XFrame extends JFrame implements MouseInputListener {
         int x = e.getX();
         int y = e.getY();
         double maxx = this.getSize().getWidth();
+        //Creates an Option pane to ask the user if he/she wants to quit
         if (maxx - x <= 50 && y < 30){
-
             int eingabe = JOptionPane.showConfirmDialog(null,"Wollen Sie wirklich beenden?",
                                                         "Beenden",JOptionPane.YES_NO_OPTION);
 
@@ -48,6 +47,11 @@ public class XFrame extends JFrame implements MouseInputListener {
         
     }
 
+    /**
+     * Calulates the position from pixel to characters
+     * @param e Position of the mouse
+     * @return int[] with the position as characters
+     */
     private int[] calcPos(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();

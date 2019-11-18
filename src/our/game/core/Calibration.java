@@ -15,21 +15,29 @@ class Calibration {
 
     int resolution_x;
     int resolution_y;
-
+    /**
+     * @param x sets the x-value
+     * @param y sets the y-value
+     */
     public Calibration(int x, int y) {
         resolution_x = x;
         resolution_y = y;
     }
 
+    /**
+     * Starts the Calibration to set the Console size to the desired x and y values
+     */
     public void startCalibration() {
 
-        // ###        ###
-        // #            #
-        // #            #
+        /* Creates "#" around the corners
+        ###        ###
+        #            #
+        #            #
 
-        // #            #
-        // #            #
-        // ###        ###
+        #            #
+        #            #
+        ###        ###
+        */
 
         Screen.clearScreen();
 
@@ -57,7 +65,12 @@ class Calibration {
         Input.confirm();
 
     }
-
+    /**
+     * Centers the text to be in the exact middle of the console after Calibration
+     * @param txt The String to be placed in the middle
+     * @param x The width in characters
+     * @return String txt with leading spaces
+     */
     public String centerText(String txt, int x) {
         String spaces = "";
         int i = 0;
@@ -67,7 +80,11 @@ class Calibration {
         }
         return (spaces + txt);
     }
-
+    /**
+     * Gets the number of spaces in a single console line
+     * @param x The number of spaces in characters
+     * @return String containing the spaces
+     */
     public String getSpacing(int x) {
         String spaces = "";
         while (x > 0) {
@@ -79,7 +96,13 @@ class Calibration {
 
     private static XFrame f;
     private static Dimension g;
-
+    /**
+     * Creates the invisible clickable Frame
+     * @param x the x-coordinate of the window
+     * @param y the y-coordinate of the window
+     * @param width the width of the window
+     * @param height the height of the window
+     */
     public static void createInvis(int x, int y, int width, int height) {
         f = new XFrame();
         f.setType(JFrame.Type.UTILITY);
@@ -94,7 +117,9 @@ class Calibration {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
     }
-
+    /**
+     * Redraws the Frame to fix the Console window
+     */
     public void redraw() {
         Rectangle rect = MouseIn.getConsoleWindow();
         g.setSize(rect.width, rect.height);
@@ -106,7 +131,9 @@ class Calibration {
         f.setLocation(rect.x, rect.y);
         f.setSize(rect.width, rect.height);
     }
-
+    /**
+     * Resets the Frame to be on top of the Console
+     */
     public void resetTop() {
         if (!f.hasFocus()) {
             Input.confirm(

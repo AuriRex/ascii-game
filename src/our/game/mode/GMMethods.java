@@ -7,8 +7,8 @@ interface GMMethods {
 
     /**
      * 
-     * @param x = X Coordinate in Console Characters
-     * @param y = Y Coordinate in Console Characters
+     * @param x X Coordinate in Console Characters
+     * @param y Y Coordinate in Console Characters
      */
     public void hoverInput(int x, int y);
 

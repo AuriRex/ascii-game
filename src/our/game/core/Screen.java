@@ -12,27 +12,28 @@ class Screen {
     String[] frame;
     String[] rframe;
 
+    /**
+     * creates and prints the new Frame
+     * @param x width of the screen
+     * @param y height of the screen
+     */
     public Screen(int x, int y) {
         RESOLUTION_X = x;
         RESOLUTION_Y = y;
 
-        // new String("128x32");
         frame = new String[y];
         screen = this;
         clearFrame = fillDefaultFrame();
         rframe = frame;
-        // Tex test = Reader.read("./assets/defaultdance.anim");
-        // System.out.println(test.getFrame()[0]);
-        // System.out.println(test.getFrame()[1]);
-        // System.out.println(test.getFrame()[2]);
-        // System.out.println(test.getFrame()[3]);
-        // System.out.println(test.getFrame()[4]);
-        // System.out.println(Tex.checkTex(test));
-        // Input.confirm();
+
         drawToScreen(30, 4, test);
-        printFrame();
+        printReadyFrame();
     }
 
+    /**
+     * The default frame to be drawn (empty frame)
+     * @return the frame
+     */
     private String[] fillDefaultFrame() {
         for (int i = 0; i < RESOLUTION_Y; i++) {
             String s = "";
@@ -43,29 +44,20 @@ class Screen {
         return frame;
     }
 
+    /**
+     * Draws the checked tex to the screen
+     * @param x width of the screen
+     * @param y height of the screen
+     * @param tex to be drawn
+     * @return true if the frame is good
+     */
     public boolean drawToScreen(int x, int y, Tex tex) {
 
-        // x, y, w , h
-        // x = 10
-        // y = 4
-        // ################################################################################################################################
-        // ################################################################################################################################
-        // ################################################################################################################################
-        // ################################################################################################################################
-        // ##########x#####################################################################################################################
-        // ################################################################################################################################
-        // #################
-
-        //
         if (Tex.checkTex(tex)) {
-
-            if (tex.isAnimated()) {
-                // Is ATex
-            }
 
             String[] texFrame = tex.getFrame();
 
-            // zeichnen auf frame :)
+            // draw on frame
             String currentLine = "";
             int ycount = 0;
             for (int i = 0; i < RESOLUTION_Y; i++) {
@@ -96,25 +88,25 @@ class Screen {
         return false;
     }
 
-    public void printFrame() {
-        for (String s : frame) {
-            System.out.print("\n" + s);
-        }
-    }
-
     /**
-     * Should be called after everything has been drawn to th frame
-     * -> pushes frame to rframe
+     * Should be called after everything has been drawn to the frame
+     * -> pushes frame to rframe (readyFrame)
      */
     public void pushFrame() {
         rframe = frame;
     }
 
+    /**
+     * Clears the screen
+     */
     public static void clearScreen() {
         for (int i = 0; i < 32; i++)
             System.out.println();
     }
 
+    /**
+     * Prints rframe to the screen
+     */
     public void printReadyFrame() {
         for (String s : rframe) {
             System.out.print("\n" + s);
@@ -126,14 +118,20 @@ class Screen {
     // Tex test = Reader.read("./assets/cards/mode/exit_idle.atex");
     Tex test = Reader.read("./assets/cards/mode/exit_hover.atex");
     // Tex test = Reader.read("./assets/default_sframe.tex");
+    // Tex time = Reader.read("./assets/test.tex");
     boolean test_b = true;
 
-    public void printReadyFrameDBG() {
+    /**
+     * Debug option for printing the rframe
+     * @param deltaTime
+     */
+    public void printReadyFrameDBG(long deltaTime) {
         if (test_b) {
             ((ATex) test).reversed = false;
             test_b = false;
         }
         clearFrame();
+        drawToScreen(0, 0, new Tex(new String[] {"dTime: "+deltaTime}));
         drawToScreen(30, 4, test);
         test.nextFrame();
         pushFrame();
@@ -142,6 +140,9 @@ class Screen {
         }
     }
 
+    /**
+     * replaces the frame with an empty frame
+     */
     private void clearFrame() {
         frame = clearFrame.clone();
     }

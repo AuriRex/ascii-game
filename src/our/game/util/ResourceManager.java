@@ -35,21 +35,9 @@ public class ResourceManager {
                 listFilesForFolder(fileEntry);
             } else {
                 System.out.println(fileEntry.getName());
-                // todo
+                //TODO 
             }
         }
     }
 
 }
-/*
-    ┌─────────┐
-    │A        │
-    │         │
-    │         │
-    │    ♠    │
-    │         │
-    │         │
-    │        A│
-    └─────────┘
-
-*/

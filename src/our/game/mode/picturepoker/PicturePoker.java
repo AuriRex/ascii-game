@@ -1,11 +1,11 @@
-package our.game.mode;
+package our.game.mode.picturepoker;
 
+import our.game.mode.Default;
 import our.game.util.ATex;
 
-class PicturePoker extends Default {
+public class PicturePoker extends Default {
 
     public PicturePoker() {
-
 
     }
 

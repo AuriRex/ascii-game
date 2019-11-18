@@ -12,6 +12,10 @@ public class Tex {
     public final int height;
     public final int width;
 
+    /**
+     * Tex object
+     * @param tex String[] -> lines of the texture
+     */
     public Tex(String[] tex) {
 
         this.tex = tex;
@@ -35,24 +39,34 @@ public class Tex {
     }
 
     /**
-     * @return Returns this or if animated the current Tex at the current framecount
+     * @return Returns this, or if animated, the current Tex at the current framecount
      */
     public Tex getTex() {
         return this;
     }
 
     /**
-     * increment the frame counter
+     * increments the frame counter
      */
     public void nextFrame() {
 
     }
 
 
+    /**
+     * Checks if every line of a Tex object is the same length
+     * @param tex The Tex Object to check
+     * @return boolean whether Tex has the right format.
+     */
     public static boolean checkTex(ATex tex) {
         return checkTex((Tex) tex);
     }
 
+    /**
+     * Checks if every line of a Tex object is the same length
+     * @param tex The Tex Object to check
+     * @return boolean whether Tex has the right format.
+     */
     public static boolean checkTex(Tex tex) {
         // 4 x 4
         // [####,####,####,####]

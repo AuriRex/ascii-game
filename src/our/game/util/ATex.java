@@ -12,6 +12,10 @@ public class ATex extends Tex {
 
     public boolean reversed = false;
 
+    /**
+     * Animated Tex
+     * @param texArray Tex[] consisting of individual animation frames
+     */
     public ATex(Tex[] texArray) {
         super(texArray[0].getFrame()); // set width & height
 
@@ -40,6 +44,9 @@ public class ATex extends Tex {
         return texArray[frameCounter];
     }
 
+    /**
+     * increments the frame counter
+     */
     @Override
     public void nextFrame() {
         if(reversed) {
@@ -55,6 +62,7 @@ public class ATex extends Tex {
         }
         
     }
+
 
     public Tex[] getTexArray() {
         return texArray;

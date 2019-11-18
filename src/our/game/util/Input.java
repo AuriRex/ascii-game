@@ -172,6 +172,9 @@ public class Input {
         get(CONFIRM, null, true);
     }
 
+    /**
+     * Calls Input.get(Input.CONFIRM) -> waits for Enter
+     */
     public static void confirm(String msg) {
         get(CONFIRM, msg, true);
     }
@@ -184,11 +187,19 @@ public class Input {
         scn = null;
     }
 
+    /**
+     * Adds a new true value to be true
+     * @param val the value to be added
+     */
     public static void addTrueValue(String val) {
         if (!trueValues.contains(val))
             trueValues.add(val);
     }
 
+    /**
+     * Removes a true value to be true
+     * @param value to be removed
+     */
     public static void removeTrueValue(String val) {
         if (trueValues.contains(val))
             trueValues.remove(val);
