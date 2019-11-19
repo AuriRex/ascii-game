@@ -73,7 +73,7 @@ public class GameManager {
      * @param g Gameobject with x, y and tex
      */
     public static void drawToScreen(GameObject g) {
-        drawToScreen(g.x, g.y, g.getObjectTex());
+        drawToScreen(g.getX(), g.getY(), g.getObjectTex());
     }
 
     /**

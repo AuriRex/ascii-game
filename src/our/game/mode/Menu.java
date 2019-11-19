@@ -2,12 +2,14 @@ package our.game.mode;
 
 import java.util.ArrayList;
 
+import our.game.core.GameManager;
 import our.game.core.Reader;
 import our.game.gameobjects.AnimationState;
 import our.game.gameobjects.Card;
 import our.game.gameobjects.GameObject;
 import our.game.mode.picturepoker.PicturePoker;
 import our.game.util.ATex;
+import our.game.util.Tex;
 import our.game.util.XFrame;
 
 public class Menu extends GameMode {
@@ -21,7 +23,15 @@ public class Menu extends GameMode {
         // Card exit = new Card(0, 0, Reader.read("./assets/cards/mode/exit_idle.atex"));
         exit.setTex(AnimationState.IDLE, Reader.read("./assets/cards/mode/exit_idle.atex"));
         exit.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
+
+
+
+        Tex at = Reader.read("./assets/cards/mode/card_idle.tex");
+        Card card = new Card("card2", 5, 10, at);
+        card.setTex(AnimationState.HOVER, at);
+
         gameObjectPool.add(exit);
+        gameObjectPool.add(card);
 
     }
 
@@ -31,40 +41,45 @@ public class Menu extends GameMode {
         return new ATex[] {null, null, null};
     }
 
-    // /**
-    //  * 
-    //  * @param x = X Coordinate in Console Characters
-    //  * @param y = Y Coordinate in Console Characters
-    //  */
-    // @Override
-    // public void hoverInput(int x, int y) {
-
-    // }
-
-    // /**
-    //  * Gets called once the cursor leaves the frame / console
-    //  */
-    // @Override
-    // public void noHoverInput() {
-
-    // }
-
     /**
-     * Gets called on Mouse click
      * 
      * @param x = X Coordinate in Console Characters
      * @param y = Y Coordinate in Console Characters
+     * @param g = GameObject
+     * @return true
      */
     @Override
-    public void clickInput(int x, int y) {
-        for(GameObject g : gameObjectPool) {
-            if (g.UID.equals("exit")){
-                if ((x >= g.x && x < g.x + g.width) && (y >= g.y && y < g.y + g.height)) {
-                    // Mouse is over our GameObject
-                    XFrame.exitWindow();
-                }
+    public boolean onHoverInput(int x, int y, GameObject g) {
+        GameManager.drawToScreen(1, 29, new Tex(new String[] {""+g.getWidth()}));
+        return true;
+    }
+
+    @Override
+    public boolean onNoHoverInput(GameObject g) {
+        return true;
+    }
+
+    @Override
+    public boolean onClickInput(GameObject g, int x, int y) {
+        if (g.UID.equals("exit")){
+            if (!g.isVisible()) return false;
+            
+            if (inBounds(x, y, g)) {
+                // Mouse is over our GameObject
+                XFrame.exitWindow();
             }
         }
+        if (g.UID.equals("card2")){
+            if (!g.isVisible()) return false;
+
+            if (inBounds(x, y, g)) {
+                // Mouse is over our GameObject
+                GameObject exit = getByUID("exit");
+                exit.setVisible(!exit.isVisible());
+                
+            }
+        }
+        return false;
     }
 
 }

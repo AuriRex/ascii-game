@@ -122,7 +122,7 @@ class Calibration {
         g = new Dimension(width, height);
         f.setTitle("Not Visible in the Taskbar");
         f.setUndecorated(true);
-        f.setBackground(new Color(255, 255, 255, 1));
+        f.setBackground(new Color(255, 255, 255, 50));
         f.getRootPane().setOpaque(false);
         f.getRootPane().addMouseMotionListener(new MouseInputAdapter() {
             @Override
