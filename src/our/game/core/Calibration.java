@@ -124,14 +124,24 @@ class Calibration {
         f.setUndecorated(true);
         f.setBackground(new Color(255, 255, 255, 50));
         f.getRootPane().setOpaque(false);
-        f.getRootPane().addMouseMotionListener(new MouseInputAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                int[] pos = XFrame.calcPos(e);
-                GameManager.debug(pos[0], pos[1]);
-                GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
-            }
-        });
+        new Thread() {
+            public void run() {
+                f.getRootPane().addMouseMotionListener(new MouseInputAdapter() {
+                    @Override
+                    public void mouseMoved(MouseEvent e) {
+                        try {
+                            sleep(50);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        int[] pos = XFrame.calcPos(e);
+                        GameManager.debug(pos[0], pos[1]);
+                        GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
+                    }
+                });
+            };
+        }.start();
+
         f.getRootPane().addMouseListener(f);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
