@@ -139,10 +139,9 @@ class Calibration {
                         GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
                     }
                 });
-            };
+                f.getRootPane().addMouseListener(f);
+            }
         }.start();
-
-        f.getRootPane().addMouseListener(f);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
     }
