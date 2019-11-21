@@ -24,8 +24,6 @@ public class Menu extends GameMode {
         exit.setTex(AnimationState.IDLE, Reader.read("./assets/cards/mode/exit_idle.atex"));
         exit.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
 
-
-
         Tex at = Reader.read("./assets/cards/mode/card_idle.tex");
         Card card = new Card("card2", 5, 10, at);
         card.setTex(AnimationState.HOVER, at);
@@ -38,7 +36,7 @@ public class Menu extends GameMode {
     @Override
     public ATex[] setPreview() {
         // Menu doesn't need a preview
-        return new ATex[] {null, null, null};
+        return new ATex[] { null, null, null };
     }
 
     /**
@@ -50,7 +48,7 @@ public class Menu extends GameMode {
      */
     @Override
     public boolean onHoverInput(int x, int y, GameObject g) {
-        GameManager.drawToScreen(1, 29, new Tex(new String[] {""+g.getWidth()}));
+        GameManager.drawToScreen(1, 29, new Tex(new String[] { "" + g.getWidth() }));
         return true;
     }
 
@@ -61,22 +59,24 @@ public class Menu extends GameMode {
 
     @Override
     public boolean onClickInput(GameObject g, int x, int y) {
-        if (g.UID.equals("exit")){
-            if (!g.isVisible()) return false;
-            
+        if (g.UID.equals("exit")) {
+            if (!g.isVisible())
+                return false;
+
             if (inBounds(x, y, g)) {
                 // Mouse is over our GameObject
                 XFrame.exitWindow();
             }
         }
-        if (g.UID.equals("card2")){
-            if (!g.isVisible()) return false;
+        if (g.UID.equals("card2")) {
+            if (!g.isVisible())
+                return false;
 
             if (inBounds(x, y, g)) {
                 // Mouse is over our GameObject
                 GameObject exit = getByUID("exit");
                 exit.setVisible(!exit.isVisible());
-                
+
             }
         }
         return false;

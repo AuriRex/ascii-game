@@ -131,7 +131,7 @@ class Screen {
             test_b = false;
         }
         clearFrame();
-        drawToScreen(0, 0, new Tex(new String[] {"dTime: "+deltaTime}));
+        drawToScreen(0, 0, new Tex(new String[] { "dTime: " + deltaTime }));
         drawToScreen(30, 4, test);
         test.nextFrame();
         pushFrame();
@@ -147,18 +147,20 @@ class Screen {
         frame = clearFrame.clone();
     }
 
-	public void debugHud(long deltaTime) {
-        
-        drawToScreen(0, 0, new Tex(new String[] {"################################################################################################################################"}));
-        drawToScreen(0, 31, new Tex(new String[] {"################################################################################################################################"}));
+    public void debugHud(long deltaTime) {
 
-        if(deltaTime != 0)
-            drawToScreen(1, 0, new Tex(new String[] {" Framerate: " + (int) (1000/deltaTime) + " "}));
+        drawToScreen(0, 0, new Tex(new String[] {
+                "################################################################################################################################" }));
+        drawToScreen(0, 31, new Tex(new String[] {
+                "################################################################################################################################" }));
 
-	}
+        if (deltaTime != 0)
+            drawToScreen(1, 0, new Tex(new String[] { " Framerate: " + (int) (1000 / deltaTime) + " " }));
 
-	public void drawDebugText(int x, int y, String txt) {
-        drawToScreen(x, y, new Tex(new String[] {txt}));
-	}
+    }
+
+    public void drawDebugText(int x, int y, String txt) {
+        drawToScreen(x, y, new Tex(new String[] { txt }));
+    }
 
 }

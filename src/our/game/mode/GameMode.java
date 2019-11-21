@@ -16,7 +16,7 @@ public abstract class GameMode implements GMMethods {
     }
 
     private Preview createPreview(ATex[] atex) {
-        return new Preview(atex[0],atex[1],atex[2]);
+        return new Preview(atex[0], atex[1], atex[2]);
     }
 
     /**
@@ -35,9 +35,9 @@ public abstract class GameMode implements GMMethods {
      * Draws all GameObjects to the screen
      */
     public void draw() {
-        for(GameObject g : gameObjectPool) {
+        for (GameObject g : gameObjectPool) {
 
-            if(g.isVisible())
+            if (g.isVisible())
                 GameManager.drawToScreen(g);
 
         }
@@ -47,23 +47,24 @@ public abstract class GameMode implements GMMethods {
      * Get's called every frame
      */
     public void frameAdvance() {
-        for(GameObject g : gameObjectPool) {
+        for (GameObject g : gameObjectPool) {
             // Only execute the GameObjects code when 
-            if(g.shouldExecute()){
+            if (g.shouldExecute()) {
                 g.frameAdvance();
             }
-                
+
         }
     }
 
-     /**
-     * Search through all GameObjects for one with a specific UID
-     * @param uid The UID to search for
-     * @return a GameObject or null!
-     */
+    /**
+    * Search through all GameObjects for one with a specific UID
+    * @param uid The UID to search for
+    * @return a GameObject or null!
+    */
     public GameObject getByUID(String uid) {
-        for(GameObject g : gameObjectPool) {
-            if (g.UID.equals(uid)) return g;
+        for (GameObject g : gameObjectPool) {
+            if (g.UID.equals(uid))
+                return g;
         }
         return null;
     }
@@ -74,8 +75,8 @@ public abstract class GameMode implements GMMethods {
      * @param y = Y Coordinate in Console Characters
      */
     public void hoverInput(int x, int y) {
-        for(GameObject g : gameObjectPool) {
-            if(g.shouldExecute() && onHoverInput(x,y,g)){
+        for (GameObject g : gameObjectPool) {
+            if (g.shouldExecute() && onHoverInput(x, y, g)) {
                 if (inBounds(x, y, g)) {
                     // Mouse is over our GameObject
                     g.onHover(x, y);
@@ -101,8 +102,8 @@ public abstract class GameMode implements GMMethods {
      * Gets called once the cursor leaves the frame / console
      */
     public void noHoverInput() {
-        for(GameObject g : gameObjectPool) {
-            if(g.shouldExecute() && onNoHoverInput(g)) {
+        for (GameObject g : gameObjectPool) {
+            if (g.shouldExecute() && onNoHoverInput(g)) {
                 g.onNoHover();
             }
         }
@@ -139,7 +140,8 @@ public abstract class GameMode implements GMMethods {
      * @return true if x & y are inside the boundary
      */
     public boolean inBounds(int x, int y, int gx, int gy, int gw, int gh) {
-        if ((x >= gx && x < gx + gw) && (y >= gy && y < gy + gh)) return true;
+        if ((x >= gx && x < gx + gw) && (y >= gy && y < gy + gh))
+            return true;
         return false;
     }
 
@@ -150,10 +152,10 @@ public abstract class GameMode implements GMMethods {
      * Changes the default GameObjects Animation State to CLICK
      */
     public void clickInput(int x, int y) {
-        for(GameObject g : gameObjectPool) {
+        for (GameObject g : gameObjectPool) {
             if (inBounds(x, y, g)) {
                 // Mouse is over our GameObject
-                if( onClickInput(g, x, y) )
+                if (onClickInput(g, x, y))
                     g.onMousePressed(x, y); // Changes the default GameObjects Animation Sate to CLICK
             }
         }

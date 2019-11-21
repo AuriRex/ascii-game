@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 import our.game.util.MouseIn;
 // import our.game.util.ResourceManager;
-import our.game.util.Tex;
+// import our.game.util.Tex;
 
 public class Main {
 
@@ -23,19 +23,20 @@ public class Main {
         Calibration c = new Calibration(X, Y); // 4:1
 
         c.startCalibration();
+        c.bufferOverflow();
 
         Rectangle rect = null;
 
         //Fixing Console Debugging
         try {
             rect = MouseIn.getConsoleWindow();
-            if(rect == null) rect = new Rectangle(0,0,100,100);
-        }catch(Exception ex) {
-            rect = new Rectangle(0,0,100,100);
+            if (rect == null)
+                rect = new Rectangle(0, 0, 100, 100);
+        } catch (Exception ex) {
+            rect = new Rectangle(0, 0, 100, 100);
         }
 
         Calibration.createInvis(rect.x, rect.y, rect.width, rect.height);
-        
 
         // Unused
         // ResourceManager.init();

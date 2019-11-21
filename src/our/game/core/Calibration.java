@@ -136,6 +136,7 @@ class Calibration {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
     }
+
     /**
      * Redraws the Frame to fix the Console window
      */
@@ -150,6 +151,7 @@ class Calibration {
         f.setLocation(rect.x, rect.y);
         f.setSize(rect.width, rect.height);
     }
+
     /**
      * Resets the Frame to be on top of the Console
      */
@@ -159,6 +161,15 @@ class Calibration {
                     " Press Enter to regain control!\n If it doesn't recognise your Enter retab into your console!");
             redraw();
             f.toFront();
+        }
+    }
+
+    /**
+    * Overflows the buffer so the console doesn't stutter so hard in the beginning
+    */
+    public void bufferOverflow() {
+        for (int i = 0; i < 2000; i++) {
+            System.out.println("\n");
         }
     }
 }
