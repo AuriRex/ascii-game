@@ -178,7 +178,7 @@ class Calibration {
     * Overflows the buffer so the console doesn't stutter so hard in the beginning
     */
     public void bufferOverflow() {
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 3000; i++) {
             System.out.println("\n");
         }
     }
