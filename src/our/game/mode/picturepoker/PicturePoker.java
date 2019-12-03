@@ -17,7 +17,7 @@ public class PicturePoker extends GameMode {
     @Override
     public ATex[] setPreview() {
         // TODO Fill the array with real ATex objects!
-        return new ATex[] {null, null, null};
+        return new ATex[] { null, null, null };
     }
 
 }

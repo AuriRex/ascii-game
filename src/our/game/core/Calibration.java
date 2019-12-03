@@ -130,13 +130,13 @@ class Calibration {
                     @Override
                     public void mouseMoved(MouseEvent e) {
                         try {
-                            sleep(50);
+                            sleep(150);
+                            int[] pos = XFrame.calcPos(e);
+                            GameManager.debug(pos[0], pos[1]);
+                            GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
                         }
-                        int[] pos = XFrame.calcPos(e);
-                        GameManager.debug(pos[0], pos[1]);
-                        GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
                     }
                 });
                 f.getRootPane().addMouseListener(f);

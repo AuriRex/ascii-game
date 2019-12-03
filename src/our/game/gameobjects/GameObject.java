@@ -8,7 +8,7 @@ import our.game.util.Tex;
 public class GameObject {
 
     public final String UID;
-    
+
     private HashMap<AnimationState, Tex> texture = new HashMap<AnimationState, Tex>();
 
     protected int x;
@@ -69,6 +69,10 @@ public class GameObject {
         return height;
     }
 
+    public Tex getObjectTex() { // call this from gamemode's gameobject pool
+        return texture.get(state);
+    }
+
     /**
      * Set the visibility State of the GameObject
      * @param vis Is the GameObject visible
@@ -79,10 +83,6 @@ public class GameObject {
 
     public void setTex(AnimationState s, Tex tex) {
         texture.put(s, tex);
-    }
-
-    public Tex getObjectTex() { // call this from gamemode's gameobject pool
-        return texture.get(state);
     }
 
     /**
@@ -120,25 +120,26 @@ public class GameObject {
     /**
      * Advances the current animations frame counter.
      */
-	public void nextFrame() {
+    public void nextFrame() {
         Tex temp = texture.get(state);
-        if(temp.isAnimated()) ((ATex) temp).nextFrame();
-	}
+        if (temp.isAnimated())
+            ((ATex) temp).nextFrame();
+    }
 
     /**
      * If the Object is Visible
      * @return objects Visibility state
      */
-	public boolean isVisible() {
-		return isVisible;
+    public boolean isVisible() {
+        return isVisible;
     }
-    
+
     /**
      * If true stops the GameObject from executing its frameAdvance() function if it's not visible.
      */
     public void setPauseInvisibleFrameAdvance(boolean pifa) {
         pauseInvisibleFrameAdvance = pifa;
-    }  
+    }
 
     /**
      * If the GameObject should stop its code execution when it's not visible
@@ -153,7 +154,7 @@ public class GameObject {
      * @return boolean execution state
      */
     public boolean shouldExecute() {
-        if(!isVisible()) {
+        if (!isVisible()) {
             if (!shouldPauseInvisibleFrameAdvance())
                 return true;
         } else {

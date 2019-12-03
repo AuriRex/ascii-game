@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 import our.game.util.MouseIn;
 // import our.game.util.ResourceManager;
-// import our.game.util.Tex;
+import our.game.util.Tex;
 
 public class Main {
 
@@ -15,9 +15,9 @@ public class Main {
 
         // Tex t = Reader.read("./assets/cards/mode/exit_idle.atex");
 
-        // System.out.println(t.width);
+        // System.err.println(t.width);
 
-        // if(X == 128)
+        // if (X == 128)
         //     return;
 
         Calibration c = new Calibration(X, Y); // 4:1
