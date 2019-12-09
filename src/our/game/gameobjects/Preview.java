@@ -19,4 +19,9 @@ public class Preview {
         this.hover = hover;
         this.click = click;
     }
+
+    public void onClick() {
+
+    }
+
 }

@@ -11,6 +11,12 @@ public abstract class GameMode implements GMMethods {
 
     public final Preview prev;
 
+    public final int PREV_IDLE = 0;
+    public final int PREV_HOVER = 1;
+    public final int PREV_CLICK = 2;
+
+    public String title = "Base";
+
     public GameMode() {
         prev = createPreview(setPreview());
     }
@@ -33,6 +39,27 @@ public abstract class GameMode implements GMMethods {
     public void load() {
 
     }
+
+    /**
+     * Called before the GameMode changes
+     * @param gm GameMode to change to
+     * @return false to cancel GameMode change
+     */
+    public boolean onGameModeChange(GameMode gm) {
+        return true;
+    }
+
+    public void unload() {
+
+    }
+
+    /**
+     * Called if the current GameMode canceled the GameMOde change
+     * @param mode GameMode that canceled the change
+     */
+    public void loadCanceled(GameMode mode) {
+
+	}
 
     public void preDraw() {
 

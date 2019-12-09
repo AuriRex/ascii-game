@@ -19,11 +19,18 @@ class Calibration {
     int resolution_x;
     int resolution_y;
 
+    public static Calibration instance;
+
     /**
      * @param x sets the x-value
      * @param y sets the y-value
      */
     public Calibration(int x, int y) {
+
+        if(instance != null) return;
+
+        instance = this;
+
         resolution_x = x;
         resolution_y = y;
     }

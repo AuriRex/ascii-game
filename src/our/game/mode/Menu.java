@@ -7,6 +7,7 @@ import our.game.core.Reader;
 import our.game.gameobjects.AnimationState;
 import our.game.gameobjects.Card;
 import our.game.gameobjects.GameObject;
+import our.game.gameobjects.Preview;
 import our.game.mode.picturepoker.PicturePoker;
 import our.game.util.ATex;
 import our.game.util.Tex;
@@ -16,11 +17,19 @@ public class Menu extends GameMode {
 
     private ArrayList<GameMode> games = new ArrayList<GameMode>();
 
+    public String title = "Menu";
+
+    public static Menu instance;
+
     public Menu() {
+
+        if(instance != null) return;
+
+        instance = this;
 
         games.add(new PicturePoker());
 
-        
+
         Card exit = new Card("exit", 110, 22, Reader.read("./assets/cards/mode/exit_idle.atex"));
         // Card exit = new Card(0, 0, Reader.read("./assets/cards/mode/exit_idle.atex"));
         exit.setTex(AnimationState.IDLE, Reader.read("./assets/cards/mode/exit_idle.atex"));
@@ -30,8 +39,26 @@ public class Menu extends GameMode {
         Card card = new Card("card2", 5, 10, at);
         card.setTex(AnimationState.HOVER, at);
 
+        int x = 5;
+        for(GameMode gm : games) {
+            Preview pv = gm.prev;
+            Card card_prev = new Card(gm.title, x, 10, pv.idle) {
+
+                @Override
+                public void onMousePressed(int x, int y) {
+                    GameManager.changeGameMode(gm);
+                }
+
+            };
+            card_prev.setTex(AnimationState.HOVER, pv.hover);
+            card_prev.setTex(AnimationState.CLICK, pv.click);
+
+            gameObjectPool.add(card_prev);
+            x += 15;
+        }
+
         gameObjectPool.add(exit);
-        gameObjectPool.add(card);
+        // gameObjectPool.add(card);
 
     }
 
@@ -82,6 +109,7 @@ public class Menu extends GameMode {
                 // Mouse is over our GameObject
                 XFrame.exitWindow();
             }
+            return false;
         }
         if (g.UID.equals("card2")) {
             if (!g.isVisible())
@@ -93,8 +121,9 @@ public class Menu extends GameMode {
                 exit.setVisible(!exit.isVisible());
 
             }
+            return false;
         }
-        return false;
+        return true;
     }
 
 }

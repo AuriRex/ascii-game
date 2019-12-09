@@ -22,6 +22,8 @@ Height: 32/2 -10 = 6
 ###############
 ###############
 
+TODO: Overhaul Render Target / Switch away from system console (terminal) to a custom one
+
 Todo: Fix Animation System animation jump when switching -> eg reset frame counter
 
 Todo: Fix todos

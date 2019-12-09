@@ -12,12 +12,18 @@ public class GameManager {
 
     // final int X;
     // final int Y;
-    private static Screen screen;
+    private Screen screen;
     boolean running = true;
 
-    private static GameMode mode;
+    private GameMode mode;
 
-    public GameManager(int x, int y, Calibration c) {
+    public static GameManager instance;
+
+    public GameManager(int x, int y) {
+
+        if(instance != null) return;
+
+        instance = this;
         screen = new Screen(x, y);
 
         init();
@@ -35,7 +41,7 @@ public class GameManager {
             // Loop thorugh all game objects and call draw function -> do this through
             // gamemode!
             screen.clearFrame();
-            c.resetTop();
+            Calibration.instance.resetTop();
             mode.preDraw();
             mode.draw();
             mode.frameAdvance();
@@ -81,7 +87,7 @@ public class GameManager {
      * @param tex texture to be drawn
      */
     public static void drawToScreen(int x, int y, Tex tex) {
-        screen.drawToScreen(x, y, tex);
+        instance.screen.drawToScreen(x, y, tex);
     }
 
     /**
@@ -89,7 +95,7 @@ public class GameManager {
      * @return GameMode Instance
      */
     public static GameMode getModeInstance() { // TODO: Redo all methods that call this one and handle null!
-        return mode;
+        return instance.mode;
     }
 
     private static int d_x = 0;
@@ -107,5 +113,22 @@ public class GameManager {
         // Screen.clearScreen();
         // System.out.println("Initialized!");
     }
+
+    /**
+     * Changes the GameMode
+     * @param gm GameMode
+     */
+	public static void changeGameMode(GameMode gm) {
+
+        if(!instance.mode.onGameModeChange(gm)) {
+            gm.loadCanceled(instance.mode);
+            return;
+        }
+
+        instance.mode.unload();
+
+        instance.mode = gm;
+
+	}
 
 }
