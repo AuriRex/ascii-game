@@ -21,11 +21,18 @@ public abstract class GameMode implements GMMethods {
 
     /**
      * 
-     * @return MUST return an ATex[] with 3 (three) elements!
+     * @return MUST return an ATex[] with 3 (three) elements! [Idle, Hover, Klick]
      */
     public abstract ATex[] setPreview();
 
     protected ArrayList<GameObject> gameObjectPool = new ArrayList<GameObject>();
+
+    /**
+     * Gets called before changing gamemode 
+     */
+    public void load() {
+
+    }
 
     public void preDraw() {
 

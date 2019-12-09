@@ -69,6 +69,7 @@ class Calibration {
 
         Input.confirm();
 
+        bufferOverflow();
     }
 
     /**
@@ -108,6 +109,8 @@ class Calibration {
 
     //private static long inputCheckCooldown = 150;
 
+
+    // TODO: Move this out of calibration!
     /**
      * Creates the invisible clickable Frame
      * 
@@ -134,7 +137,7 @@ class Calibration {
                     @Override
                     public void mouseMoved(MouseEvent e) {
                         try {
-                            sleep(200); // TODO: don't maybe? - add cooldown instead of sleep maybe ?
+                            sleep(200); // TODO: don't maybe? - add cooldown instead of sleep maybe ? update: didn't quite work as intended :P
                             int[] pos = XFrame.calcPos(e);
                             // Only trigger when the Position changes
                             if(!pos.equals(lastPos) /*&& (System.currentTimeMillis() >= lastCheck + inputCheckCooldown)*/) {
@@ -176,8 +179,7 @@ class Calibration {
      */
     public void resetTop() {
         if (!f.hasFocus()) {
-            Input.confirm(
-                    " Press Enter to regain control!\n If it doesn't recognise your Enter retab into your console!");
+            Input.confirm(" Press Enter to regain control!\n If it doesn't recognise your Enter retab into your console!");
             redraw();
             f.toFront();
         }

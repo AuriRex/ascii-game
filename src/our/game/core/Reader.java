@@ -3,17 +3,50 @@ package our.game.core;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 import our.game.util.ATex;
 import our.game.util.Tex;
 
 public class Reader {
+
+    private static HashMap<String, Tex> cache = new HashMap<String, Tex>();
+
     /**
      * Reads the contents of a file
      * @param path The path of the file to be read
      * @return Texture or Animated Texture of the read file
      */
     public static Tex read(String path) {
+        return read(path, false, true);
+    }
+
+    /**
+     * Reads the contents of a file
+     * @param path The path of the file to be read
+     * @param forceRead forces the file to be re-read
+     * @return Texture or Animated Texture of the read file
+     */
+    public static Tex read(String path, boolean forceRead) {
+        return read(path, forceRead, true);
+    }
+
+    /**
+     * Reads the contents of a file
+     * @param path The path of the file to be read
+     * @param forceRead forces the file to be re-read
+     * @param shouldCache Should the Tex element for this path remain in memorry ?
+     * @return Texture or Animated Texture of the read file
+     */
+    public static Tex read(String path, boolean forceRead, boolean shouldCache) {
+
+        if(!forceRead && cache.containsKey(path)) {
+            Tex cachedTex = cache.get(path);
+
+            if(cachedTex != null)
+                return cachedTex;
+        }
+
         BufferedReader reader;
 
         String raw_tex = "";
@@ -77,6 +110,12 @@ public class Reader {
             e.printStackTrace();
         }
 
-        return (Tex) new ATex(texArray);
+        Tex texToReturn = (Tex) new ATex(texArray);
+
+        if(shouldCache) {
+            cache.put(path, texToReturn);
+        }
+
+        return texToReturn;
     }
 }

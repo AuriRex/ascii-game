@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 import our.game.util.MouseIn;
 // import our.game.util.ResourceManager;
-import our.game.util.Tex;
+// import our.game.util.Tex;
 
 public class Main {
 
@@ -24,7 +24,6 @@ public class Main {
         Calibration c = new Calibration(X, Y); // 4:1
 
         c.startCalibration();
-        c.bufferOverflow();
 
         Rectangle rect = null;
 
