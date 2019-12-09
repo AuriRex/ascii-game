@@ -106,6 +106,8 @@ class Calibration {
     private static XFrame f;
     private static Dimension g;
 
+    //private static long inputCheckCooldown = 150;
+
     /**
      * Creates the invisible clickable Frame
      * 
@@ -125,15 +127,23 @@ class Calibration {
         f.setBackground(new Color(255, 255, 255, 50));
         f.getRootPane().setOpaque(false);
         new Thread() {
+            int[] lastPos;
+            //long lastCheck = System.currentTimeMillis();
             public void run() {
                 f.getRootPane().addMouseMotionListener(new MouseInputAdapter() {
                     @Override
                     public void mouseMoved(MouseEvent e) {
                         try {
-                            sleep(150);
+                            sleep(200); // TODO: don't maybe? - add cooldown instead of sleep maybe ?
                             int[] pos = XFrame.calcPos(e);
-                            GameManager.debug(pos[0], pos[1]);
-                            GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
+                            // Only trigger when the Position changes
+                            if(!pos.equals(lastPos) /*&& (System.currentTimeMillis() >= lastCheck + inputCheckCooldown)*/) {
+                                if(Main.debug)
+                                    GameManager.debug(pos[0], pos[1]);
+                                GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
+                                //lastCheck = System.currentTimeMillis();
+                            }
+                            lastPos = pos;
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
                         }

@@ -29,8 +29,6 @@ public class GameManager {
         int sleepTime = 200;
         int sleepCount = 0;
 
-        boolean debug = true;
-
         // Main Programm Loop
         while (running) {
 
@@ -42,7 +40,7 @@ public class GameManager {
             mode.draw();
             mode.frameAdvance();
             screen.pushFrame();
-            if(debug) {
+            if(Main.debug) {
                 screen.debugHud(deltaTime);
                 screen.drawDebugText(0,30, "X:"+d_x+" Y:"+d_y);
             }
