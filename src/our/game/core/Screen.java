@@ -3,6 +3,7 @@ package our.game.core;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import our.game.core.Main;
 import our.game.util.*;
@@ -25,6 +26,7 @@ public class Screen {
 
     /**
      * creates and prints the new Frame
+     * 
      * @param x width of the screen
      * @param y height of the screen
      */
@@ -35,13 +37,14 @@ public class Screen {
         frame = new String[y];
         screen = this;
 
-        bufferedImage = new BufferedImage(Main.X*10, Main.Y*15, BufferedImage.TYPE_INT_RGB);
+        bufferedImage = new BufferedImage(Main.X * 8, Main.Y * 16, BufferedImage.TYPE_INT_RGB);
 
         // TODO: Move this to draw function lol
         Graphics g = bufferedImage.getGraphics();
 
-        g.setColor(Color.RED);
-        g.fillRect(0,0,Main.X*10-1,Main.Y*15-1);
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, Main.X * 8 - 1, Main.Y * 16 - 1);
+        g.dispose();
 
         clearFrame = fillDefaultFrame();
         rframe = frame;
@@ -52,6 +55,7 @@ public class Screen {
 
     /**
      * The default frame to be drawn (empty frame)
+     * 
      * @return the frame
      */
     private String[] fillDefaultFrame() {
@@ -66,8 +70,9 @@ public class Screen {
 
     /**
      * Draws the checked tex to the screen
-     * @param x width of the screen
-     * @param y height of the screen
+     * 
+     * @param x   width of the screen
+     * @param y   height of the screen
      * @param tex to be drawn
      * @return true if the frame is good
      */
@@ -108,12 +113,39 @@ public class Screen {
         return false;
     }
 
+    Font testf;
+
+    int a = 0;
+
     /**
-     * Should be called after everything has been drawn to the frame
-     * -> pushes frame to rframe (readyFrame)
+     * Should be called after everything has been drawn to the frame -> pushes frame
+     * to rframe (readyFrame)
      */
     public void pushFrame() {
+        if (testf == null)
+            try {
+                testf = new Font(Reader.readFont("./assets/fonts/default_ascii_32_90.png"), 30);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         rframe = frame;
+
+        for(int iy = 0; iy < Main.Y*16; iy++) {
+            for(int ix = 0; ix < Main.X*8; ix++) {
+
+                int posx = (ix / 8);
+                int posy = (iy / 16);
+
+                char curChar = rframe[posy].charAt(posx);
+                int rgb = testf.getPixel(curChar-32, ix, iy);
+                bufferedImage.setRGB(ix, iy, rgb);
+
+            }
+        }
+
+
+        
+        // Graphics g = bufferedImage.getGraphics();
     }
 
     /**
