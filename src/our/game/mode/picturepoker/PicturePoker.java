@@ -14,7 +14,7 @@ import our.game.util.ATex;
 
 public class PicturePoker extends GameMode {
 
-    protected static PicturePoker instance = new PicturePoker();
+    protected static PicturePoker instance;
 
     public String title = "PicturePoker";
 
@@ -34,6 +34,8 @@ public class PicturePoker extends GameMode {
             (ATex) Reader.read("./assets/cards/mode/picturepoker/downvote.tex") };
 
     public PicturePoker() {
+
+        instance = this;
 
         Card card_return = new Card("exit", 110, 22, Reader.read("./assets/cards/mode/return_idle.atex")) {
 
