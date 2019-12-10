@@ -44,12 +44,12 @@ public class GameManager {
             Calibration.instance.resetTop();
             mode.preDraw();
             mode.draw();
-            mode.frameAdvance();
-            screen.pushFrame();
             if(Main.debug) {
                 screen.debugHud(deltaTime);
                 screen.drawDebugText(0,30, "X:"+d_x+" Y:"+d_y);
             }
+            mode.frameAdvance();
+            screen.pushFrame();
             screen.printReadyFrame();
             // screen.printReadyFrameDBG(deltaTime);
 

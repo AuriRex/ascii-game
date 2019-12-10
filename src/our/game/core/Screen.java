@@ -3,6 +3,8 @@ package our.game.core;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.IOException;
 
 import our.game.core.Main;
@@ -19,6 +21,7 @@ public class Screen {
     String[] rframe;
 
     static BufferedImage bufferedImage;
+    final BufferedImage bufferedImageClear;
 
     public static BufferedImage getBI() {
         return bufferedImage;
@@ -46,11 +49,20 @@ public class Screen {
         g.fillRect(0, 0, Main.X * 8 - 1, Main.Y * 16 - 1);
         g.dispose();
 
+        bufferedImageClear = deepCopy(bufferedImage);
+
         clearFrame = fillDefaultFrame();
         rframe = frame;
 
         // drawToScreen(30, 4, test);
         printReadyFrame();
+    }
+
+    static BufferedImage deepCopy(BufferedImage bi) {
+        ColorModel cm = bi.getColorModel();
+        boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+        WritableRaster raster = bi.copyData(null);
+        return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
     /**
@@ -138,7 +150,9 @@ public class Screen {
 
                 char curChar = rframe[posy].charAt(posx);
                 int rgb = testf.getPixel(curChar-32, ix, iy);
-                bufferedImage.setRGB(ix, iy, rgb);
+                // System.out.println(rgb);
+                if(rgb != -65281)
+                    bufferedImage.setRGB(ix, iy, rgb);
 
             }
         }
@@ -154,6 +168,7 @@ public class Screen {
     public static void clearScreen() {
         for (int i = 0; i < 32; i++)
             System.out.println();
+
     }
 
     /**
@@ -199,6 +214,14 @@ public class Screen {
      */
     void clearFrame() {
         frame = clearFrame.clone();
+
+        if(bufferedImage != null) {
+            Graphics g = bufferedImage.getGraphics();
+
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, Main.X * 8 - 1, Main.Y * 16 - 1);
+            g.dispose();
+        }
     }
 
     public void debugHud(long deltaTime) {
