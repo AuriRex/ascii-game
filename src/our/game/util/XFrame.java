@@ -17,6 +17,7 @@ public class XFrame extends JFrame implements MouseInputListener {
     public XFrame() {
         if(instance != null) return;
         instance = this;
+        getRootPane().getContentPane().add(new XPanel());
     }
 
     /**
@@ -31,6 +32,10 @@ public class XFrame extends JFrame implements MouseInputListener {
             instance.dispose();
             System.exit(0);
         }
+    }
+
+    public static void printReadyFrameDBG() {
+
     }
 
     /**

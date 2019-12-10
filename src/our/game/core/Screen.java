@@ -1,8 +1,13 @@
 package our.game.core;
 
+import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+
+import our.game.core.Main;
 import our.game.util.*;
 
-class Screen {
+public class Screen {
 
     public static Screen screen = null;
 
@@ -11,6 +16,12 @@ class Screen {
     final String[] clearFrame;
     String[] frame;
     String[] rframe;
+
+    static BufferedImage bufferedImage;
+
+    public static BufferedImage getBI() {
+        return bufferedImage;
+    }
 
     /**
      * creates and prints the new Frame
@@ -23,6 +34,15 @@ class Screen {
 
         frame = new String[y];
         screen = this;
+
+        bufferedImage = new BufferedImage(Main.X*10, Main.Y*15, BufferedImage.TYPE_INT_RGB);
+
+        // TODO: Move this to draw function lol
+        Graphics g = bufferedImage.getGraphics();
+
+        g.setColor(Color.RED);
+        g.fillRect(0,0,Main.X*10-1,Main.Y*15-1);
+
         clearFrame = fillDefaultFrame();
         rframe = frame;
 
@@ -111,6 +131,8 @@ class Screen {
         for (String s : rframe) {
             System.out.print("\n" + s);
         }
+
+        XFrame.printReadyFrameDBG();
     }
 
     // Tex test = Reader.read("./assets/fu.tex");

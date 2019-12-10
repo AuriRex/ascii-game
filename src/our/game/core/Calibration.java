@@ -128,14 +128,14 @@ class Calibration {
      */
     public static void createInvis(int x, int y, int width, int height) {
         f = new XFrame();
-        f.setType(JFrame.Type.UTILITY);
+        // f.setType(JFrame.Type.UTILITY);
         f.setLocation(x, y);
         f.setSize(width, height);
         g = new Dimension(width, height);
         f.setTitle("Not Visible in the Taskbar");
-        f.setUndecorated(true);
-        f.setBackground(new Color(255, 255, 255, 50));
-        f.getRootPane().setOpaque(false);
+        // f.setUndecorated(true);
+        f.getRootPane().getContentPane().setBackground(new Color(255, 255, 255, 200));
+        // f.getRootPane().setOpaque(false);
         new Thread() {
             int[] lastPos;
             //long lastCheck = System.currentTimeMillis();
