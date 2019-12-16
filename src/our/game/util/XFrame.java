@@ -21,6 +21,7 @@ public class XFrame extends JFrame implements MouseInputListener {
         instance = this;
         xp = new XPanel();
         getRootPane().getContentPane().add(xp);
+        pack();
     }
 
     /**
@@ -49,8 +50,8 @@ public class XFrame extends JFrame implements MouseInputListener {
     public static int[] calcPos(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        double refx = instance.getSize().getWidth() / our.game.core.Main.X;
-        double refy = instance.getSize().getHeight() / our.game.core.Main.Y;
+        double refx = XPanel.instance.getSize().getWidth() / our.game.core.Main.X;
+        double refy = XPanel.instance.getSize().getHeight() / our.game.core.Main.Y;
         x = (int) (x / refx);
         y = (int) (y / refy);
         return new int[]{x, y};

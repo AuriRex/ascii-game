@@ -19,6 +19,12 @@ public class GameManager {
 
     public static GameManager instance;
 
+    private boolean isReady = false;
+
+    public boolean isReady() {
+        return isReady;
+    }
+
     public GameManager(int x, int y) {
 
         if(instance != null) return;
@@ -32,8 +38,10 @@ public class GameManager {
         long oldTime = System.currentTimeMillis();
         long deltaTime = 0;
 
-        int sleepTime = 200;
+        int sleepTime = 1/60; // 1/60
         int sleepCount = 0;
+
+        isReady = true;
 
         // Main Programm Loop
         while (running) {
@@ -41,7 +49,7 @@ public class GameManager {
             // Loop thorugh all game objects and call draw function -> do this through
             // gamemode!
             screen.clearFrame();
-            Calibration.instance.resetTop();
+            // Calibration.instance.resetTop();
             mode.preDraw();
             mode.draw();
             if(Main.debug) {

@@ -22,9 +22,10 @@ public class Screen {
 
     static BufferedImage bufferedImage;
     final BufferedImage bufferedImageClear;
+    static BufferedImage bufferedImageReady;
 
     public static BufferedImage getBI() {
-        return bufferedImage;
+        return bufferedImageReady;
     }
 
     /**
@@ -46,10 +47,11 @@ public class Screen {
         Graphics g = bufferedImage.getGraphics();
 
         g.setColor(Color.WHITE);
-        g.fillRect(0, 0, Main.X * 8 - 1, Main.Y * 16 - 1);
+        g.fillRect(0, 0, Main.X * 8, Main.Y * 16);
         g.dispose();
 
         bufferedImageClear = deepCopy(bufferedImage);
+        bufferedImageReady = deepCopy(bufferedImage);
 
         clearFrame = fillDefaultFrame();
         rframe = frame;
@@ -136,7 +138,7 @@ public class Screen {
     public void pushFrame() {
         if (testf == null)
             try {
-                testf = new Font(Reader.readFont("./assets/fonts/default_ascii_32_90.png"), 30);
+                testf = new Font(Reader.readFont("./assets/fonts/default_ascii_32_127.png"), 30);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -151,13 +153,14 @@ public class Screen {
                 char curChar = rframe[posy].charAt(posx);
                 int rgb = testf.getPixel(curChar-32, ix, iy);
                 // System.out.println(rgb);
-                if(rgb != -65281)
+                if(rgb != -65281) // Filter out transparency (RGB: 255, 0, 255) -> Magenta
                     bufferedImage.setRGB(ix, iy, rgb);
 
             }
         }
 
 
+        bufferedImageReady = deepCopy(bufferedImage);
         
         // Graphics g = bufferedImage.getGraphics();
     }
@@ -175,9 +178,9 @@ public class Screen {
      * Prints rframe to the screen
      */
     public void printReadyFrame() {
-        for (String s : rframe) {
-            System.out.print("\n" + s);
-        }
+        // for (String s : rframe) {
+        //     System.out.print("\n" + s);
+        // }
 
         XFrame.printReadyFrameDBG();
     }
@@ -194,6 +197,7 @@ public class Screen {
      * Debug option for printing the rframe
      * @param deltaTime
      */
+    @Deprecated
     public void printReadyFrameDBG(long deltaTime) {
         if (test_b) {
             ((ATex) test).reversed = false;

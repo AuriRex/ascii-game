@@ -14,7 +14,7 @@ import our.game.util.XFrame;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
-class Calibration {
+public class Calibration {
 
     int resolution_x;
     int resolution_y;
@@ -112,10 +112,9 @@ class Calibration {
     }
 
     private static XFrame f;
-    private static Dimension g;
+    public static Dimension g;
 
     //private static long inputCheckCooldown = 150;
-
 
     // TODO: Move this out of calibration!
     /**
@@ -126,13 +125,16 @@ class Calibration {
      * @param width  the width of the window
      * @param height the height of the window
      */
-    public static void createInvis(int x, int y, int width, int height) {
+    public static void createWindow() {
+        g = new Dimension(Main.X * 8, Main.Y * 16);
+        
         f = new XFrame();
         // f.setType(JFrame.Type.UTILITY);
-        f.setLocation(x, y);
-        f.setSize(width, height);
-        g = new Dimension(width, height);
-        f.setTitle("Not Visible in the Taskbar");
+        // f.setSize(g);
+        f.setLocationRelativeTo(null);
+        f.setTitle("Ascii-Game");
+
+        f.setResizable(false);
         // f.setUndecorated(true);
         f.getRootPane().getContentPane().setBackground(new Color(255, 255, 255, 200));
         // f.getRootPane().setOpaque(false);
@@ -143,8 +145,9 @@ class Calibration {
                 f.getRootPane().addMouseMotionListener(new MouseInputAdapter() {
                     @Override
                     public void mouseMoved(MouseEvent e) {
-                        try {
-                            sleep(200); // TODO: don't maybe? - add cooldown instead of sleep maybe ? update: didn't quite work as intended :P
+                        if(!GameManager.instance.isReady()) return;
+                        // try {
+                        //     sleep(200); // TODO: don't maybe? - add cooldown instead of sleep maybe ? update: didn't quite work as intended :P
                             int[] pos = XFrame.calcPos(e);
                             // Only trigger when the Position changes
                             if(!pos.equals(lastPos) /*&& (System.currentTimeMillis() >= lastCheck + inputCheckCooldown)*/) {
@@ -154,9 +157,9 @@ class Calibration {
                                 //lastCheck = System.currentTimeMillis();
                             }
                             lastPos = pos;
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                        }
+                        // } catch (InterruptedException e1) {
+                        //     e1.printStackTrace();
+                        // }
                     }
                 });
                 f.getRootPane().addMouseListener(f);
@@ -169,6 +172,7 @@ class Calibration {
     /**
      * Redraws the Frame to fix the Console window
      */
+    @Deprecated
     public void redraw() {
         Rectangle rect = MouseIn.getConsoleWindow();
         g.setSize(rect.width, rect.height);
@@ -184,6 +188,7 @@ class Calibration {
     /**
      * Resets the Frame to be on top of the Console
      */
+    @Deprecated
     public void resetTop() {
         if (!f.hasFocus()) {
             Input.confirm(" Press Enter to regain control!\n If it doesn't recognise your Enter retab into your console!");
