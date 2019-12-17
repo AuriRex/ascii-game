@@ -17,6 +17,8 @@ public abstract class GameMode implements GMMethods {
 
     public String title = "Base";
 
+    protected boolean editable = true;
+
     public GameMode() {
         prev = createPreview(setPreview());
     }
@@ -31,7 +33,7 @@ public abstract class GameMode implements GMMethods {
      */
     public abstract ATex[] setPreview();
 
-    protected ArrayList<GameObject> gameObjectPool = new ArrayList<GameObject>();
+    private ArrayList<GameObject> gameObjectPool = new ArrayList<GameObject>();
 
     /**
      * Gets called before changing gamemode 
@@ -59,7 +61,7 @@ public abstract class GameMode implements GMMethods {
      */
     public void loadCanceled(GameMode mode) {
 
-	}
+    }
 
     public void preDraw() {
 
@@ -69,25 +71,27 @@ public abstract class GameMode implements GMMethods {
      * Draws all GameObjects to the screen
      */
     public void draw() {
-        for (GameObject g : gameObjectPool) {
+        for (GameObject g : getObjectPool()) {
 
             if (g.isVisible())
                 GameManager.drawToScreen(g);
 
         }
+        releaseObjectPool();
     }
 
     /**
      * Get's called every frame
      */
     public void frameAdvance() {
-        for (GameObject g : gameObjectPool) {
+        for (GameObject g : getObjectPool()) {
             // Only execute the GameObjects code when 
             if (g.shouldExecute()) {
                 g.frameAdvance();
             }
 
         }
+        releaseObjectPool();
     }
 
     /**
@@ -96,10 +100,13 @@ public abstract class GameMode implements GMMethods {
     * @return a GameObject or null!
     */
     public GameObject getByUID(String uid) {
-        for (GameObject g : gameObjectPool) {
-            if (g.UID.equals(uid))
+        for (GameObject g : getObjectPool()) {
+            if (g.UID.equals(uid)) {
+                releaseObjectPool();
                 return g;
+            }
         }
+        releaseObjectPool();
         return null;
     }
 
@@ -109,7 +116,7 @@ public abstract class GameMode implements GMMethods {
      * @param y = Y Coordinate in Console Characters
      */
     public void hoverInput(int x, int y) {
-        for (GameObject g : gameObjectPool) {
+        for (GameObject g : getObjectPool()) {
             if (g.shouldExecute() && onHoverInput(x, y, g)) {
                 if (inBounds(x, y, g)) {
                     // Mouse is over our GameObject
@@ -119,6 +126,7 @@ public abstract class GameMode implements GMMethods {
                 }
             }
         }
+        releaseObjectPool();
     }
 
     /**
@@ -136,11 +144,12 @@ public abstract class GameMode implements GMMethods {
      * Gets called once the cursor leaves the frame / console
      */
     public void noHoverInput() {
-        for (GameObject g : gameObjectPool) {
+        for (GameObject g : getObjectPool()) {
             if (g.shouldExecute() && onNoHoverInput(g)) {
                 g.onNoHover();
             }
         }
+        releaseObjectPool();
     }
 
     /**
@@ -186,13 +195,14 @@ public abstract class GameMode implements GMMethods {
      * Changes the default GameObjects Animation State to CLICK
      */
     public void clickInput(int x, int y) {
-        for (GameObject g : gameObjectPool) {
+        for (GameObject g : getObjectPool()) {
             if (inBounds(x, y, g)) {
                 // Mouse is over our GameObject
                 if (onClickInput(g, x, y))
                     g.onMousePressed(x, y); // Changes the default GameObjects Animation Sate to CLICK
             }
         }
+        releaseObjectPool();
     }
 
     /**
@@ -206,4 +216,44 @@ public abstract class GameMode implements GMMethods {
         return true;
     }
 
+    public ArrayList<GameObject> getObjectPool() {
+        int i = 0;
+        while (!editable) {
+            try {
+                if (i > 5000) {
+                    System.err.println("Softlocked for 5+ seconds! Program exits!");
+                    System.exit(1);
+                }
+                Thread.sleep(1);
+                i++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        editable = false;
+        return gameObjectPool;
+    }
+
+    public void releaseObjectPool() {
+        editable = true;
+    }
+
+    public void addObjectToPool(GameObject g) {
+        int i = 0;
+        while (!editable) {
+            try {
+                if (i > 5000) {
+                    System.err.println("Softlocked for 5+ seconds! Program exits!");
+                    System.exit(1);
+                }
+                Thread.sleep(1);
+                i++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        editable = false;
+        gameObjectPool.add(g);
+        editable = true;
+    }
 }
