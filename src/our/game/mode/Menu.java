@@ -23,12 +23,12 @@ public class Menu extends GameMode {
 
     public Menu() {
 
-        if(instance != null) return;
+        if (instance != null)
+            return;
 
         instance = this;
 
         games.add(new PicturePoker());
-
 
         Card exit = new Card("exit", 110, 22, Reader.read("./assets/cards/mode/exit_idle.atex"));
         // Card exit = new Card(0, 0, Reader.read("./assets/cards/mode/exit_idle.atex"));
@@ -40,7 +40,7 @@ public class Menu extends GameMode {
         card.setTex(AnimationState.HOVER, at);
 
         int x = 5;
-        for(GameMode gm : games) {
+        for (GameMode gm : games) {
             Preview pv = gm.prev;
             Card card_prev = new Card(gm.title, x, 10, pv.idle) {
 
@@ -53,11 +53,11 @@ public class Menu extends GameMode {
             card_prev.setTex(AnimationState.HOVER, pv.hover);
             card_prev.setTex(AnimationState.CLICK, pv.click);
 
-            gameObjectPool.add(card_prev);
+            addObjectToPool(card_prev);
             x += 15;
         }
 
-        gameObjectPool.add(exit);
+        addObjectToPool(exit);
         // gameObjectPool.add(card);
 
     }

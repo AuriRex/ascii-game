@@ -1,8 +1,9 @@
 package our.game.mode.picturepoker;
 
-import java.util.Stack;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 
 import our.game.core.GameManager;
 import our.game.core.Reader;
@@ -18,13 +19,39 @@ public class PicturePoker extends GameMode {
 
     public String title = "PicturePoker";
 
-    private Stack<CardType> enums = new Stack<CardType>();
+    private ArrayList<CardType> enums = new ArrayList<CardType>();
 
-    private Card[] cards = new Card[] { new Card("0", 10, 13, (ATex) Reader.read("./assets/cards/dummy.tex")),
-            new Card("1", 31, 13, (ATex) Reader.read("./assets/cards/dummy.tex")),
-            new Card("2", 52, 13, (ATex) Reader.read("./assets/cards/dummy.tex")),
-            new Card("3", 73, 13, (ATex) Reader.read("./assets/cards/dummy.tex")),
-            new Card("4", 94, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) };
+    private Card[] cards = new Card[] { new Card("0", 10, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+
+        @Override
+        public void onMousePressed(int x, int y) {
+            changeCard(this, 5);
+        }
+    }, new Card("1", 31, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+
+        @Override
+        public void onMousePressed(int x, int y) {
+            changeCard(this, 6);
+        }
+    }, new Card("2", 52, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+
+        @Override
+        public void onMousePressed(int x, int y) {
+            changeCard(this, 7);
+        }
+    }, new Card("3", 73, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+
+        @Override
+        public void onMousePressed(int x, int y) {
+            changeCard(this, 8);
+        }
+    }, new Card("4", 94, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+
+        @Override
+        public void onMousePressed(int x, int y) {
+            changeCard(this, 9);
+        }
+    } };
 
     private ATex[] cardATex = new ATex[] { (ATex) Reader.read("./assets/cards/mode/picturepoker/upvote.tex"),
             (ATex) Reader.read("./assets/cards/mode/picturepoker/star.tex"),
@@ -45,17 +72,23 @@ public class PicturePoker extends GameMode {
             }
         };
 
-        createStack();
+        for (CardType c : CardType.values()) {
+            enums.addAll(Arrays.asList(c, c, c, c, c));
+        }
 
         if (our.game.core.Main.debug) {
             Card shuffle = new Card("shuffle", 31, 22, Reader.read("./assets/cards/dummy.tex")) {
 
                 @Override
                 public void onMousePressed(int x, int y) {
-                    PicturePoker.instance.setCards();
+                    try {
+                        PicturePoker.instance.setCards();
+                    } catch (ConcurrentModificationException e) {
+                        e.printStackTrace();
+                    }
                 }
             };
-            gameObjectPool.add(shuffle);
+            addObjectToPool(shuffle);
             shuffle.setTex(AnimationState.HOVER, Reader.read("./assets/cards/dummy.tex"));
             shuffle.setTex(AnimationState.CLICK, Reader.read("./assets/cards/dummy.tex"));
 
@@ -64,7 +97,11 @@ public class PicturePoker extends GameMode {
         // exit.setTex(AnimationState.IDLE, Reader.read("./assets/cards/mode/exit_idle.atex"));
         card_return.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
 
-        gameObjectPool.add(card_return);
+        addObjectToPool(card_return);
+
+        for (Card c : cards) {
+            addObjectToPool(c);
+        }
 
         setCards();
 
@@ -86,23 +123,22 @@ public class PicturePoker extends GameMode {
     public void setCards() {
 
         Collections.shuffle(enums);
+        int i = 0;
         for (Card c : cards) {
-            CardType temp = enums.pop();
-            gameObjectPool.add(c);
+            CardType temp = enums.get(i);
             c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
+            i++;
         }
-        createStack();
 
     }
 
-    public void createStack() {
+    public void changeCard(Card c, int id) {
 
-        enums.removeAllElements();
-
-        for (CardType c : CardType.values()) {
-            enums.addAll(Arrays.asList(c, c, c, c, c));
-        }
+        c.setTex(AnimationState.IDLE, cardATex[enums.get(id).ordinal()]);
+        c.setTex(AnimationState.HOVER, cardATex[enums.get(id).ordinal()]);
+        c.setTex(AnimationState.CLICK, cardATex[enums.get(id).ordinal()]);
     }
+
 }
