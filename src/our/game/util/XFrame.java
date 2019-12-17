@@ -59,14 +59,14 @@ public class XFrame extends JFrame implements MouseInputListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-        double maxx = this.getSize().getWidth();
+        // int x = e.getX();
+        // int y = e.getY();
+        // double maxx = this.getSize().getWidth();
         //Creates an Option pane to ask the user if he/she wants to quit
-        if (maxx - x <= 50 && y < 30){
-            exitWindow();
+        // if (maxx - x <= 50 && y < 30){
+        //     exitWindow();
 
-        }
+        // }
 
         int[] pos = calcPos(e);
         GameManager.getModeInstance().clickInput(pos[0], pos[1]);

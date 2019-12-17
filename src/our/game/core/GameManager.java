@@ -38,7 +38,7 @@ public class GameManager {
         long oldTime = System.currentTimeMillis();
         long deltaTime = 0;
 
-        int sleepTime = 1/60; // 1/60
+        int sleepTime = 1000/60;
         int sleepCount = 0;
 
         isReady = true;
