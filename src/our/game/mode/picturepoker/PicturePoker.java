@@ -3,7 +3,7 @@ package our.game.mode.picturepoker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 
 import our.game.core.GameManager;
 import our.game.core.Reader;
@@ -20,36 +20,37 @@ public class PicturePoker extends GameMode {
     public String title = "PicturePoker";
 
     private ArrayList<CardType> enums = new ArrayList<CardType>();
+    private HashMap<Card, Integer> changeCards = new HashMap<Card, Integer>();
 
     private Card[] cards = new Card[] { new Card("0", 10, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
-            changeCard(this, 5);
+            queueChange(this, 5);
         }
     }, new Card("1", 31, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
-            changeCard(this, 6);
+            queueChange(this, 6);
         }
     }, new Card("2", 52, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
-            changeCard(this, 7);
+            queueChange(this, 7);
         }
     }, new Card("3", 73, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
-            changeCard(this, 8);
+            queueChange(this, 8);
         }
     }, new Card("4", 94, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
-            changeCard(this, 9);
+            queueChange(this, 9);
         }
     } };
 
@@ -81,16 +82,24 @@ public class PicturePoker extends GameMode {
 
                 @Override
                 public void onMousePressed(int x, int y) {
-                    try {
-                        PicturePoker.instance.setCards();
-                    } catch (ConcurrentModificationException e) {
-                        e.printStackTrace();
-                    }
+
+                    PicturePoker.instance.setCards();
+                }
+            };
+            Card confirm = new Card("confirm", 52, 22, Reader.read("./assets/cards/dummy.tex")) {
+
+                @Override
+                public void onMousePressed(int x, int y) {
+
+                    PicturePoker.instance.changeCard();
                 }
             };
             addObjectToPool(shuffle);
+            addObjectToPool(confirm);
             shuffle.setTex(AnimationState.HOVER, Reader.read("./assets/cards/dummy.tex"));
             shuffle.setTex(AnimationState.CLICK, Reader.read("./assets/cards/dummy.tex"));
+            confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/dummy.tex"));
+            confirm.setTex(AnimationState.CLICK, Reader.read("./assets/cards/dummy.tex"));
 
         }
 
@@ -134,11 +143,22 @@ public class PicturePoker extends GameMode {
 
     }
 
-    public void changeCard(Card c, int id) {
+    public void queueChange(Card c, int id) {
 
-        c.setTex(AnimationState.IDLE, cardATex[enums.get(id).ordinal()]);
-        c.setTex(AnimationState.HOVER, cardATex[enums.get(id).ordinal()]);
-        c.setTex(AnimationState.CLICK, cardATex[enums.get(id).ordinal()]);
+        changeCards.put(c, id);
+
+    }
+
+    public void changeCard() {
+
+        if (!changeCards.isEmpty()) {
+            for (Card c : changeCards.keySet()) {
+                c.setTex(AnimationState.IDLE, cardATex[enums.get(changeCards.get(c)).ordinal()]);
+                c.setTex(AnimationState.HOVER, cardATex[enums.get(changeCards.get(c)).ordinal()]);
+                c.setTex(AnimationState.CLICK, cardATex[enums.get(changeCards.get(c)).ordinal()]);
+            }
+            changeCards.clear();
+        }
     }
 
 }
