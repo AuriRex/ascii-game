@@ -19,6 +19,7 @@ public class PicturePoker extends GameMode {
 
     public String title = "PicturePoker";
 
+
     private ArrayList<CardType> enums = new ArrayList<CardType>();
     private HashMap<Card, Integer> changeCards = new HashMap<Card, Integer>();
 
@@ -54,6 +55,7 @@ public class PicturePoker extends GameMode {
         }
     } };
 
+
     private ATex[] cardATex = new ATex[] { (ATex) Reader.read("./assets/cards/mode/picturepoker/upvote.tex"),
             (ATex) Reader.read("./assets/cards/mode/picturepoker/star.tex"),
             (ATex) Reader.read("./assets/cards/mode/picturepoker/heart.tex"),
@@ -73,6 +75,7 @@ public class PicturePoker extends GameMode {
             }
         };
 
+
         for (CardType c : CardType.values()) {
             enums.addAll(Arrays.asList(c, c, c, c, c));
         }
@@ -82,7 +85,6 @@ public class PicturePoker extends GameMode {
 
                 @Override
                 public void onMousePressed(int x, int y) {
-
                     PicturePoker.instance.setCards();
                 }
             };
@@ -96,6 +98,7 @@ public class PicturePoker extends GameMode {
             };
             addObjectToPool(shuffle);
             addObjectToPool(confirm);
+
             shuffle.setTex(AnimationState.HOVER, Reader.read("./assets/cards/dummy.tex"));
             shuffle.setTex(AnimationState.CLICK, Reader.read("./assets/cards/dummy.tex"));
             confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/dummy.tex"));
@@ -110,6 +113,8 @@ public class PicturePoker extends GameMode {
         for (Card c : cards) {
             addObjectToPool(c);
         }
+
+        setCards();
 
         setCards();
 
@@ -131,6 +136,7 @@ public class PicturePoker extends GameMode {
     public void setCards() {
 
         Collections.shuffle(enums);
+
         int i = 0;
         for (Card c : cards) {
             CardType temp = enums.get(i);
@@ -170,5 +176,6 @@ public class PicturePoker extends GameMode {
             Collections.shuffle(enums);
         }
     }
+
 
 }

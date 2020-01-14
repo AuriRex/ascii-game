@@ -14,9 +14,14 @@ public class XFrame extends JFrame implements MouseInputListener {
 
     private static XFrame instance = null;
 
+    private XPanel xp;
+
     public XFrame() {
         if(instance != null) return;
         instance = this;
+        xp = new XPanel();
+        getRootPane().getContentPane().add(xp);
+        pack();
     }
 
     /**
@@ -33,6 +38,10 @@ public class XFrame extends JFrame implements MouseInputListener {
         }
     }
 
+    public static void printReadyFrameDBG() {
+        if(instance.xp != null) instance.xp.repaint();
+    }
+
     /**
      * Calulates the position from pixel to characters
      * @param e Position of the mouse
@@ -41,8 +50,8 @@ public class XFrame extends JFrame implements MouseInputListener {
     public static int[] calcPos(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        double refx = instance.getSize().getWidth() / our.game.core.Main.X;
-        double refy = instance.getSize().getHeight() / our.game.core.Main.Y;
+        double refx = XPanel.instance.getSize().getWidth() / our.game.core.Main.X;
+        double refy = XPanel.instance.getSize().getHeight() / our.game.core.Main.Y;
         x = (int) (x / refx);
         y = (int) (y / refy);
         return new int[]{x, y};
@@ -50,14 +59,14 @@ public class XFrame extends JFrame implements MouseInputListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-        double maxx = this.getSize().getWidth();
+        // int x = e.getX();
+        // int y = e.getY();
+        // double maxx = this.getSize().getWidth();
         //Creates an Option pane to ask the user if he/she wants to quit
-        if (maxx - x <= 50 && y < 30){
-            exitWindow();
+        // if (maxx - x <= 50 && y < 30){
+        //     exitWindow();
 
-        }
+        // }
 
         int[] pos = calcPos(e);
         GameManager.getModeInstance().clickInput(pos[0], pos[1]);

@@ -1,9 +1,14 @@
 package our.game.core;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
+
+import java.awt.image.BufferedImage;
 
 import our.game.util.ATex;
 import our.game.util.Tex;
@@ -118,4 +123,12 @@ public class Reader {
 
         return texToReturn;
     }
+
+
+    public static BufferedImage readFont(String path) throws IOException {
+
+        BufferedImage in = ImageIO.read(new File(path));
+        return in;
+    }
+
 }

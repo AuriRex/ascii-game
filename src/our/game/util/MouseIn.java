@@ -3,6 +3,7 @@ package our.game.util;
 import java.awt.Rectangle;
 import com.sun.jna.platform.*;
 
+@Deprecated
 public class MouseIn {
 
     /**

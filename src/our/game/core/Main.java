@@ -1,8 +1,8 @@
 package our.game.core;
 
-import java.awt.Rectangle;
+// import java.awt.Rectangle;
 
-import our.game.util.MouseIn;
+// import our.game.util.MouseIn;
 // import our.game.util.ResourceManager;
 // import our.game.util.Tex;
 
@@ -21,22 +21,22 @@ public class Main {
         // if (X == 128)
         //     return;
 
-        Calibration c = new Calibration(X, Y); // 4:1
+        // Calibration c = new Calibration(X, Y); // 4:1
 
-        c.startCalibration();
+        // c.startCalibration();
 
-        Rectangle rect = null;
+        // Rectangle rect = null;
 
         //Fixing Console Debugging
-        try {
-            rect = MouseIn.getConsoleWindow();
-            if (rect == null)
-                rect = new Rectangle(0, 0, 100, 100);
-        } catch (Exception ex) {
-            rect = new Rectangle(0, 0, 100, 100);
-        }
+        // try {
+        //     // rect = MouseIn.getConsoleWindow();
+        //     if (rect == null)
+        //         rect = new Rectangle(0, 0, 100, 100);
+        // } catch (Exception ex) {
+        //     rect = new Rectangle(0, 0, 100, 100);
+        // }
 
-        Calibration.createInvis(rect.x, rect.y, rect.width, rect.height);
+        Calibration.createWindow();
 
         // Unused
         // ResourceManager.init();
