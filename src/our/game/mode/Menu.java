@@ -8,6 +8,7 @@ import our.game.gameobjects.AnimationState;
 import our.game.gameobjects.Card;
 import our.game.gameobjects.GameObject;
 import our.game.gameobjects.Preview;
+import our.game.mode.memorymatch.MemoryMatch;
 import our.game.mode.picturepoker.PicturePoker;
 import our.game.util.ATex;
 import our.game.util.Tex;
@@ -29,6 +30,7 @@ public class Menu extends GameMode {
         instance = this;
 
         games.add(new PicturePoker());
+        games.add(new MemoryMatch());
 
         Card exit = new Card("exit", 110, 22, Reader.read("./assets/cards/mode/exit_idle.atex"));
         // Card exit = new Card(0, 0, Reader.read("./assets/cards/mode/exit_idle.atex"));
