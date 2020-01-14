@@ -38,8 +38,11 @@ public class GameManager {
         long oldTime = System.currentTimeMillis();
         long deltaTime = 0;
 
-        int sleepTime = 1000/60;
+        int sleepTime = -1;//1000/60;
         int sleepCount = 0;
+
+        long animationFrameLimit = 1000 / 24;
+        long animationTime = 0;
 
         isReady = true;
 
@@ -56,7 +59,15 @@ public class GameManager {
                 screen.debugHud(deltaTime);
                 screen.drawDebugText(0,30, "X:"+d_x+" Y:"+d_y);
             }
-            mode.frameAdvance();
+            screen.drawDebugText(0,3, "dt:"+deltaTime);
+            if(animationTime >= animationFrameLimit) {
+                mode.frameAdvance();
+                animationTime = 0;
+            } else {
+                animationTime += deltaTime;
+            }
+            
+            screen.draw();
             screen.pushFrame();
             screen.printReadyFrame();
             // screen.printReadyFrameDBG(deltaTime);
