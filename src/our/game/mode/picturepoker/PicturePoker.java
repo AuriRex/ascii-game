@@ -103,7 +103,6 @@ public class PicturePoker extends GameMode {
 
         }
 
-        // exit.setTex(AnimationState.IDLE, Reader.read("./assets/cards/mode/exit_idle.atex"));
         card_return.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
 
         addObjectToPool(card_return);
@@ -145,7 +144,15 @@ public class PicturePoker extends GameMode {
 
     public void queueChange(Card c, int id) {
 
-        changeCards.put(c, id);
+        if (!changeCards.containsKey(c) && c.getChange()) {
+            c.setChange(false);
+            c.setPos(c.getX(), c.getY() - 2);
+            changeCards.put(c, id);
+        } else {
+            c.setChange(true);
+            c.setPos(c.getX(), c.getY() + 2);
+            changeCards.remove(c);
+        }
 
     }
 
@@ -153,11 +160,14 @@ public class PicturePoker extends GameMode {
 
         if (!changeCards.isEmpty()) {
             for (Card c : changeCards.keySet()) {
+                c.setPos(c.getX(), c.getY() + 2);
                 c.setTex(AnimationState.IDLE, cardATex[enums.get(changeCards.get(c)).ordinal()]);
                 c.setTex(AnimationState.HOVER, cardATex[enums.get(changeCards.get(c)).ordinal()]);
                 c.setTex(AnimationState.CLICK, cardATex[enums.get(changeCards.get(c)).ordinal()]);
+                c.setChange(true);
             }
             changeCards.clear();
+            Collections.shuffle(enums);
         }
     }
 

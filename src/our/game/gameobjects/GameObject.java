@@ -22,6 +22,8 @@ public class GameObject {
     private boolean isVisible = true;
     private boolean pauseInvisibleFrameAdvance = true;
 
+    private boolean change = true;
+
     public GameObject(String uid, int x, int y) {
         UID = uid;
         this.x = x;
@@ -162,6 +164,19 @@ public class GameObject {
         }
 
         return false;
+    }
+
+    public void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public boolean getChange() {
+        return change;
+    }
+
+    public void setChange(boolean change) {
+        this.change = change;
     }
 
 }
