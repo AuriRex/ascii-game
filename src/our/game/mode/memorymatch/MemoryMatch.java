@@ -155,7 +155,7 @@ public class MemoryMatch extends GameMode {
 
         addObjectToPool(reset);
 
-        win = new Card("win", 32, 11, Reader.read("./assets/cards/mode/global/win.atex")) {
+        win = new Card("win", 32, 3, Reader.read("./assets/cards/mode/global/win.atex")) {
             @Override
             public void onHover(int x, int y) {}
             @Override
@@ -307,13 +307,25 @@ public class MemoryMatch extends GameMode {
                 reset.setVisible(true);
                 win.setPos(win.getX(), win.getY()+19);
                 win.setVisible(true);
-                new Timer("win_display", 200, 10) {
+                new Timer("win_flyin", 200, 10) {
                     @Override
                     public void run() {
-                        new Timer("win_remove", 4000, 0) {
+                        new Timer("win_display", 4000, 0) {
                             @Override
                             public void run() {
-                                win.setVisible(false);
+                                new Timer("win_flyout", 100, 10) {
+                                    @Override
+                                    public void run() {
+                                        win.setVisible(false);
+                                        win.setPos(win.getX(), win.getY()+9);
+                                    }
+
+                                    @Override
+                                    public void runInterval() {
+                                        win.setPos(win.getX(), win.getY()-1);
+                                    }
+                                };
+                                
                             }
                         };
                     }
