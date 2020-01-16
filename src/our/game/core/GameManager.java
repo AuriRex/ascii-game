@@ -4,6 +4,7 @@ import our.game.gameobjects.GameObject;
 import our.game.mode.GameMode;
 import our.game.mode.Menu;
 import our.game.util.Tex;
+import our.game.util.Timer;
 
 /**
  * Responsible for running the main programm loop and calling all of the necesarry functions.
@@ -53,6 +54,7 @@ public class GameManager {
             // gamemode!
             screen.clearFrame();
             // Calibration.instance.resetTop();
+            Timer.advance(deltaTime);
             mode.preDraw();
             mode.draw();
             if(Main.debug) {
@@ -127,6 +129,7 @@ public class GameManager {
 
     private void init() {
 
+        Timer.init();
         mode = new Menu();
 
         // Screen.clearScreen();
