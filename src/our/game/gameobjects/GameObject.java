@@ -9,7 +9,7 @@ public class GameObject {
 
     public final String UID;
 
-    private HashMap<AnimationState, Tex> texture = new HashMap<AnimationState, Tex>();
+    protected HashMap<AnimationState, Tex> texture = new HashMap<AnimationState, Tex>();
 
     protected int x;
     protected int y;
@@ -17,7 +17,7 @@ public class GameObject {
     protected int width;
     protected int height;
 
-    AnimationState state = AnimationState.IDLE;
+    protected AnimationState state = AnimationState.IDLE;
 
     private boolean isVisible = true;
     private boolean pauseInvisibleFrameAdvance = true;

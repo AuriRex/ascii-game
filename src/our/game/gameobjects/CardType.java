@@ -1,8 +1,7 @@
-package our.game.mode.picturepoker;
+package our.game.gameobjects;
 
 public enum CardType {
 
-    //all 6 CardTypes needed for picturepoker
     UPVOTE,
     STAR,
     HEART,

@@ -9,6 +9,7 @@ import our.game.core.GameManager;
 import our.game.core.Reader;
 import our.game.gameobjects.AnimationState;
 import our.game.gameobjects.Card;
+import our.game.gameobjects.CardType;
 import our.game.mode.GameMode;
 import our.game.mode.Menu;
 import our.game.util.ATex;
@@ -56,12 +57,12 @@ public class PicturePoker extends GameMode {
     } };
 
 
-    private ATex[] cardATex = new ATex[] { (ATex) Reader.read("./assets/cards/mode/picturepoker/upvote.tex"),
-            (ATex) Reader.read("./assets/cards/mode/picturepoker/star.tex"),
-            (ATex) Reader.read("./assets/cards/mode/picturepoker/heart.tex"),
-            (ATex) Reader.read("./assets/cards/mode/picturepoker/flower.tex"),
-            (ATex) Reader.read("./assets/cards/mode/picturepoker/cloud.tex"),
-            (ATex) Reader.read("./assets/cards/mode/picturepoker/downvote.tex") };
+    private ATex[] cardATex = new ATex[] { (ATex) Reader.read("./assets/cards/mode/global/upvote.tex"),
+            (ATex) Reader.read("./assets/cards/mode/global/star.tex"),
+            (ATex) Reader.read("./assets/cards/mode/global/heart.tex"),
+            (ATex) Reader.read("./assets/cards/mode/global/flower.tex"),
+            (ATex) Reader.read("./assets/cards/mode/global/cloud.tex"),
+            (ATex) Reader.read("./assets/cards/mode/global/downvote.tex") };
 
     public PicturePoker() {
 
