@@ -22,6 +22,7 @@ public class GameObject {
     private boolean isVisible = true;
     private boolean pauseInvisibleFrameAdvance = true;
 
+    private boolean hidden = false;
     private boolean change = true;
 
     public GameObject(String uid, int x, int y) {
@@ -177,6 +178,14 @@ public class GameObject {
 
     public void setChange(boolean change) {
         this.change = change;
+    }
+
+    public boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
 }

@@ -27,7 +27,8 @@ public class Calibration {
      */
     public Calibration(int x, int y) {
 
-        if(instance != null) return;
+        if (instance != null)
+            return;
 
         instance = this;
 
@@ -127,7 +128,7 @@ public class Calibration {
      */
     public static void createWindow() {
         g = new Dimension(Main.X * 8, Main.Y * 16);
-        
+
         f = new XFrame();
         // f.setType(JFrame.Type.UTILITY);
         // f.setSize(g);
@@ -140,23 +141,26 @@ public class Calibration {
         // f.getRootPane().setOpaque(false);
         new Thread() {
             int[] lastPos;
+
             //long lastCheck = System.currentTimeMillis();
             public void run() {
                 f.getRootPane().addMouseMotionListener(new MouseInputAdapter() {
                     @Override
                     public void mouseMoved(MouseEvent e) {
-                        if(!GameManager.instance.isReady()) return;
+                        if (!GameManager.instance.isReady())
+                            return;
                         // try {
                         //     sleep(200); // TODO: don't maybe? - add cooldown instead of sleep maybe ? update: didn't quite work as intended :P
-                            int[] pos = XFrame.calcPos(e);
-                            // Only trigger when the Position changes
-                            if(!pos.equals(lastPos) /*&& (System.currentTimeMillis() >= lastCheck + inputCheckCooldown)*/) {
-                                if(Main.debug)
-                                    GameManager.debug(pos[0], pos[1]);
-                                GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
-                                //lastCheck = System.currentTimeMillis();
-                            }
-                            lastPos = pos;
+                        int[] pos = XFrame.calcPos(e);
+                        // Only trigger when the Position changes
+                        if (!pos.equals(
+                                lastPos) /*&& (System.currentTimeMillis() >= lastCheck + inputCheckCooldown)*/) {
+                            if (Main.debug)
+                                GameManager.debug(pos[0], pos[1]);
+                            GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
+                            //lastCheck = System.currentTimeMillis();
+                        }
+                        lastPos = pos;
                         // } catch (InterruptedException e1) {
                         //     e1.printStackTrace();
                         // }
@@ -191,7 +195,8 @@ public class Calibration {
     @Deprecated
     public void resetTop() {
         if (!f.hasFocus()) {
-            Input.confirm(" Press Enter to regain control!\n If it doesn't recognise your Enter retab into your console!");
+            Input.confirm(
+                    " Press Enter to regain control!\n If it doesn't recognise your Enter retab into your console!");
             redraw();
             f.toFront();
         }
