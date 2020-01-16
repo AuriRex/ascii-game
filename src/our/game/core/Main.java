@@ -14,6 +14,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        //UNUSED
         // Tex t = Reader.read("./assets/cards/mode/exit_idle.atex");
 
         // System.err.println(t.width);
@@ -38,7 +39,7 @@ public class Main {
 
         Calibration.createWindow();
 
-        // Unused
+        // UNUSED
         // ResourceManager.init();
         // ResourceManager.instance.loadResources("./assets/");
 

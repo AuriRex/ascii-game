@@ -13,6 +13,7 @@ import our.game.gameobjects.CardType;
 import our.game.mode.GameMode;
 import our.game.mode.Menu;
 import our.game.util.ATex;
+import our.game.util.Timer;
 
 public class PicturePoker extends GameMode {
 
@@ -20,35 +21,36 @@ public class PicturePoker extends GameMode {
 
     public String title = "PicturePoker";
 
-
     private ArrayList<CardType> enums = new ArrayList<CardType>();
     private HashMap<Card, Integer> changeCards = new HashMap<Card, Integer>();
+    private HashMap<Card, CardType> cardFigure = new HashMap<Card, CardType>();
+    private ATex cardBack = (ATex) Reader.read("./assets/cards/card_back.tex");
 
-    private Card[] cards = new Card[] { new Card("0", 10, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+    private Card[] cards = new Card[] { new Card("0", 10, 21, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
             queueChange(this, 5);
         }
-    }, new Card("1", 31, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+    }, new Card("1", 31, 21, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
             queueChange(this, 6);
         }
-    }, new Card("2", 52, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+    }, new Card("2", 52, 21, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
             queueChange(this, 7);
         }
-    }, new Card("3", 73, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+    }, new Card("3", 73, 21, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
             queueChange(this, 8);
         }
-    }, new Card("4", 94, 13, (ATex) Reader.read("./assets/cards/dummy.tex")) {
+    }, new Card("4", 94, 21, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
         public void onMousePressed(int x, int y) {
@@ -56,6 +58,9 @@ public class PicturePoker extends GameMode {
         }
     } };
 
+    private Card[] dealerCards = new Card[] { new Card("5", 10, 3, (ATex) cardBack),
+            new Card("6", 31, 3, (ATex) cardBack), new Card("7", 52, 3, (ATex) cardBack),
+            new Card("8", 73, 3, (ATex) cardBack), new Card("9", 94, 3, (ATex) cardBack) };
 
     private ATex[] cardATex = new ATex[] { (ATex) Reader.read("./assets/cards/mode/global/upvote.tex"),
             (ATex) Reader.read("./assets/cards/mode/global/star.tex"),
@@ -65,6 +70,9 @@ public class PicturePoker extends GameMode {
             (ATex) Reader.read("./assets/cards/mode/global/downvote.tex") };
 
     public PicturePoker() {
+
+        if (instance != null)
+            return;
 
         instance = this;
 
@@ -76,55 +84,30 @@ public class PicturePoker extends GameMode {
             }
         };
 
+        Card confirm = new Card("confirm", 28, 13, Reader.read("./assets/cards/mode/global/confirm.tex")) {
 
-        for (CardType c : CardType.values()) {
-            enums.addAll(Arrays.asList(c, c, c, c, c));
-        }
+            @Override
+            public void onMousePressed(int x, int y) {
 
-        if (our.game.core.Main.debug) {
-            Card shuffle = new Card("shuffle", 31, 22, Reader.read("./assets/cards/dummy.tex")) {
+                PicturePoker.instance.changeCard();
+            }
+        };
+        addObjectToPool(confirm);
 
-                @Override
-                public void onMousePressed(int x, int y) {
-                    PicturePoker.instance.setCards();
-                }
-            };
-            Card confirm = new Card("confirm", 52, 22, Reader.read("./assets/cards/dummy.tex")) {
-
-                @Override
-                public void onMousePressed(int x, int y) {
-
-                    PicturePoker.instance.changeCard();
-                }
-            };
-            addObjectToPool(shuffle);
-            addObjectToPool(confirm);
-
-            shuffle.setTex(AnimationState.HOVER, Reader.read("./assets/cards/dummy.tex"));
-            shuffle.setTex(AnimationState.CLICK, Reader.read("./assets/cards/dummy.tex"));
-            confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/dummy.tex"));
-            confirm.setTex(AnimationState.CLICK, Reader.read("./assets/cards/dummy.tex"));
-
-        }
+        confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/global/confirm.tex"));
+        confirm.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/global/confirm.tex"));
 
         card_return.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
 
         addObjectToPool(card_return);
 
-        for (Card c : cards) {
-            addObjectToPool(c);
+        for (CardType c : CardType.values()) {
+            enums.addAll(Arrays.asList(c, c, c, c, c));
         }
 
         setCards();
 
-        setCards();
-
     }
-
-    // @Override
-    // public void frameAdvance() {
-
-    // }
 
     @Override
     public ATex[] setPreview() {
@@ -141,10 +124,19 @@ public class PicturePoker extends GameMode {
         int i = 0;
         for (Card c : cards) {
             CardType temp = enums.get(i);
+            cardFigure.put(c, temp);
             c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
             i++;
+            addObjectToPool(c);
+        }
+
+        for (Card c : dealerCards) {
+            c.setTex(AnimationState.IDLE, (ATex) cardBack);
+            c.setTex(AnimationState.HOVER, (ATex) cardBack);
+            c.setTex(AnimationState.CLICK, (ATex) cardBack);
+            addObjectToPool(c);
         }
 
     }
@@ -165,18 +157,66 @@ public class PicturePoker extends GameMode {
 
     public void changeCard() {
 
-        if (!changeCards.isEmpty()) {
-            for (Card c : changeCards.keySet()) {
-                c.setPos(c.getX(), c.getY() + 2);
-                c.setTex(AnimationState.IDLE, cardATex[enums.get(changeCards.get(c)).ordinal()]);
-                c.setTex(AnimationState.HOVER, cardATex[enums.get(changeCards.get(c)).ordinal()]);
-                c.setTex(AnimationState.CLICK, cardATex[enums.get(changeCards.get(c)).ordinal()]);
-                c.setChange(true);
-            }
-            changeCards.clear();
-            Collections.shuffle(enums);
+        for (Card c : changeCards.keySet()) {
+            c.setPos(c.getX(), c.getY() + 2);
+            int card = enums.get(changeCards.get(c)).ordinal();
+            c.setTex(AnimationState.IDLE, cardATex[card]);
+            c.setTex(AnimationState.HOVER, cardATex[card]);
+            c.setTex(AnimationState.CLICK, cardATex[card]);
+            c.setChange(true);
+            if (cardFigure.containsKey(c))
+                cardFigure.replace(c, enums.get(changeCards.get(c)));
+            else
+                cardFigure.put(c, enums.get(changeCards.get(c)));
         }
+
+        int i = 10;
+        for (Card c : dealerCards) {
+            if (!changeCards.containsKey(c)) {
+                changeCards.put(c, Integer.parseInt(c.UID));
+            }
+
+            CardType temp = enums.get(i);
+            cardFigure.put(c, temp);
+            c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
+            c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
+            c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
+            i++;
+
+        }
+        for (Card d : cardFigure.keySet()) {
+            System.out.println(d.UID + cardFigure.get(d));
+        }
+        System.out.println("empty");
+        cardFigure.clear();
+
+        changeCards.clear();
+        Collections.shuffle(enums);
+
+        new Timer("timer_1", 3000, 0) {
+            @Override
+            public void run() {
+                for (Card c : dealerCards) {
+                    c.setTex(AnimationState.IDLE, (ATex) cardBack);
+                    c.setTex(AnimationState.HOVER, (ATex) cardBack);
+                    c.setTex(AnimationState.CLICK, (ATex) cardBack);
+                }
+                int i = 0;
+                for (Card c : cards) {
+                    CardType temp = enums.get(i);
+                    cardFigure.put(c, temp);
+                    c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
+                    c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
+                    c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
+                    i++;
+                }
+            }
+        };
+
     }
 
+    public void compareCards() {
+
+    }
 
 }

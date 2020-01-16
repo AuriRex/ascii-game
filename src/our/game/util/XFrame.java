@@ -17,7 +17,8 @@ public class XFrame extends JFrame implements MouseInputListener {
     private XPanel xp;
 
     public XFrame() {
-        if(instance != null) return;
+        if (instance != null)
+            return;
         instance = this;
         xp = new XPanel();
         getRootPane().getContentPane().add(xp);
@@ -29,8 +30,8 @@ public class XFrame extends JFrame implements MouseInputListener {
      */
     public static void exitWindow() {
         //TODO replace this with yes/no cards
-        int eingabe = JOptionPane.showConfirmDialog(null,"Wollen Sie wirklich beenden?",
-        "Beenden",JOptionPane.YES_NO_OPTION);
+        int eingabe = JOptionPane.showConfirmDialog(null, "Wollen Sie wirklich beenden?", "Beenden",
+                JOptionPane.YES_NO_OPTION);
 
         if (eingabe == 0) {
             instance.dispose();
@@ -39,7 +40,8 @@ public class XFrame extends JFrame implements MouseInputListener {
     }
 
     public static void printReadyFrameDBG() {
-        if(instance.xp != null) instance.xp.repaint();
+        if (instance.xp != null)
+            instance.xp.repaint();
     }
 
     /**
@@ -54,7 +56,7 @@ public class XFrame extends JFrame implements MouseInputListener {
         double refy = XPanel.instance.getSize().getHeight() / our.game.core.Main.Y;
         x = (int) (x / refx);
         y = (int) (y / refy);
-        return new int[]{x, y};
+        return new int[] { x, y };
     }
 
     @Override
@@ -73,11 +75,11 @@ public class XFrame extends JFrame implements MouseInputListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {  
+    public void mousePressed(MouseEvent e) {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {     
+    public void mouseReleased(MouseEvent e) {
     }
 
     @Override
@@ -95,5 +97,5 @@ public class XFrame extends JFrame implements MouseInputListener {
     @Override
     public void mouseMoved(MouseEvent e) {
     }
-    
+
 }
