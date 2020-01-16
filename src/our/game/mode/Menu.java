@@ -12,6 +12,7 @@ import our.game.mode.memorymatch.MemoryMatch;
 import our.game.mode.picturepoker.PicturePoker;
 import our.game.util.ATex;
 import our.game.util.Tex;
+import our.game.util.Timer;
 import our.game.util.XFrame;
 
 public class Menu extends GameMode {
@@ -60,6 +61,39 @@ public class Menu extends GameMode {
         }
 
         addObjectToPool(exit);
+        /*
+        // Timer Test
+        new Timer("timer_1", 5000, 1000) {
+            @Override
+            public void run() {
+                System.out.println("Timer1 finished!");
+            }
+
+            @Override
+            public void runInterval() {
+                System.out.println("Timer1 interval!");
+            }
+
+            @Override
+            public void onDestroy() {
+                System.out.println("Timer1 has been destroyed!");
+            }
+        };
+
+        new Timer("timer_2", 4000, 0) {
+            @Override
+            public void run() {
+                System.out.println("Timer2 finished!");
+                Timer.destroy("timer_1");
+            }
+
+            @Override
+            public void runInterval() {
+                System.out.println("Timer2 interval!");
+            }
+        };
+        */
+
         // gameObjectPool.add(card);
 
     }
