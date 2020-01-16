@@ -10,4 +10,10 @@ public class Card extends GameObject {
         // height = idle.height;
     }
 
+    protected CardType cardType;
+
+    public CardType getCardType() {
+        return cardType;
+    }
+
 }

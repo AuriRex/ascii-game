@@ -23,12 +23,12 @@ public class Timer {
     }
     // #########################
 
-    private static ArrayList<Timer> timers;
+    private static ArrayList<Timer> timers = new ArrayList<>();
 
     public final String UID;
-    private long c_inter = 1;
     private final long initTime;
     private final long intervall;
+    private long c_inter = 1;
     private long duration = 0;
 
     public static void init() {
@@ -47,12 +47,14 @@ public class Timer {
 
         if(UID == null) return;
         
-        Timer.addTimer(this);
+        timersToAdd.add(this);
+        // Timer.addTimer(this);
     }
 
     public static void advance(long dt) {
 
         destroyQueuedTimers();
+        addQueuedTimers();
 
         Iterator<Timer> it = timers.iterator();
 
@@ -79,7 +81,7 @@ public class Timer {
         
     }
 
-    private static ArrayList<Timer> timersToDestroy;
+    private static ArrayList<Timer> timersToDestroy = new ArrayList<>();
 
     private static void destroyQueuedTimers() {
         Iterator<Timer> it = timersToDestroy.iterator();
@@ -88,6 +90,19 @@ public class Timer {
             t.onDestroy();
             if(timers.contains(t)) timers.remove(t);
             it.remove();
+        }
+    }
+
+    private static ArrayList<Timer> timersToAdd = new ArrayList<>();
+
+    private static void addQueuedTimers() {
+        Iterator<Timer> it = timersToAdd.iterator();
+        while(it.hasNext()) {
+            Timer t = it.next();
+            if(timers.contains(t)) return;
+            t.onCreate();
+            it.remove();
+            addTimer(t);
         }
     }
 
@@ -125,6 +140,12 @@ public class Timer {
     }
 
     private static boolean addTimer(Timer _t) {
+        if(_t == null) return false;
+        if(timers == null) {
+            System.out.println("timers == null! Error");
+            init();
+            // return false;
+        }
         if(timers.contains(_t)) return false;
 
         for(Timer tmp : timers) {

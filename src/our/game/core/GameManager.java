@@ -111,6 +111,10 @@ public class GameManager {
         instance.screen.drawToScreen(x, y, tex);
     }
 
+    public static void drawDebugText(int x, int y, String txt) {
+        instance.screen.drawDebugText(x, y, txt);
+    }
+
     /**
      * Returns the current running GameMode Instance.
      * @return GameMode Instance
