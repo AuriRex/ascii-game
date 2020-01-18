@@ -16,4 +16,8 @@ public class Card extends GameObject {
         return cardType;
     }
 
+    public void setCardType(CardType cardType) {
+        this.cardType = cardType;
+    }
+
 }
