@@ -1,9 +1,7 @@
 package our.game.mode.memorymatch;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 import our.game.core.GameManager;
@@ -64,6 +62,7 @@ public class MemoryMatch extends GameMode {
 
     private Card reset;
     private Card win;
+    private Card lose;
 
     private void reset(Random rng) {
         tries = 3;
@@ -118,7 +117,7 @@ public class MemoryMatch extends GameMode {
     }
 
     private int calcX(int i) {
-        int offset = 10;
+        int offset = 20;
         int card_spacing = 16;
         return  offset + i * card_spacing - (int)(i/4) * 4 * card_spacing;
     }
@@ -171,6 +170,23 @@ public class MemoryMatch extends GameMode {
         win.setVisible(false);
 
         addObjectToPool(win);
+
+        lose = new Card("lose", 32, 3, Reader.read("./assets/cards/mode/global/lose.atex")) {
+            @Override
+            public void onHover(int x, int y) {}
+            @Override
+            public void onNoHover() {}
+            @Override
+            public void onMousePressed(int x, int y) {
+
+                lose.setVisible(false);
+
+            }
+        };
+
+        lose.setVisible(false);
+
+        addObjectToPool(lose);
 
         cards = new MMCard[8];
         tries = 3;
@@ -300,45 +316,52 @@ public class MemoryMatch extends GameMode {
         }
     }
 
+    private void banner_flyin(Card card) {
+
+        card.setPos(card.getX(), card.getY()+19);
+        card.setVisible(true);
+        new Timer("card_flyin", 200, 10) {
+            @Override
+            public void run() {
+                new Timer("card_display", 4000, 0) {
+                    @Override
+                    public void run() {
+                        new Timer("card_flyout", 100, 10) {
+                            @Override
+                            public void run() {
+                                card.setVisible(false);
+                                card.setPos(card.getX(), card.getY()+9);
+                            }
+
+                            @Override
+                            public void runInterval() {
+                                card.setPos(card.getX(), card.getY()-1);
+                            }
+                        };
+                        
+                    }
+                };
+            }
+
+            @Override
+            public void runInterval() {
+                card.setPos(card.getX(), card.getY()-1);
+            }
+        };
+
+    }
+
     private void endGame(int state) {
         switch(state) {
             case GAME_WIN:
                 lockAll(true);
                 reset.setVisible(true);
-                win.setPos(win.getX(), win.getY()+19);
-                win.setVisible(true);
-                new Timer("win_flyin", 200, 10) {
-                    @Override
-                    public void run() {
-                        new Timer("win_display", 4000, 0) {
-                            @Override
-                            public void run() {
-                                new Timer("win_flyout", 100, 10) {
-                                    @Override
-                                    public void run() {
-                                        win.setVisible(false);
-                                        win.setPos(win.getX(), win.getY()+9);
-                                    }
-
-                                    @Override
-                                    public void runInterval() {
-                                        win.setPos(win.getX(), win.getY()-1);
-                                    }
-                                };
-                                
-                            }
-                        };
-                    }
-
-                    @Override
-                    public void runInterval() {
-                        win.setPos(win.getX(), win.getY()-1);
-                    }
-                };
+                banner_flyin(win);
                 break;
             case GAME_LOSE:
                 lockAll(true);
                 reset.setVisible(true);
+                banner_flyin(lose);
                 break;
         }
     }
