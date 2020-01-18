@@ -3,13 +3,7 @@ package our.game.mode.picturepoker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import our.game.core.GameManager;
 import our.game.core.Reader;
@@ -29,8 +23,6 @@ public class PicturePoker extends GameMode {
 
     private ArrayList<CardType> enums = new ArrayList<CardType>();
     private HashMap<Card, Integer> changeCards = new HashMap<Card, Integer>();
-    private LinkedHashMap<Card, CardType> cardFigure = new LinkedHashMap<Card, CardType>();
-    private LinkedHashMap<Card, CardType> cardsDealer = new LinkedHashMap<Card, CardType>();
 
     private ATex cardBack = (ATex) Reader.read("./assets/cards/card_back.tex");
 
@@ -132,7 +124,7 @@ public class PicturePoker extends GameMode {
         int i = 0;
         for (Card c : cards) {
             CardType temp = enums.get(i);
-            cardFigure.put(c, temp);
+            c.setCardType(temp);
             c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
@@ -172,10 +164,7 @@ public class PicturePoker extends GameMode {
             c.setTex(AnimationState.HOVER, cardATex[card]);
             c.setTex(AnimationState.CLICK, cardATex[card]);
             c.setChange(true);
-            if (cardFigure.containsKey(c))
-                cardFigure.replace(c, enums.get(changeCards.get(c)));
-            else
-                cardFigure.put(c, enums.get(changeCards.get(c)));
+            c.setCardType(enums.get(changeCards.get(c)));
         }
 
         int i = 10;
@@ -185,7 +174,7 @@ public class PicturePoker extends GameMode {
             }
 
             CardType temp = enums.get(i);
-            cardsDealer.put(c, temp);
+            c.setCardType(temp);
             c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
@@ -193,16 +182,14 @@ public class PicturePoker extends GameMode {
 
         }
 
-        Map<Card, CardType> sorted = sortByValues(cardFigure);
-
-        for (Map.Entry<Card, CardType> entry : sorted.entrySet()) {
-            System.out.println("Value: " + entry.getValue() + " Key: " + entry.getKey().UID);
+        System.out.println("Player Cards:");
+        for (Card c : cards) {
+            System.out.println(c.UID + c.getCardType());
         }
-        System.out.println("empty");
-        cardFigure.clear();
-
-        changeCards.clear();
-        Collections.shuffle(enums);
+        System.out.println("Dealer Cards:");
+        for (Card c : dealerCards) {
+            System.out.println(c.UID + c.getCardType());;
+        }
 
         new Timer("timer_1", 3000, 0) {
             @Override
@@ -215,7 +202,7 @@ public class PicturePoker extends GameMode {
                 int i = 0;
                 for (Card c : cards) {
                     CardType temp = enums.get(i);
-                    cardFigure.put(c, temp);
+                    c.setCardType(temp);
                     c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
                     c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
                     c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
@@ -230,18 +217,4 @@ public class PicturePoker extends GameMode {
 
     }
 
-    public static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {
-        Comparator<K> valueComparator = new Comparator<K>() {
-            public int compare(K k1, K k2) {
-                int compare = map.get(k1).compareTo(map.get(k2));
-                if (compare == 0)
-                    return 1;
-                else
-                    return compare;
-            }
-        };
-        Map<K, V> sortedByValues = new TreeMap<K, V>(valueComparator);
-        sortedByValues.putAll(map);
-        return new LinkedHashMap<K, V>(sortedByValues);
-    }
 }

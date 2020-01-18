@@ -12,7 +12,6 @@ import our.game.mode.memorymatch.MemoryMatch;
 import our.game.mode.picturepoker.PicturePoker;
 import our.game.util.ATex;
 import our.game.util.Tex;
-import our.game.util.Timer;
 import our.game.util.XFrame;
 
 public class Menu extends GameMode {
@@ -34,7 +33,8 @@ public class Menu extends GameMode {
         games.add(new MemoryMatch());
 
         Card exit = new Card("exit", 110, 22, Reader.read("./assets/cards/mode/exit_idle.atex"));
-        // Card exit = new Card(0, 0, Reader.read("./assets/cards/mode/exit_idle.atex"));
+        // Card exit = new Card(0, 0,
+        // Reader.read("./assets/cards/mode/exit_idle.atex"));
         exit.setTex(AnimationState.IDLE, Reader.read("./assets/cards/mode/exit_idle.atex"));
         exit.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
 
@@ -62,37 +62,24 @@ public class Menu extends GameMode {
 
         addObjectToPool(exit);
         /*
-        // Timer Test
-        new Timer("timer_1", 5000, 1000) {
-            @Override
-            public void run() {
-                System.out.println("Timer1 finished!");
-            }
-
-            @Override
-            public void runInterval() {
-                System.out.println("Timer1 interval!");
-            }
-
-            @Override
-            public void onDestroy() {
-                System.out.println("Timer1 has been destroyed!");
-            }
-        };
-
-        new Timer("timer_2", 4000, 0) {
-            @Override
-            public void run() {
-                System.out.println("Timer2 finished!");
-                Timer.destroy("timer_1");
-            }
-
-            @Override
-            public void runInterval() {
-                System.out.println("Timer2 interval!");
-            }
-        };
-        */
+         * // Timer Test new Timer("timer_1", 5000, 1000) {
+         * 
+         * @Override public void run() { System.out.println("Timer1 finished!"); }
+         * 
+         * @Override public void runInterval() { System.out.println("Timer1 interval!");
+         * }
+         * 
+         * @Override public void onDestroy() {
+         * System.out.println("Timer1 has been destroyed!"); } };
+         * 
+         * new Timer("timer_2", 4000, 0) {
+         * 
+         * @Override public void run() { System.out.println("Timer2 finished!");
+         * Timer.destroy("timer_1"); }
+         * 
+         * @Override public void runInterval() { System.out.println("Timer2 interval!");
+         * } };
+         */
 
         // gameObjectPool.add(card);
 
@@ -153,7 +140,8 @@ public class Menu extends GameMode {
 
             if (inBounds(x, y, g)) {
                 // Mouse is over our GameObject
-                GameObject exit = getByUID("exit"); // TODO: Optimize, cache GameObject reference instead of searching for it everytime.
+                GameObject exit = getByUID("exit"); // TODO: Optimize, cache GameObject reference instead of searching
+                                                    // for it everytime.
                 exit.setVisible(!exit.isVisible());
 
             }

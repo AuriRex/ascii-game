@@ -36,7 +36,7 @@ public abstract class GameMode implements GMMethods {
     private ArrayList<GameObject> gameObjectPool = new ArrayList<GameObject>();
 
     /**
-     * Gets called before changing gamemode 
+     * Gets called before changing gamemode
      */
     public void load() {
 
@@ -44,6 +44,7 @@ public abstract class GameMode implements GMMethods {
 
     /**
      * Called before the GameMode changes
+     * 
      * @param gm GameMode to change to
      * @return false to cancel GameMode change
      */
@@ -57,6 +58,7 @@ public abstract class GameMode implements GMMethods {
 
     /**
      * Called if the current GameMode canceled the GameMOde change
+     * 
      * @param mode GameMode that canceled the change
      */
     public void loadCanceled(GameMode mode) {
@@ -85,7 +87,7 @@ public abstract class GameMode implements GMMethods {
      */
     public void frameAdvance() {
         for (GameObject g : getObjectPool()) {
-            // Only execute the GameObjects code when 
+            // Only execute the GameObjects code when
             if (g.shouldExecute()) {
                 g.frameAdvance();
             }
@@ -95,10 +97,11 @@ public abstract class GameMode implements GMMethods {
     }
 
     /**
-    * Search through all GameObjects for one with a specific UID
-    * @param uid The UID to search for
-    * @return a GameObject or null!
-    */
+     * Search through all GameObjects for one with a specific UID
+     * 
+     * @param uid The UID to search for
+     * @return a GameObject or null!
+     */
     public GameObject getByUID(String uid) {
         for (GameObject g : getObjectPool()) {
             if (g.UID.equals(uid)) {
@@ -131,7 +134,8 @@ public abstract class GameMode implements GMMethods {
 
     /**
      * Hover Input hook
-     * @param x 
+     * 
+     * @param x
      * @param y
      * @param g GameObject g
      * @return boolean - true to call onHover() for the given GameObject
@@ -154,6 +158,7 @@ public abstract class GameMode implements GMMethods {
 
     /**
      * No Hover Input hook
+     * 
      * @param g GameObject g
      * @return boolean - true to call onNoHover() for the given GameObject
      */
@@ -163,6 +168,7 @@ public abstract class GameMode implements GMMethods {
 
     /**
      * Check if the x and y coordinates are inside the GameObjects bounds
+     * 
      * @param x Points X coordinate
      * @param y Points Y coordinate
      * @param g GameObject
@@ -173,9 +179,11 @@ public abstract class GameMode implements GMMethods {
     }
 
     /**
-     * Check if the x and y coordinates are inside the (gx, gy, gx + gw, gy + gh) bounds
-     * @param x Points X coordinate
-     * @param y Points Y coordinate
+     * Check if the x and y coordinates are inside the (gx, gy, gx + gw, gy + gh)
+     * bounds
+     * 
+     * @param x  Points X coordinate
+     * @param y  Points Y coordinate
      * @param gx Top left boundary X Position
      * @param gy Top left boundary Y Position
      * @param gw Width of the boundary
@@ -190,9 +198,10 @@ public abstract class GameMode implements GMMethods {
 
     /**
      * Gets called on Mouse click
+     * 
      * @param x = X Coordinate in Console Characters
-     * @param y = Y Coordinate in Console Characters
-     * Changes the default GameObjects Animation State to CLICK
+     * @param y = Y Coordinate in Console Characters Changes the default GameObjects
+     *          Animation State to CLICK
      */
     public void clickInput(int x, int y) {
         for (GameObject g : getObjectPool()) {
@@ -207,6 +216,7 @@ public abstract class GameMode implements GMMethods {
 
     /**
      * Click input hook
+     * 
      * @param g = affected GameObject
      * @param x = X Coordinate in Console Characters
      * @param y = Y Coordinate in Console Characters
