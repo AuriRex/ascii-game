@@ -40,6 +40,16 @@ public class GameObject {
         texture.put(AnimationState.IDLE, idle);
     }
 
+    public GameObject(String uid, int x, int y, Tex tex, AnimationState defaultAS) {
+        UID = uid;
+        this.x = x;
+        this.y = y;
+        this.width = tex.width;
+        this.height = tex.height;
+        texture.put(defaultAS, tex);
+        setAnimationState(defaultAS);
+    }
+
     /**
      * Returns this GameObjects X Position
      * @return X Position in Console Characters
@@ -94,14 +104,14 @@ public class GameObject {
      * @param y position in console characters
      */
     public void onHover(int x, int y) {
-        state = AnimationState.HOVER;
+        setAnimationState(AnimationState.HOVER);
     }
 
     /**
      * Gets called once the Mouse leaves the frame
      */
     public void onNoHover() {
-        state = AnimationState.IDLE;
+        setAnimationState(AnimationState.IDLE);
     }
 
     /**
@@ -110,7 +120,7 @@ public class GameObject {
      * @param y position in console characters
      */
     public void onMousePressed(int x, int y) {
-        state = AnimationState.CLICK;
+        setAnimationState(AnimationState.CLICK);
     }
 
     /**
@@ -125,8 +135,34 @@ public class GameObject {
      */
     public void nextFrame() {
         Tex temp = texture.get(state);
-        if (temp.isAnimated())
+        if (temp.isAnimated()) {
             ((ATex) temp).nextFrame();
+            if(((ATex) temp).isOnLastFrame())
+                onLastFrameHit((ATex) temp);
+        }
+    }
+
+    /**
+     * Returns the current AnimationState
+     * @return The current AnimationState
+     */
+    public AnimationState getAnimationState() {
+        return state;
+    }
+
+    /**
+     * Sets the current AnimationState
+     */
+    public void setAnimationState(AnimationState s) {
+        state = s;
+    }
+
+    /**
+     * Called once the Last animation Frame is hit
+     * @param at The Texture that hit the last frame
+     */
+    public void onLastFrameHit(ATex at) {
+
     }
 
     /**

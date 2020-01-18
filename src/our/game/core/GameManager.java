@@ -60,8 +60,8 @@ public class GameManager {
             if(Main.debug) {
                 screen.debugHud(deltaTime);
                 screen.drawDebugText(0,30, "X:"+d_x+" Y:"+d_y);
+                screen.drawDebugText(0,3, "dt:"+deltaTime);
             }
-            screen.drawDebugText(0,3, "dt:"+deltaTime);
             if(animationTime >= animationFrameLimit) {
                 mode.frameAdvance();
                 animationTime = 0;

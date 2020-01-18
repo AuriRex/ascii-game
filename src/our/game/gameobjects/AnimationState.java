@@ -8,6 +8,12 @@ public enum AnimationState {
     HOVER,
     HOVER_2,
     CLICK,
+
+    // Card related
+    IDLE_FRONT,
+    IDLE_BACK,
+    TURN_TO_BACK,
+    TURN_TO_FRONT,
     
     // MPAS = Multi Purpouse Animation State
     MPAS_0,

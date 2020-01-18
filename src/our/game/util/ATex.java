@@ -44,28 +44,46 @@ public class ATex extends Tex {
         return texArray[frameCounter];
     }
 
+    private boolean frame_isLast = false;
+
     /**
      * increments the frame counter
      */
     @Override
     public void nextFrame() {
+        frame_isLast = false;
         if(reversed) {
             frameCounter--;
             if(frameCounter < 0) {
                 frameCounter = frames-1;
+                frame_isLast = true;
             }
         } else {
             frameCounter++;
             if(frameCounter >= frames) {
                 frameCounter = 0;
+                frame_isLast = true;
             }
         }
         
     }
 
+    /**
+     * Returns true if the last frame of the animation was displayed
+     * @return boolean
+     */
+    public boolean isOnLastFrame() {
+        return frame_isLast;
+    }
 
     public Tex[] getTexArray() {
         return texArray;
     }
+
+	public ATex reversed() {
+        frameCounter = frames - 1;
+        this.reversed = !this.reversed;
+		return this;
+	}
 
 }
