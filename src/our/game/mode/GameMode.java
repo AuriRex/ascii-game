@@ -227,43 +227,43 @@ public abstract class GameMode implements GMMethods {
     }
 
     public ArrayList<GameObject> getObjectPool() {
-        int i = 0;
-        while (!editable) {
-            try {
-                if (i > 5000) {
-                    System.err.println("Softlocked for 5+ seconds! Program exits!");
-                    System.exit(1);
-                }
-                Thread.sleep(1);
-                i++;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        editable = false;
+        // int i = 0;
+        // while (!editable) {
+        //     try {
+        //         if (i > 5000) {
+        //             System.err.println("Softlocked for 5+ seconds! Program exits!");
+        //             System.exit(1);
+        //         }
+        //         Thread.sleep(1);
+        //         i++;
+        //     } catch (InterruptedException e) {
+        //         e.printStackTrace();
+        //     }
+        // }
+        // editable = false;
         return gameObjectPool;
     }
 
     public void releaseObjectPool() {
-        editable = true;
+        // editable = true;
     }
 
     public void addObjectToPool(GameObject g) {
-        int i = 0;
-        while (!editable) {
-            try {
-                if (i > 5000) {
-                    System.err.println("Softlocked for 5+ seconds! Program exits!");
-                    System.exit(1);
-                }
-                Thread.sleep(1);
-                i++;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        editable = false;
+        // int i = 0;
+        // while (!editable) {
+        //     try {
+        //         if (i > 5000) {
+        //             System.err.println("Softlocked for 5+ seconds! Program exits!");
+        //             System.exit(1);
+        //         }
+        //         Thread.sleep(1);
+        //         i++;
+        //     } catch (InterruptedException e) {
+        //         e.printStackTrace();
+        //     }
+        // }
+        // editable = false;
         gameObjectPool.add(g);
-        editable = true;
+        // editable = true;
     }
 }
