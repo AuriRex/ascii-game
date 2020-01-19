@@ -3,6 +3,7 @@ package our.game.core;
 import our.game.gameobjects.GameObject;
 import our.game.mode.GameMode;
 import our.game.mode.Menu;
+import our.game.mode.Quit;
 import our.game.util.Tex;
 import our.game.util.Timer;
 
@@ -21,6 +22,9 @@ public class GameManager {
     public static GameManager instance;
 
     private boolean isReady = false;
+
+    private static Menu gm_menu;
+    private static Quit gm_quit;
 
     public boolean isReady() {
         return isReady;
@@ -134,7 +138,9 @@ public class GameManager {
     private void init() {
 
         Timer.init();
-        mode = new Menu();
+        gm_quit = new Quit();
+        gm_menu = new Menu();
+        mode = gm_menu;
 
         // Screen.clearScreen();
         // System.out.println("Initialized!");
@@ -154,6 +160,20 @@ public class GameManager {
         instance.mode.unload();
 
         instance.mode = gm;
+
+    }
+
+	public static void quit() {
+
+        if(!instance.mode.equals(gm_quit))
+            gm_quit.setReturnMode(instance.mode);
+        changeGameMode(gm_quit);
+
+	}
+
+	public static void menu() {
+
+        changeGameMode(gm_menu);
 
 	}
 

@@ -13,6 +13,8 @@ import our.game.util.XFrame;
 
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 
 public class Calibration {
 
@@ -42,14 +44,9 @@ public class Calibration {
     public void startCalibration() {
 
         /*
-         * Creates "#" around the corners 
-         * ###      ### 
-         * #          # 
-         * #          #
+         * Creates "#" around the corners ### ### # # # #
          * 
-         * #          #
-         * #          #
-         * ###      ###
+         * # # # # ### ###
          */
 
         Screen.clearScreen();
@@ -115,7 +112,7 @@ public class Calibration {
     private static XFrame f;
     public static Dimension g;
 
-    //private static long inputCheckCooldown = 150;
+    // private static long inputCheckCooldown = 150;
 
     // TODO: Move this out of calibration!
     /**
@@ -142,7 +139,7 @@ public class Calibration {
         new Thread() {
             int[] lastPos;
 
-            //long lastCheck = System.currentTimeMillis();
+            // long lastCheck = System.currentTimeMillis();
             public void run() {
                 f.getRootPane().addMouseMotionListener(new MouseInputAdapter() {
                     @Override
@@ -150,26 +147,38 @@ public class Calibration {
                         if (!GameManager.instance.isReady())
                             return;
                         // try {
-                        //     sleep(200); // TODO: don't maybe? - add cooldown instead of sleep maybe ? update: didn't quite work as intended :P
+                        // sleep(200); // TODO: don't maybe? - add cooldown instead of sleep maybe ?
+                        // update: didn't quite work as intended :P
                         int[] pos = XFrame.calcPos(e);
                         // Only trigger when the Position changes
                         if (!pos.equals(
-                                lastPos) /*&& (System.currentTimeMillis() >= lastCheck + inputCheckCooldown)*/) {
+                                lastPos) /* && (System.currentTimeMillis() >= lastCheck + inputCheckCooldown) */) {
                             if (Main.debug)
                                 GameManager.debug(pos[0], pos[1]);
                             GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
-                            //lastCheck = System.currentTimeMillis();
+                            // lastCheck = System.currentTimeMillis();
                         }
                         lastPos = pos;
                         // } catch (InterruptedException e1) {
-                        //     e1.printStackTrace();
+                        // e1.printStackTrace();
                         // }
                     }
                 });
                 f.getRootPane().addMouseListener(f);
             }
         }.start();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+
+                GameManager.quit();
+
+            }
+            
+
+        });
+        // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         f.setVisible(true);
     }
 

@@ -43,7 +43,7 @@ public class MemoryMatch extends GameMode {
             }
         };
         card_return.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
-        card_return.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/return_idle.atex"));
+        // card_return.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/return_idle.atex"));
 
         addObjectToPool(card_return);
 

@@ -7,7 +7,7 @@ public enum AnimationState {
     IDLE_2,
     HOVER,
     HOVER_2,
-    CLICK,
+    // CLICK,
 
     // Card related
     IDLE_FRONT,

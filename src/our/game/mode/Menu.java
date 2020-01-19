@@ -54,7 +54,7 @@ public class Menu extends GameMode {
 
             };
             card_prev.setTex(AnimationState.HOVER, pv.hover);
-            card_prev.setTex(AnimationState.CLICK, pv.click);
+            // card_prev.setTex(AnimationState.CLICK, pv.click);
 
             addObjectToPool(card_prev);
             x += 15;
@@ -130,7 +130,8 @@ public class Menu extends GameMode {
 
             if (inBounds(x, y, g)) {
                 // Mouse is over our GameObject
-                XFrame.exitWindow();
+                // XFrame.exitWindow();
+                GameManager.quit();
             }
             return false;
         }

@@ -6,18 +6,18 @@ public class Preview {
     
     public final ATex idle;
     public final ATex hover;
-    public final ATex click;
+    public final ATex extra;
 
     /**
      * 
      * @param idle Animated idle texture
      * @param hover Animated hover texture
-     * @param click Animated click texture
+     * @param extra Animated extra texture
      */
-    public Preview(ATex idle, ATex hover, ATex click) {
+    public Preview(ATex idle, ATex hover, ATex extra) {
         this.idle = idle;
         this.hover = hover;
-        this.click = click;
+        this.extra = extra;
     }
 
     public void onClick() {

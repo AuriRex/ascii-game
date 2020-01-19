@@ -120,7 +120,7 @@ public class GameObject {
      * @param y position in console characters
      */
     public void onMousePressed(int x, int y) {
-        setAnimationState(AnimationState.CLICK);
+        setAnimationState(AnimationState.IDLE);
     }
 
     /**
