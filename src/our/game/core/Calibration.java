@@ -144,6 +144,8 @@ public class Calibration {
                 f.getRootPane().addMouseMotionListener(new MouseInputAdapter() {
                     @Override
                     public void mouseMoved(MouseEvent e) {
+                        if(GameManager.instance == null)
+                            return;
                         if (!GameManager.instance.isReady())
                             return;
                         // try {
