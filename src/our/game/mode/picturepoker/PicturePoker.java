@@ -27,6 +27,8 @@ public class PicturePoker extends GameMode {
 
     private ATex cardBack = (ATex) Reader.read("./assets/cards/card_back.tex");
 
+    int score = 0;
+
     Card card_return;
     Card confirm;
 
@@ -99,7 +101,6 @@ public class PicturePoker extends GameMode {
         addObjectToPool(confirm);
 
         confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/global/confirm.tex"));
-        // confirm.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/global/confirm.tex"));
 
         card_return.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
 
@@ -131,7 +132,6 @@ public class PicturePoker extends GameMode {
             c.setCardType(temp);
             c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
-            // c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
             i++;
             addObjectToPool(c);
         }
@@ -139,7 +139,6 @@ public class PicturePoker extends GameMode {
         for (Card c : dealerCards) {
             c.setTex(AnimationState.IDLE, (ATex) cardBack);
             c.setTex(AnimationState.HOVER, (ATex) cardBack);
-            // c.setTex(AnimationState.CLICK, (ATex) cardBack);
             addObjectToPool(c);
         }
 
@@ -166,7 +165,6 @@ public class PicturePoker extends GameMode {
             int card = enums.get(changeCards.get(c)).ordinal();
             c.setTex(AnimationState.IDLE, cardATex[card]);
             c.setTex(AnimationState.HOVER, cardATex[card]);
-            // c.setTex(AnimationState.CLICK, cardATex[card]);
             c.setChange(true);
             c.setCardType(enums.get(changeCards.get(c)));
         }
@@ -178,7 +176,6 @@ public class PicturePoker extends GameMode {
             c.setCardType(temp);
             c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
-            // c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
             i++;
 
         }
@@ -265,12 +262,12 @@ public class PicturePoker extends GameMode {
         if ((ups + stars + hearts + flowers + cloud + down) > (dups + dstars + dhearts + dflowers + dcloud + ddown)) {
             confirm.setTex(AnimationState.IDLE, (ATex) Reader.read("./assets/cards/mode/global/win.tex"));
             confirm.setTex(AnimationState.HOVER, (ATex) Reader.read("./assets/cards/mode/global/win.tex"));
-            confirm.setTex(AnimationState.CLICK, (ATex) Reader.read("./assets/cards/mode/global/win.tex"));
+            score++;
         } else if ((ups + stars + hearts + flowers + cloud + down) < (dups + dstars + dhearts + dflowers + dcloud
                 + ddown)) {
             confirm.setTex(AnimationState.IDLE, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
             confirm.setTex(AnimationState.HOVER, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
-            confirm.setTex(AnimationState.CLICK, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
+            score--;
         } else {
             int dppoints = 0;
             int ddpoints = 0;
@@ -340,15 +337,14 @@ public class PicturePoker extends GameMode {
             if (dppoints > ddpoints) {
                 confirm.setTex(AnimationState.IDLE, (ATex) Reader.read("./assets/cards/mode/global/win.tex"));
                 confirm.setTex(AnimationState.HOVER, (ATex) Reader.read("./assets/cards/mode/global/win.tex"));
-                confirm.setTex(AnimationState.CLICK, (ATex) Reader.read("./assets/cards/mode/global/win.tex"));
+                score++;
             } else if (ddpoints > dppoints) {
                 confirm.setTex(AnimationState.IDLE, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
                 confirm.setTex(AnimationState.HOVER, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
-                confirm.setTex(AnimationState.CLICK, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
+                score--;
             } else {
                 confirm.setTex(AnimationState.IDLE, (ATex) Reader.read("./assets/cards/mode/global/draw.tex"));
                 confirm.setTex(AnimationState.HOVER, (ATex) Reader.read("./assets/cards/mode/global/draw.tex"));
-                confirm.setTex(AnimationState.CLICK, (ATex) Reader.read("./assets/cards/mode/global/draw.tex"));
             }
         }
 
@@ -372,7 +368,6 @@ public class PicturePoker extends GameMode {
                 }
                 confirm.setTex(AnimationState.IDLE, Reader.read("./assets/cards/mode/global/confirm.tex"));
                 confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/global/confirm.tex"));
-                confirm.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/global/confirm.tex"));
             }
         };
 
