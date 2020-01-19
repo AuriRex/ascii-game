@@ -99,7 +99,7 @@ public class PicturePoker extends GameMode {
         addObjectToPool(confirm);
 
         confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/global/confirm.tex"));
-        confirm.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/global/confirm.tex"));
+        // confirm.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/global/confirm.tex"));
 
         card_return.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
 
@@ -131,7 +131,7 @@ public class PicturePoker extends GameMode {
             c.setCardType(temp);
             c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
-            c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
+            // c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
             i++;
             addObjectToPool(c);
         }
@@ -139,7 +139,7 @@ public class PicturePoker extends GameMode {
         for (Card c : dealerCards) {
             c.setTex(AnimationState.IDLE, (ATex) cardBack);
             c.setTex(AnimationState.HOVER, (ATex) cardBack);
-            c.setTex(AnimationState.CLICK, (ATex) cardBack);
+            // c.setTex(AnimationState.CLICK, (ATex) cardBack);
             addObjectToPool(c);
         }
 
@@ -166,7 +166,7 @@ public class PicturePoker extends GameMode {
             int card = enums.get(changeCards.get(c)).ordinal();
             c.setTex(AnimationState.IDLE, cardATex[card]);
             c.setTex(AnimationState.HOVER, cardATex[card]);
-            c.setTex(AnimationState.CLICK, cardATex[card]);
+            // c.setTex(AnimationState.CLICK, cardATex[card]);
             c.setChange(true);
             c.setCardType(enums.get(changeCards.get(c)));
         }
@@ -178,7 +178,7 @@ public class PicturePoker extends GameMode {
             c.setCardType(temp);
             c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
             c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
-            c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
+            // c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
             i++;
 
         }
@@ -358,7 +358,7 @@ public class PicturePoker extends GameMode {
                 for (Card c : dealerCards) {
                     c.setTex(AnimationState.IDLE, (ATex) cardBack);
                     c.setTex(AnimationState.HOVER, (ATex) cardBack);
-                    c.setTex(AnimationState.CLICK, (ATex) cardBack);
+                    // c.setTex(AnimationState.CLICK, (ATex) cardBack);
                 }
                 int i = 0;
                 for (Card c : cards) {
@@ -366,7 +366,7 @@ public class PicturePoker extends GameMode {
                     c.setCardType(temp);
                     c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
                     c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
-                    c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
+                    // c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
                     i++;
                     c.setChange(true);
                 }

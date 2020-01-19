@@ -9,7 +9,10 @@ public class MMCard extends Card {
 
     public MMCard(String uid, int x, int y, Tex idle) {
         super(uid, x, y, idle);
-        // TODO Auto-generated constructor stub
+    }
+
+    public MMCard(String uid, int x, int y, Tex idle, AnimationState as) {
+        super(uid, x, y, idle, as);
     }
 
     protected boolean mm_hidden = true;
@@ -28,9 +31,11 @@ public class MMCard extends Card {
     public void mm_setHidden(boolean h) {
         mm_hidden = h;
         if(h) {
-            state = AnimationState.IDLE;
+            if(!getAnimationState().equals(AnimationState.TURN_TO_BACK) || !getAnimationState().equals(AnimationState.IDLE_BACK))
+                setAnimationState(AnimationState.TURN_TO_BACK);
         } else {
-            state = AnimationState.IDLE_2;
+            if(!getAnimationState().equals(AnimationState.TURN_TO_FRONT) || !getAnimationState().equals(AnimationState.IDLE_FRONT))
+                setAnimationState(AnimationState.TURN_TO_FRONT);
         }
     }
 

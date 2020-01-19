@@ -26,16 +26,24 @@ public class XFrame extends JFrame implements MouseInputListener {
     }
 
     /**
+     * Force closes the game
+     */
+    public static void forceExitWindow() {
+        instance.dispose();
+        System.exit(0);
+	}
+
+    /**
      * Creates a Yes/No option to exit the game
      */
+    @Deprecated
     public static void exitWindow() {
         //TODO replace this with yes/no cards
         int eingabe = JOptionPane.showConfirmDialog(null, "Wollen Sie wirklich beenden?", "Beenden",
                 JOptionPane.YES_NO_OPTION);
 
         if (eingabe == 0) {
-            instance.dispose();
-            System.exit(0);
+            forceExitWindow();
         }
     }
 

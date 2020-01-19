@@ -1,9 +1,7 @@
 package our.game.mode.memorymatch;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 import our.game.core.GameManager;
@@ -45,7 +43,7 @@ public class MemoryMatch extends GameMode {
             }
         };
         card_return.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
-        card_return.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/return_idle.atex"));
+        // card_return.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/return_idle.atex"));
 
         addObjectToPool(card_return);
 
@@ -64,6 +62,7 @@ public class MemoryMatch extends GameMode {
 
     private Card reset;
     private Card win;
+    private Card lose;
 
     private void reset(Random rng) {
         tries = 3;
@@ -118,7 +117,7 @@ public class MemoryMatch extends GameMode {
     }
 
     private int calcX(int i) {
-        int offset = 10;
+        int offset = 30;
         int card_spacing = 16;
         return  offset + i * card_spacing - (int)(i/4) * 4 * card_spacing;
     }
@@ -172,6 +171,23 @@ public class MemoryMatch extends GameMode {
 
         addObjectToPool(win);
 
+        lose = new Card("lose", 32, 3, Reader.read("./assets/cards/mode/global/lose.atex")) {
+            @Override
+            public void onHover(int x, int y) {}
+            @Override
+            public void onNoHover() {}
+            @Override
+            public void onMousePressed(int x, int y) {
+
+                lose.setVisible(false);
+
+            }
+        };
+
+        lose.setVisible(false);
+
+        addObjectToPool(lose);
+
         cards = new MMCard[8];
         tries = 3;
         pairs = 0;
@@ -182,7 +198,7 @@ public class MemoryMatch extends GameMode {
 
             int ci = (int) (i / 2);
 
-            cards[i] = new MMCard(ci+"_"+(i%2), calcX(i), calcY(i), cardATex[choosenCards[ci]]) { // TODO: change tex
+            cards[i] = new MMCard(ci+"_"+(i%2), calcX(i), calcY(i), cardATex[choosenCards[ci]], AnimationState.IDLE_FRONT) { // TODO: change tex
 
                 protected CardType cardType = CardType.values()[choosenCards[ci]];
 
@@ -193,15 +209,20 @@ public class MemoryMatch extends GameMode {
 
                 @Override
                 public Tex getObjectTex() { // call this from gamemode's gameobject pool
-                    if(mm_isHidden()) return texture.get(AnimationState.IDLE_2);
-                    return texture.get(AnimationState.IDLE);
+                    // if(mm_isHidden()) return texture.get(AnimationState.IDLE_BACK);
+                    // return texture.get(AnimationState.IDLE_FRONT);
+                    // if((!getAnimationState().equals(AnimationState.IDLE_FRONT)) || (!getAnimationState().equals(AnimationState.IDLE_BACK)) || (!getAnimationState().equals(AnimationState.TURN_TO_FRONT)) || (!getAnimationState().equals(AnimationState.IDLE_BACK)) ) {
+                    //     return texture.get(AnimationState.IDLE_FRONT);
+                    // }
+                    return texture.get(state);
                 }
 
                 private void unlockAndHide() {
                     mm_lock = false;
-                    mm_hidden = true;
+                    mm_setHidden(true);
                     first.mm_lock = false;
                     first.mm_setHidden(true);
+                    // setAnimationState(AnimationState.TURN_TO_BACK);
                     first = null;
                     g_lock = false;
                 }
@@ -236,9 +257,11 @@ public class MemoryMatch extends GameMode {
                                 // set first card
                                 first = this;
                                 mm_lock = true;
+                                // setAnimationState(AnimationState.TURN_TO_FRONT);
                             } else {
                                 // second card
                                 // System.out.println(first.getCardType() + "\n" + this.cardType);
+                                // setAnimationState(AnimationState.TURN_TO_FRONT);
                                 if(first.getCardType().equals(this.cardType)) {
                                     mm_lock = true;
                                     first = null;
@@ -275,7 +298,11 @@ public class MemoryMatch extends GameMode {
                 }
             };
 
-            cards[i].setTex(AnimationState.IDLE_2, Reader.read("./assets/cards/card_back.tex")); // TODO: change tex
+            cards[i].setTex(AnimationState.IDLE_BACK, Reader.read("./assets/cards/card_back.tex"));
+            cards[i].setTex(AnimationState.TURN_TO_BACK, cardTurnBackATex[choosenCards[ci]]);
+            cards[i].setTex(AnimationState.TURN_TO_FRONT, cardTurnFrontATex[choosenCards[ci]]);
+
+            cards[i].setAnimationState(AnimationState.IDLE_BACK);
 
             addObjectToPool(cards[i]);
         }
@@ -296,8 +323,43 @@ public class MemoryMatch extends GameMode {
 
     private void hideAll(boolean hide) {
         for(MMCard c : cards) {
-            c.mm_hidden = hide;
+            c.mm_setHidden(true);
         }
+    }
+
+    private void banner_flyin(Card card) {
+
+        card.setPos(card.getX(), card.getY()+19);
+        card.setVisible(true);
+        new Timer("card_flyin", 200, 10) {
+            @Override
+            public void run() {
+                new Timer("card_display", 4000, 0) {
+                    @Override
+                    public void run() {
+                        new Timer("card_flyout", 100, 10) {
+                            @Override
+                            public void run() {
+                                card.setVisible(false);
+                                card.setPos(card.getX(), card.getY()+9);
+                            }
+
+                            @Override
+                            public void runInterval() {
+                                card.setPos(card.getX(), card.getY()-1);
+                            }
+                        };
+                        
+                    }
+                };
+            }
+
+            @Override
+            public void runInterval() {
+                card.setPos(card.getX(), card.getY()-1);
+            }
+        };
+
     }
 
     private void endGame(int state) {
@@ -305,40 +367,12 @@ public class MemoryMatch extends GameMode {
             case GAME_WIN:
                 lockAll(true);
                 reset.setVisible(true);
-                win.setPos(win.getX(), win.getY()+19);
-                win.setVisible(true);
-                new Timer("win_flyin", 200, 10) {
-                    @Override
-                    public void run() {
-                        new Timer("win_display", 4000, 0) {
-                            @Override
-                            public void run() {
-                                new Timer("win_flyout", 100, 10) {
-                                    @Override
-                                    public void run() {
-                                        win.setVisible(false);
-                                        win.setPos(win.getX(), win.getY()+9);
-                                    }
-
-                                    @Override
-                                    public void runInterval() {
-                                        win.setPos(win.getX(), win.getY()-1);
-                                    }
-                                };
-                                
-                            }
-                        };
-                    }
-
-                    @Override
-                    public void runInterval() {
-                        win.setPos(win.getX(), win.getY()-1);
-                    }
-                };
+                banner_flyin(win);
                 break;
             case GAME_LOSE:
                 lockAll(true);
                 reset.setVisible(true);
+                banner_flyin(lose);
                 break;
         }
     }
@@ -354,12 +388,32 @@ public class MemoryMatch extends GameMode {
         return false;
     }
 
-    private ATex[] cardATex = new ATex[] { (ATex) Reader.read("./assets/cards/mode/global/upvote.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/star.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/heart.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/flower.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/cloud.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/downvote.tex") };
+    private ATex[] cardATex = new ATex[] {
+        (ATex) Reader.read("./assets/cards/mode/global/upvote.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/star.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/heart.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/flower.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/cloud.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/downvote.tex")
+    };
+
+    private ATex[] cardTurnBackATex = new ATex[] {
+        (ATex) Reader.read("./assets/cards/mode/global/upvote_turn.atex"),
+        (ATex) Reader.read("./assets/cards/mode/global/star_turn.atex"),
+        (ATex) Reader.read("./assets/cards/mode/global/heart_turn.atex"),
+        (ATex) Reader.read("./assets/cards/mode/global/flower_turn.atex"),
+        (ATex) Reader.read("./assets/cards/mode/global/cloud_turn.atex"),
+        (ATex) Reader.read("./assets/cards/mode/global/downvote_turn.atex")
+    };
+
+    private ATex[] cardTurnFrontATex = new ATex[] {
+        ((ATex) Reader.read("./assets/cards/mode/global/upvote_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/star_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/heart_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/flower_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/cloud_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/downvote_turn.atex", true)).reversed()
+    };
 
     @Override
     public ATex[] setPreview() {
