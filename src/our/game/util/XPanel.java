@@ -16,6 +16,7 @@ public class XPanel extends JPanel {
 
     public static XPanel instance;
 
+    @SuppressWarnings("unused")
     private final XFrame frame;
 
     public XPanel(XFrame frame) {
