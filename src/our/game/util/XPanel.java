@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 
-import our.game.core.Calibration;
 import our.game.core.Screen;
 
 public class XPanel extends JPanel {
@@ -17,14 +16,18 @@ public class XPanel extends JPanel {
 
     public static XPanel instance;
 
-    public XPanel() {
+    private final XFrame frame;
+
+    public XPanel(XFrame frame) {
+
+        this.frame = frame;
 
         if(instance != null) return;
         instance = this;
 
         setBackground(new Color(0,0,100));
-        setPreferredSize(Calibration.g); 
-        setMinimumSize(Calibration.g); // TODO: Change this
+        setPreferredSize(frame.g); 
+        setMinimumSize(frame.g); // TODO: Change this
 
     }
 

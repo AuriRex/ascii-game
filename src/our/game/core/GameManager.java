@@ -6,6 +6,7 @@ import our.game.mode.Menu;
 import our.game.mode.Quit;
 import our.game.util.Tex;
 import our.game.util.Timer;
+import our.game.util.XFrame;
 
 /**
  * Responsible for running the main programm loop and calling all of the necesarry functions.
@@ -35,6 +36,9 @@ public class GameManager {
         if(instance != null) return;
 
         instance = this;
+
+        XFrame.createWindow(x, y);
+
         screen = new Screen(x, y);
 
         init();

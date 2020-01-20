@@ -207,15 +207,7 @@ public class MemoryMatch extends GameMode {
                     return cardType;
                 }
 
-                @Override
-                public Tex getObjectTex() { // call this from gamemode's gameobject pool
-                    // if(mm_isHidden()) return texture.get(AnimationState.IDLE_BACK);
-                    // return texture.get(AnimationState.IDLE_FRONT);
-                    // if((!getAnimationState().equals(AnimationState.IDLE_FRONT)) || (!getAnimationState().equals(AnimationState.IDLE_BACK)) || (!getAnimationState().equals(AnimationState.TURN_TO_FRONT)) || (!getAnimationState().equals(AnimationState.IDLE_BACK)) ) {
-                    //     return texture.get(AnimationState.IDLE_FRONT);
-                    // }
-                    return texture.get(state);
-                }
+                
 
                 private void unlockAndHide() {
                     mm_lock = false;
