@@ -14,6 +14,7 @@ import our.game.gameobjects.CardType;
 import our.game.mode.GameMode;
 import our.game.mode.Menu;
 import our.game.util.ATex;
+import our.game.util.Tex;
 import our.game.util.Timer;
 
 public class PicturePoker extends GameMode {
@@ -28,9 +29,15 @@ public class PicturePoker extends GameMode {
     private ATex cardBack = (ATex) Reader.read("./assets/cards/card_back.tex");
 
     int score = 0;
+    Tex scoreTex = new Tex(
+            new String[] { "Score: " + score, "Upvote  ", "Star    ", "Heart   ", "Flower  ", "Cloud   ", "Downvote" });
+
+    boolean clicked = false;
 
     Card card_return;
     Card confirm;
+    Card reset;
+    int i = 10;
 
     private Card[] cards = new Card[] { new Card("0", 10, 21, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
@@ -68,12 +75,21 @@ public class PicturePoker extends GameMode {
             new Card("6", 31, 3, (ATex) cardBack), new Card("7", 52, 3, (ATex) cardBack),
             new Card("8", 73, 3, (ATex) cardBack), new Card("9", 94, 3, (ATex) cardBack) };
 
+    Card scoreCard = new Card("score", 7, 12, scoreTex);
+
     private ATex[] cardATex = new ATex[] { (ATex) Reader.read("./assets/cards/mode/global/upvote.tex"),
             (ATex) Reader.read("./assets/cards/mode/global/star.tex"),
             (ATex) Reader.read("./assets/cards/mode/global/heart.tex"),
             (ATex) Reader.read("./assets/cards/mode/global/flower.tex"),
             (ATex) Reader.read("./assets/cards/mode/global/cloud.tex"),
             (ATex) Reader.read("./assets/cards/mode/global/downvote.tex") };
+
+    private ATex[] cardATexTurn = new ATex[] { (ATex) Reader.read("./assets/cards/mode/global/upvote_turn.atex"),
+            (ATex) Reader.read("./assets/cards/mode/global/star_turn.atex"),
+            (ATex) Reader.read("./assets/cards/mode/global/heart_turn.atex"),
+            (ATex) Reader.read("./assets/cards/mode/global/flower_turn.atex"),
+            (ATex) Reader.read("./assets/cards/mode/global/cloud_turn.atex"),
+            (ATex) Reader.read("./assets/cards/mode/global/downvote_turn.atex") };
 
     public PicturePoker() {
 
@@ -100,9 +116,27 @@ public class PicturePoker extends GameMode {
         };
         addObjectToPool(confirm);
 
+        reset = new Card("reset", 110, 12, Reader.read("./assets/cards/reset.tex")) {
+
+            @Override
+            public void onMousePressed(int x, int y) {
+
+                resetGame();
+            }
+        };
+        addObjectToPool(reset);
+        reset.setVisible(false);
+
+        reset.setTex(AnimationState.HOVER, Reader.read("./assets/cards/reset.tex"));
+
         confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/global/confirm.tex"));
 
         card_return.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
+
+        scoreCard.setTex(AnimationState.IDLE, scoreTex);
+        scoreCard.setTex(AnimationState.HOVER, scoreTex);
+
+        addObjectToPool(scoreCard);
 
         addObjectToPool(card_return);
 
@@ -159,7 +193,10 @@ public class PicturePoker extends GameMode {
     }
 
     public void changeCard() {
+        if (clicked)
+            return;
 
+        clicked = true;
         for (Card c : changeCards.keySet()) {
             c.setPos(c.getX(), c.getY() + 2);
             int card = enums.get(changeCards.get(c)).ordinal();
@@ -170,30 +207,40 @@ public class PicturePoker extends GameMode {
         }
         changeCards.clear();
 
-        int i = 10;
-        for (Card c : dealerCards) {
-            CardType temp = enums.get(i);
-            c.setCardType(temp);
-            c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
-            c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
-            i++;
-
-        }
-
-        if (Main.debug) {
-
-            System.out.println("Player Cards:");
-            for (Card c : cards) {
-                System.out.println(c.UID + c.getCardType());
+        new Timer("Timer_1", 3000, 500) {
+            @Override
+            public void runInterval() {
+                CardType temp = enums.get(i);
+                dealerCards[i - 10].setCardType(temp);
+                dealerCards[i - 10].setTex(AnimationState.TURN_TO_FRONT, cardATexTurn[temp.ordinal()]);
+                dealerCards[i - 10].setTex(AnimationState.IDLE_FRONT, cardATex[temp.ordinal()]);
+                dealerCards[i - 10].setAnimationState(AnimationState.TURN_TO_FRONT);
+                dealerCards[i - 10].setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
+                dealerCards[i - 10].setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
+                i++;
             }
-            System.out.println("Dealer Cards:");
-            for (Card c : dealerCards) {
-                System.out.println(c.UID + c.getCardType());
+        };
+        i = 10;
 
+        new Timer("timer_2", 4000, 0) {
+            @Override
+            public void run() {
+
+                if (Main.debug) {
+
+                    System.out.println("Player Cards:");
+                    for (Card c : cards) {
+                        System.out.println(c.UID + c.getCardType());
+                    }
+                    System.out.println("Dealer Cards:");
+                    for (Card c : dealerCards) {
+                        System.out.println(c.UID + c.getCardType());
+
+                    }
+                }
+                compareCards();
             }
-        }
-
-        compareCards();
+        };
     }
 
     public void compareCards() {
@@ -267,7 +314,8 @@ public class PicturePoker extends GameMode {
                 + ddown)) {
             confirm.setTex(AnimationState.IDLE, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
             confirm.setTex(AnimationState.HOVER, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
-            score--;
+            if (score > 0)
+                score--;
         } else {
             int dppoints = 0;
             int ddpoints = 0;
@@ -286,7 +334,8 @@ public class PicturePoker extends GameMode {
                     if (down > 0 && cards[j].getCardType().equals(CardType.DOWNVOTE))
                         dppoints += 1;
                 } else {
-                    if ((ups + stars + hearts + flowers + cloud + down) > 0) {
+                    if ((ups + stars + hearts + flowers + cloud + down) == 0 || (dups + dstars + dhearts + dflowers
+                            + dcloud + ddown) == (ups + stars + hearts + flowers + cloud + down)) {
                         if (cards[j].getCardType().equals(CardType.UPVOTE))
                             dppoints += 20;
                         if (cards[j].getCardType().equals(CardType.STAR))
@@ -317,7 +366,8 @@ public class PicturePoker extends GameMode {
                     if (ddown > 0 && dealerCards[j].getCardType().equals(CardType.DOWNVOTE))
                         ddpoints += 1;
                 } else {
-                    if ((dups + dstars + dhearts + dflowers + dcloud + ddown) > 0) {
+                    if (((dups + dstars + dhearts + dflowers + dcloud + ddown) == 0) || (dups + dstars + dhearts
+                            + dflowers + dcloud + ddown) == (ups + stars + hearts + flowers + cloud + down)) {
                         if (dealerCards[j].getCardType().equals(CardType.UPVOTE))
                             ddpoints += 20;
                         if (dealerCards[j].getCardType().equals(CardType.STAR))
@@ -341,36 +391,41 @@ public class PicturePoker extends GameMode {
             } else if (ddpoints > dppoints) {
                 confirm.setTex(AnimationState.IDLE, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
                 confirm.setTex(AnimationState.HOVER, (ATex) Reader.read("./assets/cards/mode/global/defeat.tex"));
-                score--;
+                if (score > 0)
+                    score--;
             } else {
                 confirm.setTex(AnimationState.IDLE, (ATex) Reader.read("./assets/cards/mode/global/draw.tex"));
                 confirm.setTex(AnimationState.HOVER, (ATex) Reader.read("./assets/cards/mode/global/draw.tex"));
             }
         }
+        scoreTex = new Tex(new String[] { "Score: " + score, "Upvote  ", "Star    ", "Heart   ", "Flower  ", "Cloud   ",
+                "Downvote" });
+        scoreCard.setTex(AnimationState.IDLE, scoreTex);
+        scoreCard.setTex(AnimationState.HOVER, scoreTex);
 
-        new Timer("timer_1", 3000, 0) {
-            @Override
-            public void run() {
-                for (Card c : dealerCards) {
-                    c.setTex(AnimationState.IDLE, (ATex) cardBack);
-                    c.setTex(AnimationState.HOVER, (ATex) cardBack);
-                    // c.setTex(AnimationState.CLICK, (ATex) cardBack);
-                }
-                int i = 0;
-                for (Card c : cards) {
-                    CardType temp = enums.get(i);
-                    c.setCardType(temp);
-                    c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
-                    c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
-                    // c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
-                    i++;
-                    c.setChange(true);
-                }
-                confirm.setTex(AnimationState.IDLE, Reader.read("./assets/cards/mode/global/confirm.tex"));
-                confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/global/confirm.tex"));
-            }
-        };
-
+        reset.setVisible(true);
     }
 
+    public void resetGame() {
+
+        for (Card c : dealerCards) {
+            c.setTex(AnimationState.IDLE, (ATex) cardBack);
+            c.setTex(AnimationState.HOVER, (ATex) cardBack);
+            // c.setTex(AnimationState.CLICK, (ATex) cardBack);
+        }
+        int i = 0;
+        for (Card c : cards) {
+            CardType temp = enums.get(i);
+            c.setCardType(temp);
+            c.setTex(AnimationState.IDLE, cardATex[temp.ordinal()]);
+            c.setTex(AnimationState.HOVER, cardATex[temp.ordinal()]);
+            // c.setTex(AnimationState.CLICK, cardATex[temp.ordinal()]);
+            i++;
+            c.setChange(true);
+        }
+        confirm.setTex(AnimationState.IDLE, Reader.read("./assets/cards/mode/global/confirm.tex"));
+        confirm.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/global/confirm.tex"));
+        clicked = false;
+        reset.setVisible(false);
+    }
 }
