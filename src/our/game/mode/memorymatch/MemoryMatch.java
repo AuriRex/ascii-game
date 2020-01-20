@@ -12,7 +12,6 @@ import our.game.gameobjects.CardType;
 import our.game.mode.GameMode;
 import our.game.mode.Menu;
 import our.game.util.ATex;
-import our.game.util.Tex;
 import our.game.util.Timer;
 
 public class MemoryMatch extends GameMode {
@@ -20,16 +19,6 @@ public class MemoryMatch extends GameMode {
     protected static MemoryMatch instance;
 
     public final String title = "MemoryMatch";
-
-    /*
-
-    8 Cards
-    4 Card Pairs
-    6 Total Unique Cards
-
-    -> choose 4 at random
-
-    */
 
     public MemoryMatch() {
 
@@ -198,7 +187,7 @@ public class MemoryMatch extends GameMode {
 
             int ci = (int) (i / 2);
 
-            cards[i] = new MMCard(ci+"_"+(i%2), calcX(i), calcY(i), cardATex[choosenCards[ci]], AnimationState.IDLE_FRONT) { // TODO: change tex
+            cards[i] = new MMCard(ci+"_"+(i%2), calcX(i), calcY(i), cardATex[choosenCards[ci]], AnimationState.IDLE_FRONT) {
 
                 protected CardType cardType = CardType.values()[choosenCards[ci]];
 
@@ -225,35 +214,14 @@ public class MemoryMatch extends GameMode {
                 public void onNoHover() {}
                 @Override
                 public void onMousePressed(int x, int y) {
-                    // new Timer("hide_timer", 2000, 0) {
-
-                    //     @Override
-                    //     public void run() {
-                    //         // unlockAndHide();
-                    //         System.out.println("Timer Works");
-                    //     }
-                        
-                    // };
-
-                    // String txt = "";
-                    // for(MMCard c : cards) {
-                    //     txt += c.mm_lock + " ";
-                    // }
-                    // GameManager.drawDebugText(0, 3, "MMC: "+txt);
-
                     if(g_lock) return;
                     if(!mm_lock) {
                         mm_setHidden(!mm_isHidden());
                         if(!mm_isHidden()) {
                             if(first == null) {
-                                // set first card
                                 first = this;
                                 mm_lock = true;
-                                // setAnimationState(AnimationState.TURN_TO_FRONT);
                             } else {
-                                // second card
-                                // System.out.println(first.getCardType() + "\n" + this.cardType);
-                                // setAnimationState(AnimationState.TURN_TO_FRONT);
                                 if(first.getCardType().equals(this.cardType)) {
                                     mm_lock = true;
                                     first = null;
@@ -272,7 +240,6 @@ public class MemoryMatch extends GameMode {
 
                                         @Override
                                         public void run() {
-                                            // System.out.println("Timer: Hide done!");
                                             unlockAndHide();
                                         }
                                         
@@ -409,7 +376,6 @@ public class MemoryMatch extends GameMode {
 
     @Override
     public ATex[] setPreview() {
-        // TODO Auto-generated method stub
         return new ATex[] { (ATex) Reader.read("./assets/cards/preview/memorymatch/idle.tex"),
                 (ATex) Reader.read("./assets/cards/preview/memorymatch/hover.atex"),
                 (ATex) Reader.read("./assets/cards/preview/memorymatch/click.tex") };

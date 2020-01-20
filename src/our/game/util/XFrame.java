@@ -23,7 +23,7 @@ public class XFrame extends JFrame implements MouseInputListener {
 
     private static XFrame f;
     private XPanel xp;
-    public static Dimension g;
+    public static Dimension panel_dimension;
 
     public XFrame() {
         if (instance != null)
@@ -75,7 +75,7 @@ public class XFrame extends JFrame implements MouseInputListener {
      * @param height the height of the window
      */
     public static void createWindow(int x, int y) {
-        g = new Dimension(x * 8, y * 16);
+        panel_dimension = new Dimension(x * 8, y * 16);
 
         f = new XFrame();
         // f.setType(JFrame.Type.UTILITY);
@@ -134,6 +134,13 @@ public class XFrame extends JFrame implements MouseInputListener {
         f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         f.setVisible(true);
     }
+
+    /**
+     * 
+     */
+    public Dimension getPanelDimension() {
+		return panel_dimension;
+	}
 
     /**
      * Force closes the game
