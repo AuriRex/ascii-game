@@ -99,22 +99,15 @@ public class XFrame extends JFrame implements MouseInputListener {
                             return;
                         if (!GameManager.instance.isReady())
                             return;
-                        // try {
-                        // sleep(200); // TODO: don't maybe? - add cooldown instead of sleep maybe ?
-                        // update: didn't quite work as intended :P
+
                         int[] pos = XFrame.calcPos(e);
                         // Only trigger when the Position changes
-                        if (!pos.equals(
-                                lastPos) /* && (System.currentTimeMillis() >= lastCheck + inputCheckCooldown) */) {
+                        if (!pos.equals(lastPos)) {
                             if (Main.debug)
                                 GameManager.debug(pos[0], pos[1]);
                             GameManager.getModeInstance().hoverInput(pos[0], pos[1]);
-                            // lastCheck = System.currentTimeMillis();
                         }
                         lastPos = pos;
-                        // } catch (InterruptedException e1) {
-                        // e1.printStackTrace();
-                        // }
                     }
                 });
                 f.getRootPane().addMouseListener(f);
@@ -155,7 +148,6 @@ public class XFrame extends JFrame implements MouseInputListener {
      */
     @Deprecated
     public static void exitWindow() {
-        //TODO replace this with yes/no cards
         int eingabe = JOptionPane.showConfirmDialog(null, "Wollen Sie wirklich beenden?", "Beenden",
                 JOptionPane.YES_NO_OPTION);
 

@@ -43,7 +43,6 @@ public class Screen {
 
         bufferedImage = new BufferedImage(Main.X * 8, Main.Y * 16, BufferedImage.TYPE_INT_RGB);
 
-        // TODO: Move this to draw function lol
         Graphics g = bufferedImage.getGraphics();
 
         g.setColor(Color.WHITE);
@@ -56,7 +55,6 @@ public class Screen {
         clearFrame = fillDefaultFrame();
         rframe = frame;
 
-        // drawToScreen(30, 4, test);
         printReadyFrame();
     }
 
