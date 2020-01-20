@@ -72,7 +72,7 @@ public class Reader {
             }
             reader.close();
             
-            // TODO: Maybe check that each Frame of the Animation has the same height -> append strings filled with spaces if neccesarry
+            // TO_DO: Maybe check that each Frame of the Animation has the same height -> append strings filled with spaces if neccesarry
 
             String[] raw_tex_split = raw_tex.split("\n\n");
 

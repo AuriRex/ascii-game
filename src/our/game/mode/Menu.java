@@ -12,7 +12,6 @@ import our.game.mode.memorymatch.MemoryMatch;
 import our.game.mode.picturepoker.PicturePoker;
 import our.game.util.ATex;
 import our.game.util.Tex;
-import our.game.util.XFrame;
 
 public class Menu extends GameMode {
 
@@ -141,8 +140,9 @@ public class Menu extends GameMode {
 
             if (inBounds(x, y, g)) {
                 // Mouse is over our GameObject
-                GameObject exit = getByUID("exit"); // TODO: Optimize, cache GameObject reference instead of searching
+                GameObject exit = getByUID("exit"); // TO_DO: Optimize, cache GameObject reference instead of searching
                                                     // for it everytime.
+                                                    // No.
                 exit.setVisible(!exit.isVisible());
 
             }

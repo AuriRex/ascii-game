@@ -133,6 +133,9 @@ public class Screen {
 
     boolean new_algo = true;
 
+    /**
+     * Draws the String[] to a BufferedImage
+     */
     public void draw() {
         if (testf == null) {
             try {
@@ -142,49 +145,51 @@ public class Screen {
             }
         }
 
-        if(new_algo)
-        for(int iy = 0; iy < Main.Y; iy++) {
-            for(int ix = 0; ix < Main.X; ix++) {
-
-                char curChar = rframe[iy].charAt(ix);
-
-                if(curChar != ' ') {
-
-                    for(int posy = 0; posy < 16; posy++) {
-                        for(int posx = 0; posx < 8; posx++) {
-                            
-                            int rgb = testf.getPixel(curChar-32, ix * 8 + posx, iy * 16 + posy);
-                            // System.out.println(rgb);
-                            if(rgb != -65281) // Filter out transparency (RGB: 255, 0, 255) -> Magenta
-                                bufferedImage.setRGB(ix * 8 + posx, iy * 16 + posy, rgb);
-
+        if(new_algo) {
+            for(int iy = 0; iy < Main.Y; iy++) {
+                for(int ix = 0; ix < Main.X; ix++) {
+    
+                    char curChar = rframe[iy].charAt(ix);
+    
+                    if(curChar != ' ') {
+    
+                        for(int posy = 0; posy < 16; posy++) {
+                            for(int posx = 0; posx < 8; posx++) {
+                                
+                                int rgb = testf.getPixel(curChar-32, ix * 8 + posx, iy * 16 + posy);
+                                // System.out.println(rgb);
+                                if(rgb != -65281) // Filter out transparency (RGB: 255, 0, 255) -> Magenta
+                                    bufferedImage.setRGB(ix * 8 + posx, iy * 16 + posy, rgb);
+    
+                            }
                         }
+    
+                        
+    
                     }
-
-                    
-
+    
                 }
-
             }
-        }
-        else
-        for(int iy = 0; iy < Main.Y*16; iy++) {
-            for(int ix = 0; ix < Main.X*8; ix++) {
-
-                int posx = (ix / 8);
-                int posy = (iy / 16);
-
-                char curChar = rframe[posy].charAt(posx);
-
-                if(curChar != ' ') {
-
-                    int rgb = testf.getPixel(curChar-32, ix, iy);
-                    // System.out.println(rgb);
-                    if(rgb != -65281) // Filter out transparency (RGB: 255, 0, 255) -> Magenta
-                        bufferedImage.setRGB(ix, iy, rgb);
-
+        } else {
+            // Unused but may come in handy someday
+            for(int iy = 0; iy < Main.Y*16; iy++) {
+                for(int ix = 0; ix < Main.X*8; ix++) {
+    
+                    int posx = (ix / 8);
+                    int posy = (iy / 16);
+    
+                    char curChar = rframe[posy].charAt(posx);
+    
+                    if(curChar != ' ') {
+    
+                        int rgb = testf.getPixel(curChar-32, ix, iy);
+                        // System.out.println(rgb);
+                        if(rgb != -65281) // Filter out transparency (RGB: 255, 0, 255) -> Magenta
+                            bufferedImage.setRGB(ix, iy, rgb);
+    
+                    }
+    
                 }
-
             }
         }
         
