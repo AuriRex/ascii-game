@@ -13,8 +13,6 @@ import our.game.util.XFrame;
  */
 public class GameManager {
 
-    // final int X;
-    // final int Y;
     private Screen screen;
     boolean running = true;
 
@@ -58,10 +56,7 @@ public class GameManager {
         // Main Programm Loop
         while (running) {
 
-            // Loop thorugh all game objects and call draw function -> do this through
-            // gamemode!
             screen.clearFrame();
-            // Calibration.instance.resetTop();
             Timer.advance(deltaTime);
             mode.preDraw();
             mode.draw();
@@ -80,9 +75,7 @@ public class GameManager {
             screen.draw();
             screen.pushFrame();
             screen.printReadyFrame();
-            // screen.printReadyFrameDBG(deltaTime);
 
-            // Makes sure the program runs at 5 frames per second
             while (sleepCount < sleepTime) {
                 try {
                     Thread.sleep(1);
@@ -101,6 +94,7 @@ public class GameManager {
         }
 
     }
+
     /**
      * Draws a GameObject to the screen
      * @param g Gameobject with x, y and tex
@@ -119,6 +113,12 @@ public class GameManager {
         instance.screen.drawToScreen(x, y, tex);
     }
 
+    /**
+     * Draws a String to the screen for debug purpouses
+     * @param x x-coordinate for the drawing
+     * @param y y-coordinate for the drawing
+     * @param txt String to be drawn
+     */
     public static void drawDebugText(int x, int y, String txt) {
         instance.screen.drawDebugText(x, y, txt);
     }
@@ -127,18 +127,26 @@ public class GameManager {
      * Returns the current running GameMode Instance.
      * @return GameMode Instance
      */
-    public static GameMode getModeInstance() { // TODO: Redo all methods that call this one and handle null!
+    public static GameMode getModeInstance() {
         return instance.mode;
     }
 
     private static int d_x = 0;
     private static int d_y = 0;
 
+    /**
+     * sets debug variables
+     * @param x X coordinate
+     * @param y Y coordinate
+     */
     public static void debug(int x, int y) {
         d_x = x;
         d_y = y;
     }
 
+    /**
+     * Initialize variables
+     */
     private void init() {
 
         Timer.init();
@@ -146,8 +154,6 @@ public class GameManager {
         gm_menu = new Menu();
         mode = gm_menu;
 
-        // Screen.clearScreen();
-        // System.out.println("Initialized!");
     }
 
     /**

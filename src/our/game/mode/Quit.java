@@ -35,7 +35,6 @@ public class Quit extends GameMode {
         };
         exit.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
 
-        
         Tex at = Reader.read("./assets/cards/mode/card_idle.tex");
         Card card = new Card("card2", 68, 12, at) {
             @Override
@@ -49,30 +48,8 @@ public class Quit extends GameMode {
         };
         card.setTex(AnimationState.HOVER, at);
 
-
         addObjectToPool(exit);
         addObjectToPool(card);
-        /*
-         * // Timer Test new Timer("timer_1", 5000, 1000) {
-         * 
-         * @Override public void run() { System.out.println("Timer1 finished!"); }
-         * 
-         * @Override public void runInterval() { System.out.println("Timer1 interval!");
-         * }
-         * 
-         * @Override public void onDestroy() {
-         * System.out.println("Timer1 has been destroyed!"); } };
-         * 
-         * new Timer("timer_2", 4000, 0) {
-         * 
-         * @Override public void run() { System.out.println("Timer2 finished!");
-         * Timer.destroy("timer_1"); }
-         * 
-         * @Override public void runInterval() { System.out.println("Timer2 interval!");
-         * } };
-         */
-
-        // gameObjectPool.add(card);
 
     }
 
@@ -82,43 +59,12 @@ public class Quit extends GameMode {
         return new ATex[] { null, null, null };
     }
 
+    /**
+     * set the GameMode reference to return to
+     * @param mode GameMode
+     */
 	public void setReturnMode(GameMode mode) {
         return_mode = mode;
 	}
-
-    /**
-     * 
-     * @param g
-     * @param x
-     * @param y
-     * @return
-     */
-    // @Override
-    // public boolean onClickInput(GameObject g, int x, int y) {
-    //     if (g.UID.equals("exit")) {
-    //         if (!g.isVisible())
-    //             return false;
-
-    //         if (inBounds(x, y, g)) {
-    //             // Mouse is over our GameObject
-    //             XFrame.exitWindow();
-    //         }
-    //         return false;
-    //     }
-    //     if (g.UID.equals("card2")) {
-    //         if (!g.isVisible())
-    //             return false;
-
-    //         if (inBounds(x, y, g)) {
-    //             // Mouse is over our GameObject
-    //             GameObject exit = getByUID("exit"); // TODO: Optimize, cache GameObject reference instead of searching
-    //                                                 // for it everytime.
-    //             exit.setVisible(!exit.isVisible());
-
-    //         }
-    //         return false;
-    //     }
-    //     return true;
-    // }
 
 }

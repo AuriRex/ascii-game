@@ -32,7 +32,6 @@ public class MemoryMatch extends GameMode {
             }
         };
         card_return.setTex(AnimationState.HOVER, Reader.read("./assets/cards/mode/exit_hover.atex"));
-        // card_return.setTex(AnimationState.CLICK, Reader.read("./assets/cards/mode/return_idle.atex"));
 
         addObjectToPool(card_return);
 
@@ -53,6 +52,10 @@ public class MemoryMatch extends GameMode {
     private Card win;
     private Card lose;
 
+    /**
+     * Resets the game state
+     * @param rng Random
+     */
     private void reset(Random rng) {
         tries = 3;
         pairs = 0;
@@ -65,6 +68,12 @@ public class MemoryMatch extends GameMode {
         
     }
 
+    /**
+     * Shuffles the Cards in an array
+     * @param cards
+     * @param rng
+     * @return
+     */
     private MMCard[] shuffleCards(MMCard[] cards, Random rng) {
 
         LinkedList<MMCard> l_cards = new LinkedList<MMCard>(Arrays.asList(cards));
