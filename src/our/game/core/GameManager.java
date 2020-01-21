@@ -175,9 +175,13 @@ public class GameManager {
 
 	public static void quit() {
 
-        if(!instance.mode.equals(gm_quit))
+        if(!instance.mode.equals(gm_quit)) {
             gm_quit.setReturnMode(instance.mode);
-        changeGameMode(gm_quit);
+            changeGameMode(gm_quit);
+        } else {
+            XFrame.forceExitWindow();
+        }
+            
 
 	}
 
