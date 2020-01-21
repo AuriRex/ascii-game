@@ -72,25 +72,33 @@ public class PicturePoker extends GameMode {
         }
     } };
 
-    private Card[] dealerCards = new Card[] { new Card("5", 10, 3, (ATex) cardBack),
-            new Card("6", 31, 3, (ATex) cardBack), new Card("7", 52, 3, (ATex) cardBack),
-            new Card("8", 73, 3, (ATex) cardBack), new Card("9", 94, 3, (ATex) cardBack) };
+    private Card[] dealerCards = new Card[] {
+        new Card("5", 10, 3, (ATex) cardBack),
+        new Card("6", 31, 3, (ATex) cardBack),
+        new Card("7", 52, 3, (ATex) cardBack),
+        new Card("8", 73, 3, (ATex) cardBack),
+        new Card("9", 94, 3, (ATex) cardBack)
+    };
 
     Card scoreCard = new Card("score", 7, 12, scoreTex);
 
-    private ATex[] cardATex = new ATex[] { (ATex) Reader.read("./assets/cards/mode/global/upvote.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/star.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/heart.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/flower.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/cloud.tex"),
-            (ATex) Reader.read("./assets/cards/mode/global/downvote.tex") };
+    private ATex[] cardATex = new ATex[] {
+        (ATex) Reader.read("./assets/cards/mode/global/upvote.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/star.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/heart.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/flower.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/cloud.tex"),
+        (ATex) Reader.read("./assets/cards/mode/global/downvote.tex")
+    };
 
-    private ATex[] cardATexTurn = new ATex[] { (ATex) Reader.read("./assets/cards/mode/global/upvote_turn.atex"),
-            (ATex) Reader.read("./assets/cards/mode/global/star_turn.atex"),
-            (ATex) Reader.read("./assets/cards/mode/global/heart_turn.atex"),
-            (ATex) Reader.read("./assets/cards/mode/global/flower_turn.atex"),
-            (ATex) Reader.read("./assets/cards/mode/global/cloud_turn.atex"),
-            (ATex) Reader.read("./assets/cards/mode/global/downvote_turn.atex") };
+    private ATex[] cardATexTurn = new ATex[] {
+        ((ATex) Reader.read("./assets/cards/mode/global/upvote_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/star_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/heart_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/flower_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/cloud_turn.atex", true)).reversed(),
+        ((ATex) Reader.read("./assets/cards/mode/global/downvote_turn.atex", true)).reversed()
+    };
 
     public PicturePoker() {
 
