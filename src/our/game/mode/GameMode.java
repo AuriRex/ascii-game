@@ -248,6 +248,10 @@ public abstract class GameMode implements GMMethods {
         // editable = true;
     }
 
+    /**
+     * adds the Object to the pool
+     * @param g the GameObject to be added
+     */
     public void addObjectToPool(GameObject g) {
         // int i = 0;
         // while (!editable) {

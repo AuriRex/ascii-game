@@ -23,21 +23,21 @@ public class PicturePoker extends GameMode {
 
     public String title = "PicturePoker";
 
+    private int score = 0;
+    private int i = 10;
+
     private ArrayList<CardType> enums = new ArrayList<CardType>();
     private HashMap<Card, Integer> changeCards = new HashMap<Card, Integer>();
 
     private ATex cardBack = (ATex) Reader.read("./assets/cards/card_back.tex");
-
-    int score = 0;
-    Tex scoreTex = new Tex(
+    private Tex scoreTex = new Tex(
             new String[] { "Score: " + score, "Upvote  ", "Star    ", "Heart   ", "Flower  ", "Cloud   ", "Downvote" });
 
-    boolean clicked = false;
+    private boolean clicked = false;
 
-    Card card_return;
-    Card confirm;
-    Card reset;
-    int i = 10;
+    private Card card_return;
+    private Card confirm;
+    private Card reset;
 
     private Card[] cards = new Card[] { new Card("0", 10, 21, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
@@ -156,6 +156,9 @@ public class PicturePoker extends GameMode {
                 (ATex) Reader.read("./assets/cards/preview/picturepoker/click.tex") };
     }
 
+    /**
+     * First time setup of the cards
+     */
     public void setCards() {
 
         Collections.shuffle(enums);
@@ -178,6 +181,11 @@ public class PicturePoker extends GameMode {
 
     }
 
+    /**
+     * Queues chance of the cards
+     * @param c The specific card
+     * @param id The id of the card to be set with in enums
+     */
     public void queueChange(Card c, int id) {
 
         if (!changeCards.containsKey(c) && c.getChange()) {
@@ -192,6 +200,9 @@ public class PicturePoker extends GameMode {
 
     }
 
+    /**
+     * Chances the queued cards, also sets the Dealers cards
+     */
     public void changeCard() {
         if (clicked)
             return;
@@ -243,6 +254,9 @@ public class PicturePoker extends GameMode {
         };
     }
 
+    /**
+     * Logic to compare the cards of the user and the dealer
+     */
     public void compareCards() {
 
         int ups = 0;
@@ -406,6 +420,9 @@ public class PicturePoker extends GameMode {
         reset.setVisible(true);
     }
 
+    /**
+     * Resets the game to the start mode, keeps the score
+     */
     public void resetGame() {
 
         for (Card c : dealerCards) {
