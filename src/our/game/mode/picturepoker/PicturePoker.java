@@ -39,6 +39,7 @@ public class PicturePoker extends GameMode {
     private Card confirm;
     private Card reset;
 
+    //Overwriting Functions of the Card Datatype
     private Card[] cards = new Card[] { new Card("0", 10, 21, (ATex) Reader.read("./assets/cards/dummy.tex")) {
 
         @Override
@@ -218,6 +219,7 @@ public class PicturePoker extends GameMode {
         }
         changeCards.clear();
 
+        //Used for a slow turning of the cards
         new Timer("Timer_1", 3000, 500) {
             @Override
             public void runInterval() {

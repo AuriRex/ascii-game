@@ -99,9 +99,9 @@ public class Menu extends GameMode {
      */
     @Override
     public boolean onHoverInput(int x, int y, GameObject g) {
-        String[] str = new String[1];
-        str[0] = "" + g.getWidth();
-        GameManager.drawToScreen(1, 29, new Tex(str));
+        // String[] str = new String[1];
+        // str[0] = "" + g.getWidth();
+        // GameManager.drawToScreen(1, 29, new Tex(str));
         return true;
     }
 

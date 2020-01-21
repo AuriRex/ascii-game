@@ -12,6 +12,7 @@ import our.game.gameobjects.CardType;
 import our.game.mode.GameMode;
 import our.game.mode.Menu;
 import our.game.util.ATex;
+import our.game.util.Tex;
 import our.game.util.Timer;
 
 public class MemoryMatch extends GameMode {
@@ -62,6 +63,8 @@ public class MemoryMatch extends GameMode {
     private Card reset;
     private Card win;
     private Card lose;
+    private Card card_tries;
+    private Tex tex_tries;
 
     /**
      * Resets the game state
@@ -69,6 +72,7 @@ public class MemoryMatch extends GameMode {
      */
     private void reset(Random rng) {
         tries = 3;
+        card_tries.setTex(AnimationState.IDLE, new Tex(new String[] {"Tries left: "+tries}));
         pairs = 0;
         first = null;
         hideAll(true);
@@ -167,7 +171,7 @@ public class MemoryMatch extends GameMode {
 
         addObjectToPool(reset);
 
-        win = new Card("win", 32, 3, Reader.read("./assets/cards/mode/global/win.atex")) {
+        win = new Card("win", 28, 3, Reader.read("./assets/cards/mode/global/win.atex")) {
             @Override
             public void onHover(int x, int y) {
             }
@@ -188,7 +192,7 @@ public class MemoryMatch extends GameMode {
 
         addObjectToPool(win);
 
-        lose = new Card("lose", 32, 3, Reader.read("./assets/cards/mode/global/lose.atex")) {
+        lose = new Card("lose", 28, 3, Reader.read("./assets/cards/mode/global/lose.atex")) {
             @Override
             public void onHover(int x, int y) {
             }
@@ -208,6 +212,19 @@ public class MemoryMatch extends GameMode {
         lose.setVisible(false);
 
         addObjectToPool(lose);
+
+        tex_tries = new Tex(new String[] {"Tries left: 3"});
+
+        card_tries = new Card("score", 2, 12, tex_tries) {
+            // Prevent AnimationState changes from occuring
+            @Override
+            public void onHover(int x, int y) { }
+            @Override
+            public void onNoHover() { }
+            @Override
+            public void onMousePressed(int x, int y) { }
+        };
+        addObjectToPool(card_tries);
 
         cards = new MMCard[8];
         tries = 3;
@@ -290,6 +307,8 @@ public class MemoryMatch extends GameMode {
 
                     }
 
+                    card_tries.setTex(AnimationState.IDLE, new Tex(new String[] {"Tries left: "+tries}));
+
                 }
             };
 
@@ -324,24 +343,24 @@ public class MemoryMatch extends GameMode {
 
     private void banner_flyin(Card card) {
 
-        card.setPos(card.getX(), card.getY() + 19);
+        card.setPos(card.getX(), 3 + 19);
         card.setVisible(true);
-        new Timer("card_flyin", 200, 10) {
+        new Timer("card_flyin", 200, 20) {
             @Override
             public void run() {
                 new Timer("card_display", 4000, 0) {
                     @Override
                     public void run() {
-                        new Timer("card_flyout", 100, 10) {
+                        new Timer("card_flyout", 100, 20) {
                             @Override
                             public void run() {
                                 card.setVisible(false);
-                                card.setPos(card.getX(), card.getY() + 9);
+                                card.setPos(card.getX(), card.getY() + 10);
                             }
 
                             @Override
                             public void runInterval() {
-                                card.setPos(card.getX(), card.getY() - 1);
+                                card.setPos(card.getX(), card.getY() - 2);
                             }
                         };
 
@@ -351,7 +370,7 @@ public class MemoryMatch extends GameMode {
 
             @Override
             public void runInterval() {
-                card.setPos(card.getX(), card.getY() - 1);
+                card.setPos(card.getX(), card.getY() - 2);
             }
         };
 
