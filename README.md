@@ -2,7 +2,7 @@
 school project
 
 
-<h1> Some List </h1>
+<h1> Some List of things to do </h1>
 
 <table>
 <ul>
@@ -11,7 +11,7 @@ school project
 <li>Poker</li>
 <li>Memory Match</li>
 </ul>
-<li>Optional Goals:</li>
+<li>Optional Stuff:</li>
 <ul>
 <li>Blackjack</li>
 <li>Implementing music</li>
